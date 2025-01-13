@@ -98,7 +98,9 @@ const config = {
             position: 'left',
             label: 'Project Information',
             items: [
-              {
+            /* Temporarily commented out because these two documents are too large and depend on the Ambari project generation.
+                 They cannot be treated as static files pushed to git, and they also block the GitHub workflow process.
+             {
                 label: 'Old Version Website',
                 target: '_blank',
                 to: '/old/',
@@ -112,7 +114,7 @@ const config = {
                 label: 'Java Doc',
                 target: '_blank',
                 to: '/javadoc/apidocs',
-              },
+              },*/
               {
                 label: 'Project Team',
                 target: '_blank',
@@ -126,11 +128,11 @@ const config = {
                 label: 'User Group',
                 href: 'https://www.meetup.com/Apache-Ambari-User-Group/',
               },
-              {
+ /*             {
                 label: 'Maling List',
                 target: '_blank',
                 to: '/old/mail-lists.html',
-              },
+              },*/
               {
                 label: "Project License",
                 href: 'https://www.apache.org/licenses/'
