@@ -1,0 +1,36 @@
+name: Build and Deploy
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build-website-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Build main document: DolphinScheduler documentation
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12.1
+
+      - name: Build Main Document
+        run: yarn && yarn build
+
+      - name: Deploy
+        if: ${{ github.event_name == 'push' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: asf-site
+          publish_dir: ./build
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Automated deployment:'
