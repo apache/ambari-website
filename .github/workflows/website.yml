@@ -34,3 +34,19 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: 'Automated deployment:'
+
+     - name: Update .asf.yaml
+       run: |
+         git config --global user.name "GitHub Actions"
+         git config --global user.email "dev@ambari.apache.org"
+         git fetch --all
+         git checkout asf-site
+         echo 'staging:'           > .asf.yaml
+         echo '  profile: ~'       >> .asf.yaml
+         echo '  whoami: asf-site' >> .asf.yaml
+         echo '  whoami: asf-site' >> .asf.yaml
+         git add .asf.yaml
+         git commit -m '.asf.yaml'
+         git push origin asf-site
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
