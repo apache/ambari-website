@@ -11,7 +11,7 @@ This guide is part of the Quick Start section and covers:
 4. Configuring security settings (firewall, SELinux)
 5. Preparing the environment for Ambari installation
 
-For complete installation instructions, refer to the [Installation Guide](installation-guide.md).
+For complete installation instructions, refer to the [Installation Guide](../installation-guide.md).
 
 ## System Requirements
 
@@ -484,7 +484,7 @@ vagrant status
 vagrant ssh vm1  # Similarly for vm2, vm3
 ```
 
-3. Proceed to the [Installation Guide](installation-guide.md) to install and configure Ambari Server and Agents.
+3. Proceed to the [Installation Guide](../installation-guide.md) to install and configure Ambari Server and Agents.
 
 ## Common Vagrant Commands
 
