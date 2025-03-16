@@ -21,7 +21,10 @@ Key|Allowed Values|Comments
 -----|--------|-------------
 Type  |"ganglia" / "jmx" |type = ganglia implies Metrics Service request fulfilled by either a Ganglia (up to version 2.0) or Ambari Metrics (2.0 and above) backend service, this decision is taken by Ambari server at runtime.
 Category | "default" / "performance" ... |This is to group metrics into subsets for better navigability
-Metrics |metricKey : { <br></br>"metricName":<br></br>"pointInTime":<br></br>temporal":<br></br>} | metricKey = Key to be used by REST API. This is unique for a service and identifies the requested metric as well as what endpoint to use for serving the data (AMS vs JMX)<br></br>metricName = Name to use for the Metrics Service backend<br></br>pointInTime = Get latest value, no time range query allowed<br></br>temporal = Time range query supported
+Metrics |metricKey : `{ "metricName": "", "pointInTime": "", "temporal": "" }` | metricKey = Key to be used by REST API. This is unique for a service and identifies the requested metric as well as what endpoint to use for serving the data (AMS vs JMX)
+  * metricName = Name to use for the Metrics Service backend
+  * pointInTime = Get latest value, no time range query allowed
+  * temporal = Time range query supported
 
 Example:
 
@@ -76,4 +79,3 @@ Cluster & Host metrics:
 ```
 Template => http://<ambari-server>:<port>/api/v1/stacks/<stackName>/versions/<stackVersion>/artifacts/metrics_descriptor
 Example => http://localhost:8080/api/v1/stacks/HDP/versions/2.3/artifacts/metrics_descriptor
-```

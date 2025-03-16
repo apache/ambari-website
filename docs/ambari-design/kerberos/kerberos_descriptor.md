@@ -569,7 +569,7 @@ and `configurations` blocks.
 The following example is annotated for descriptive purposes. The annotations are not valid in a real
 JSON-formatted file.
 
-```
+```json5
 {
   // Properties that can be used in variable replacement operations.
   // For example, ${keytab_dir} will resolve to "/etc/security/keytabs".
@@ -664,7 +664,7 @@ JSON-formatted file.
 The following example is annotated for descriptive purposes. The annotations are not valid in a real
 JSON-formatted file.
 
-```
+```json5
 {
   // One or more services may be listed in a service-level Kerberos
   // Descriptor file

@@ -17,7 +17,7 @@ In Ambari 3.0.0, we are tackling these performance issues through a complete sch
 **STEPS**
 
 * Metric whitelist file is present in /etc/ambari-metrics-collector/conf. If not present in older Ambari versions, it can be downloaded from https://github.com/apache/ambari/blob/trunk/ambari-metrics/ambari-metrics-timelineservice/conf/unix/metrics_whitelist to the collector host.
-* Adding config ams-site : timeline.metrics.whitelist.file = <path_to_whitelist_file>
+* Adding config ams-site : timeline.metrics.whitelist.file = `/path/to/whitelist_file`
 * Restart AMS collector
 * Verify whitelisting config was used. In ambari-metrics-collector log file, verify the line 'Whitelisting # metrics'.
 
@@ -39,7 +39,7 @@ From Ambari 2.5.0, more refinements for whitelisting were included.
    NOTE : The App name can be found from the metadata URL :
    
    ```
-   http:<metrics_collector_host>:6188/ws/v1/timeline/metrics/metadata
+   http://<metrics_collector_host>:6188/ws/v1/timeline/metrics/metadata
    ```
 
 * **Metric Whitelisting** - Same as the whitelisting method in Ambari 2.4.3 (through a whitelist file).
@@ -53,7 +53,7 @@ An example of a metric whitelisting file that has both metrics and patterns - ht
 
 These whitelisting/blacklisting techniques can be used together.
 
-* If you just have timeline.metrics.whitelist.file = &lt;some_file&gt;, only metrics in that file will be allowed (irrespective of whatever apps might be sending them). 
+* If you just have timeline.metrics.whitelist.file = `/path/to/whitelist_file`, only metrics in that file will be allowed (irrespective of whatever apps might be sending them). 
 * If you just have timeline.metrics.apps.blacklist = datanode, all datanode metrics will be disallowed. Metrics from all other services will be allowed.
 * If you just have timeline.metrics.apps.whitelist = namenode, it is not useful since there is no blacklisting at all. 
 * If you have metric whitelisting enabled (through a file), and have timeline.metrics.apps.blacklist = datanode, all datanode metrics will be disallowed. The whitelisted metrics from other services will be allowed.

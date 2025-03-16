@@ -3,7 +3,7 @@
 This feature was first introduced in Ambari 2.1.0 release. Any Ambari release before 2.1.0 does not support this feature. Cluster is required to be upgraded to Ambari 2.1.0 or above to use this feature.
 
 :::caution
-This document assumes that the service metrics are being exposed via Ambari. If this is not the case then please refer to [Metrics](https://cwiki.apache.org/confluence/display/AMBARI/Metrics)document for more related information.
+This document assumes that the service metrics are being exposed via Ambari. If this is not the case then please refer to [Metrics ](https://cwiki.apache.org/confluence/display/AMBARI/Metrics) document for more related information.
 :::
 
 ## Introduction
@@ -98,9 +98,9 @@ A widget to display line or area graphs that are derived from one or more than o
 
 12. **values/name:** This field is used only for Graph widget type. This shows up as a label name in the legend for the dataset shown in a Graph widget type.
 
-13. **values/value:** This is the expression from which the value for the dataset is calculated. Expression contains references to the declared metric name and constant numbers which acts as valid operands. Expression also contains a valid set of operators {+,-,*,/} that can be used along with valid operands. Parentheses are also permitted in the expression.
+13. **values/value:** This is the expression from which the value for the dataset is calculated. Expression contains references to the declared metric name and constant numbers which acts as valid operands. Expression also contains a valid set of operators (`+`, `-`, `*`, `/`) that can be used along with valid operands. Parentheses are also permitted in the expression.
 
-14. **properties:** These contains set of properties specific to the widget type. For Graph widget type it contains display_unit, graph_type and time_range. t ime_range field is currently not honored in the UI.
+14. **properties:** These contains set of properties specific to the widget type. For Graph widget type it contains display_unit, graph_type and time_range. time_range field is currently not honored in the UI.
 
 ### Gauge
 
@@ -157,32 +157,3 @@ By default Ambari Metrics System uses the average aggregator function while comp
    "time_range": "1"
  }
 }
-```
-
-## Widget Operations:
-
-A Service that has widgets.json and metrics.json file will also be provided with following abilities:
-
-1. **Widget Browser** for performing widget related operations.
-
-2. **Create widget wizard** for creating new desired service widgets in a cluster.
-
-3. **Edit widget wizard** for editing service widgets post creation.
-
-## Widget Browser
-
-Widget Browser is the place from which actions can be performed on widgets like adding/removing a widget from the dashboard, sharing widget with other users and deleting a widget.While creating new widget, user can choose to share the widget with other users or not. All widgets that are created by the user + shared with the user + defined in the stack as default service widgets will be available in the widget browser of a user.
-![](./imgs/widget-browser.png "Widget Browser")
-
-### Create Widget Wizard
-
-A custom desired widget can be created from the exposed service metrics using 3 step Create Widget wizard.
-![](./imgs/create-widget.png "Create Widget")
-
-## Using Enhanced Service Dashboard feature
-
-If the existing service in Ambari is pushing the metrics to Ambari metrics collector then minimal work needs to be done. This includes adding metrics.json and widgets.json file for the service, and might include making changes to metainfo.xml file.
-
-:::tip
-[AMBARI-9910](https://issues.apache.org/jira/browse/AMBARI-9910) added widgets to Accumulo service page. This work can be referred as an example to use Enhanced Service Dashboard feature.
-:::
