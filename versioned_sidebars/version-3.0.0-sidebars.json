@@ -1,6 +1,8 @@
 {
   "ambariSidebar": [
     "introduction",
+    "release-notes",
+    "faq",
     {
       "type": "category",
       "label": "Quick Start",
@@ -8,7 +10,18 @@
       "collapsed": false,
       "items": [
         "quick-start/quick-start-guide",
-        "quick-start/quick-start-for-new-vm-users"
+        {
+          "type": "category",
+          "label": "Environment Setup",
+          "collapsible": true,
+          "collapsed": false,
+          "items": [
+            "quick-start/environment-setup/vagrant-environment-setup",
+            "quick-start/environment-setup/docker-environment-setup",
+            "quick-start/environment-setup/bare-metal-kvm-setup"
+          ]
+        },
+        "quick-start/installation-guide"
       ]
     },
     {
