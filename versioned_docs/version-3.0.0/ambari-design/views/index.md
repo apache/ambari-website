@@ -1,33 +1,30 @@
 # Views
 
-:::info
-This capability is currently under development.
-:::info
+:::info This capability is currently under development. :::info
 
 **Ambari Views** offer a systematic way to plug-in UI capabilities to surface custom visualization, management and monitoring features in Ambari Web. A " **view**" is a way of extending Ambari that allows 3rd parties to plug in new resource types along with the APIs, providers and UI to support them. In other words, a view is an application that is deployed into the Ambari container.
 
-
 ## Useful Resources
 
-Resource | Link
----------|-------
-Views Overview  | http://www.slideshare.net/hortonworks/ambari-views-overview
-Views Framework API Docs | https://github.com/apache/ambari/blob/trunk/ambari-views/docs/index.md
-Views Framework Examples | https://github.com/apache/ambari/tree/trunk/ambari-views/examples
+| Resource                 | Link                                                                   |
+| ------------------------ | ---------------------------------------------------------------------- |
+| Views Overview           | http://www.slideshare.net/hortonworks/ambari-views-overview            |
+| Views Framework API Docs | https://github.com/apache/ambari/blob/trunk/ambari-views/docs/index.md |
+| Views Framework Examples | https://github.com/apache/ambari/tree/trunk/ambari-views/examples      |
 
 ## Terminology
 
 The following section describes the basic terminology associated with views.
 
-Term | Description
----------|-------
-View Name     | The name of the view. The view name identifies the view to Ambari.
-View Version  | The version of the view. A unique view name can have multiple versions deployed in Ambari.
-View Package  | This is the JAR package that contains the **view definition** and all view resources (server-side resources and client-side assets) for a given view version. See [View Package](#View20%Package) for more information on the contents and structure of the package.
-View Definition | This defines the view name, version, resources and required/optional configuration parameters for a view. The view definition file is included in the view package. See View Definition for more information on the view definition file syntax and features.
-View Instance | An unique instance of a view, that is based on a view definition and specific version that is configured. See Versions and Instances for more information.
-View API  | The REST API for viewing the list of deployed views and creating view instances. See View API for more information.
-Framework Services | The server-side of the view framework exposes certain services for use with your views. This includes persistence of view instance data and view eventing. See Framework Services for more information.
+| Term | Description |
+| --- | --- |
+| View Name | The name of the view. The view name identifies the view to Ambari. |
+| View Version | The version of the view. A unique view name can have multiple versions deployed in Ambari. |
+| View Package | This is the JAR package that contains the **view definition** and all view resources (server-side resources and client-side assets) for a given view version. See [View Package](#view-package) for more information on the contents and structure of the package. |
+| View Definition | This defines the view name, version, resources and required/optional configuration parameters for a view. The view definition file is included in the view package. See View Definition for more information on the view definition file syntax and features. |
+| View Instance | An unique instance of a view, that is based on a view definition and specific version that is configured. See Versions and Instances for more information. |
+| View API | The REST API for viewing the list of deployed views and creating view instances. See View API for more information. |
+| Framework Services | The server-side of the view framework exposes certain services for use with your views. This includes persistence of view instance data and view eventing. See Framework Services for more information. |
 
 ## Components of a View
 
@@ -43,11 +40,9 @@ The view does not limit or restrict what client-side technologies a view uses. Y
 
 A view can expose resources as REST end points to be used in conjunction with the client-side to deliver the functionality of your view application. Thees resources are written in Java and can be anything from a servlet to a regular REST service to an Ambari ResourceProvider (i.e. a special type of REST service that handles some REST capabilities such as partial response and pagination – if you adhere to the Ambari ResourceProvider interface). See [Framework Services](./framework-services.md) for more information on capabilities that the framework exposes on the server-side for views.
 
-:::info
-Checkout the **Weather View** as an example of a view that exposes servlet and REST endpoints.
+:::info Checkout the **Weather View** as an example of a view that exposes servlet and REST endpoints.
 
-[https://github.com/apache/ambari/tree/trunk/ambari-views/examples/weather-view](https://github.com/apache/ambari/tree/trunk/ambari-views/examples/weather-view)
-:::
+[https://github.com/apache/ambari/tree/trunk/ambari-views/examples/weather-view](https://github.com/apache/ambari/tree/trunk/ambari-views/examples/weather-view) :::
 
 ## View Package
 

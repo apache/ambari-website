@@ -12,11 +12,9 @@ The following tools are needed to build Ambari from source.
 
 Alternatively, you can easily launch a VM that is preconfigured with all the tools that you need. See the **Pre-Configured Development Environment** section in the [Quick Start Guide](../quick-start/quick-start-guide.md).
 
-* xCode (if using Mac - free download from the apple store)
-* JDK 8 (Ambari 2.6 and below can be compiled with JDK 7, from Ambari 2.7, it can be compiled with at least JDK 8)
-* [Apache Maven](http://maven.apache.org/download.html) 3.3.9 or later
-Tip:In order to persist your changes to the JAVA_HOME environment variable and add Maven to your path, create the following files:
-File: ~/.profile
+- xCode (if using Mac - free download from the apple store)
+- JDK 8 (Ambari 2.6 and below can be compiled with JDK 7, from Ambari 2.7, it can be compiled with at least JDK 8)
+- [Apache Maven](http://maven.apache.org/download.html) 3.3.9 or later Tip:In order to persist your changes to the JAVA_HOME environment variable and add Maven to your path, create the following files: File: ~/.profile
 
 ```bash
 source ~/.bashrc
@@ -30,10 +28,8 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export _JAVA_OPTIONS="-Xmx2048m -XX:MaxPermSize=512m -Djava.awt.headless=true"
 ```
 
-
-* Python 2.6 (Ambari 2.7 or later require Python 2.7 as minimum supported version)
-* Python setuptools:
-for Python 2.6: D [ownload](http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg#md5=bfa92100bd772d5a213eedd356d64086) setuptools and run:
+- Python 2.6 (Ambari 2.7 or later require Python 2.7 as minimum supported version)
+- Python setuptools: for Python 2.6: D [ownload](http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg#md5=bfa92100bd772d5a213eedd356d64086) setuptools and run:
 
 ```bash
 sh setuptools-0.6c11-py2.6.egg
@@ -45,61 +41,53 @@ for Python 2.7: D [ownload](https://pypi.python.org/packages/2.7/s/setuptools/se
 sh setuptools-0.6c11-py2.7.egg
 ```
 
-
-* rpmbuild (rpm-build package)
-* g++ (gcc-c++ package)
+- rpmbuild (rpm-build package)
+- g++ (gcc-c++ package)
 
 ## Running Unit Tests
 
-* `mvn clean test`
-* Run unit tests in a single module:
+- `mvn clean test`
+- Run unit tests in a single module:
 
 ```bash
 mvn -pl ambari-server test
 ```
 
-
-* Run only Java tests:
+- Run only Java tests:
 
 ```bash
 mvn -pl ambari-server -DskipPythonTests
 ```
 
-
-* Run only specific Java tests:
+- Run only specific Java tests:
 
 ```bash
 mvn -pl ambari-server -DskipPythonTests -Dtest=AgentHostInfoTest test
 ```
 
-
-* Run only Python tests:
+- Run only Python tests:
 
 ```bash
 mvn -pl ambari-server -DskipSurefireTests test
 ```
 
-
-* Run only specific Python tests:
+- Run only specific Python tests:
 
 ```bash
 mvn -pl ambari-server -DskipSurefireTests -Dpython.test.mask=TestUtils.py test
 ```
 
-
-* Run only Checkstyle and RAT checks:
+- Run only Checkstyle and RAT checks:
 
 ```bash
 mvn -pl ambari-server -DskipTests test
 ```
 
-
-
 NOTE: Please make sure you have npm in the path before running the unit tests.
 
 ## Generating Findbugs Report
 
-* mvn clean install
+- mvn clean install
 
 This will generate xml and html report unders target/findbugs. You can also add flags to skip unit tests to generate report faster.
 
@@ -109,7 +97,7 @@ Note: if you can an error that too many files are open while building, then run:
 
 To build Ambari RPMs, run the following.
 
-Note: Replace ${AMBARI_VERSION} with a 4-digit version you want the artifacts to be (e.g., -DnewVersion=1.6.1.1)
+Note: Replace `${AMBARI_VERSION}` with a 4-digit version you want the artifacts to be (e.g., -DnewVersion=1.6.1.1)
 
 **Note**: If running into errors while compiling the ambari-metrics package due to missing the artifacts of jms, jmxri, jmxtools:
 
@@ -134,14 +122,14 @@ mvn clean package -DskipTests -Drat.skip
 
 ## Setting the Version Using Maven
 
-Ambari 2.8+ uses a newer method to update the version when building Ambari. 
+Ambari 2.8+ uses a newer method to update the version when building Ambari.
 
 **RHEL/CentOS 6**:
 
 ```
 # Update the revision property to the release version
 mvn versions:set-property -Dproperty=revision -DnewVersion=2.8.0.0.0
- 
+
 mvn -B clean install package rpm:rpm -DskipTests -Dpython.ver="python >= 2.6" -Preplaceurl
 ```
 
@@ -150,7 +138,7 @@ mvn -B clean install package rpm:rpm -DskipTests -Dpython.ver="python >= 2.6" -P
 ```
 # Update the revision property to the release version
 mvn versions:set-property -Dproperty=revision -DnewVersion=2.8.0.0.0
-  
+
 mvn -B clean install package rpm:rpm -DskipTests -Psuse11 -Dpython.ver="python >= 2.6" -Preplaceurl
 ```
 
@@ -159,35 +147,34 @@ mvn -B clean install package rpm:rpm -DskipTests -Psuse11 -Dpython.ver="python >
 ```
 # Update the revision property to the release version
 mvn versions:set-property -Dproperty=revision -DnewVersion=2.8.0.0.0
-  
+
 mvn -B clean install package jdeb:jdeb -DskipTests -Dpython.ver="python >= 2.6" -Preplaceurl
 ```
 
 Ambari Server will create following packages
 
-* RPM will be created under `AMBARI_DIR`/ambari-server/target/rpm/ambari-server/RPMS/noarch.
+- RPM will be created under `AMBARI_DIR`/ambari-server/target/rpm/ambari-server/RPMS/noarch.
 
-* DEB will be created under `AMBARI_DIR`/ambari-server/target/
+- DEB will be created under `AMBARI_DIR`/ambari-server/target/
 
 Ambari Agent will create following packages
 
-* RPM will be created under `AMBARI_DIR`/ambari-agent/target/rpm/ambari-agent/RPMS/x86_64.
+- RPM will be created under `AMBARI_DIR`/ambari-agent/target/rpm/ambari-agent/RPMS/x86_64.
 
-* DEB will be created under `AMBARI_DIR`/ambari-agent/target
+- DEB will be created under `AMBARI_DIR`/ambari-agent/target
 
 Optional parameters:
 
-* -X -e: add these options for more verbose output by Maven. Useful when debugging Maven issues.
+- -X -e: add these options for more verbose output by Maven. Useful when debugging Maven issues.
 
-* -DdefaultStackVersion=STACK-VERSION
-* Sets the default stack and version to be used for installation (e.g., -DdefaultStackVersion=HDP-1.3.0)
-* -DenableExperimental=true
-* Enables experimental features to be available via Ambari Web (default is false)
-* All views can be packaged in RPM by adding _-Dviews_ parameter
+- -DdefaultStackVersion=STACK-VERSION
+- Sets the default stack and version to be used for installation (e.g., -DdefaultStackVersion=HDP-1.3.0)
+- -DenableExperimental=true
+- Enables experimental features to be available via Ambari Web (default is false)
+- All views can be packaged in RPM by adding _-Dviews_ parameter
   - _mvn -B clean install package rpm:rpm -Dviews -DskipTests_
-* Specific views can be built by adding `--projects` parameter to the _-Dviews_
+- Specific views can be built by adding `--projects` parameter to the _-Dviews_
   - _mvn -B clean install package rpm:rpm --projects ambari-web,ambari-project,ambari-views,ambari-admin,contrib/views/files,contrib/views/pig,ambari-server,ambari-agent,ambari-client,ambari-shell -Dviews -DskipTests_
-
 
 _NOTE: Run everything as `root` below._
 

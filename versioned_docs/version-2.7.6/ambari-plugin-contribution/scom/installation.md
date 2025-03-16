@@ -1,18 +1,18 @@
 # Installation
 
-## Prerequisite Software 
+## Prerequisite Software
 
 Setting up Ambari SCOM assumes the following prerequisite software:
 
-* Ambari SCOM 1.0
+- Ambari SCOM 1.0
   - Apache Hadoop 1.x cluster (HDFS and MapReduce) 1
-* Ambari SCOM 2.0
+- Ambari SCOM 2.0
   - Apache Hadoop 2.x cluster (HDFS and YARN/MapReduce) 2
-* JDK 1.7
-* Microsoft SQL Server 2012
-* Microsoft JDBC Driver 4.0 for SQL Server 3
-* Microsoft System Center Operations Manager (SCOM) 2012 SP1 or later
-* System Center Monitoring Agent installed on **Watcher Node** 4
+- JDK 1.7
+- Microsoft SQL Server 2012
+- Microsoft JDBC Driver 4.0 for SQL Server 3
+- Microsoft System Center Operations Manager (SCOM) 2012 SP1 or later
+- System Center Monitoring Agent installed on **Watcher Node** 4
 
 1 _Ambari SCOM_ 1.0 has been tested with a Hadoop cluster based on **Hortonworks Data Platform 1.3 for Windows** ("[HDP 1.3 for Windows](http://hortonworks.com/products/releases/hdp-1-3-for-windows/)")
 
@@ -22,7 +22,7 @@ Setting up Ambari SCOM assumes the following prerequisite software:
 
 4 See Microsoft TechNet topic for [Managing Discovery and Agents](http://technet.microsoft.com/en-us/library/hh212772.aspx). Minimum Agent requirements _.NET 4_ and _PowerShell 2.0 + 3.0_
 
-## Package Contents 
+## Package Contents
 
 ```
 ├─ ambari-scom- _**version**_.zip
@@ -33,25 +33,23 @@ Setting up Ambari SCOM assumes the following prerequisite software:
 └── ambari-scom.msi
 ```
 
-File | Name | Description
------|------|-------------
-server.zip | Server Package | Contains the required software for configuring the Ambari SCOM Server software. 
-metrics-sink.zip | Metrics Sink Package | Contains the required software for manually configuring SQL Server and the Hadoop Metrics Sink.
-ambari-scom.msi | MSI Installer | The Ambari SCOM MSI Installer for configuring the Ambari SCOM Server and Hadoop Metrics Sink
-mp.zip | Management Pack Package | Contains the Ambari SCOM Management Pack software.
+| File | Name | Description |
+| --- | --- | --- |
+| server.zip | Server Package | Contains the required software for configuring the Ambari SCOM Server software. |
+| metrics-sink.zip | Metrics Sink Package | Contains the required software for manually configuring SQL Server and the Hadoop Metrics Sink. |
+| ambari-scom.msi | MSI Installer | The Ambari SCOM MSI Installer for configuring the Ambari SCOM Server and Hadoop Metrics Sink |
+| mp.zip | Management Pack Package | Contains the Ambari SCOM Management Pack software. |
 
 ## Ambari SCOM Server Installation
 
-:::caution
-The **Ambari SCOM Management Pack** must connect to an Ambari SCOM Server to retrieve cluster metrics. Therefore, you need to have an Ambari SCOM Server running in your cluster. If you have already installed your Hadoop cluster (including the Ganglia Service) with Ambari (minimum **Ambari 1.5.1 for SCOM 2.0.0**) and have an Ambari Server already running + managing your Hadoop 1.x cluster, you can use that Ambari Server and point the **Management Pack** that host. You can proceed directly to [Installing Ambari SCOM Management Pack](#id-2installation-mgmtpack) and skip these steps to install an Ambari SCOM Server. If you do not have an Ambari Server running + managing your cluster, you **must** install an Ambari SCOM Server using one of the methods described below.
-:::
+:::caution The **Ambari SCOM Management Pack** must connect to an Ambari SCOM Server to retrieve cluster metrics. Therefore, you need to have an Ambari SCOM Server running in your cluster. If you have already installed your Hadoop cluster (including the Ganglia Service) with Ambari (minimum **Ambari 1.5.1 for SCOM 2.0.0**) and have an Ambari Server already running + managing your Hadoop 1.x cluster, you can use that Ambari Server and point the **Management Pack** that host. You can proceed directly to [Installing Ambari SCOM Management Pack](#installing-ambari-scom-management-pack) and skip these steps to install an Ambari SCOM Server. If you do not have an Ambari Server running + managing your cluster, you **must** install an Ambari SCOM Server using one of the methods described below. :::
 
 The following methods are available for installing Ambari SCOM Server:
 
-* **Manual Installation** - This installation method requires you to configure the SQL Server database, setup the Ambari SCOM Server and configure the Hadoop Metrics Sink. This provides the most flexible install option based on your environment.
-* **MSI Installation** - This installation method installs the Ambari SCOM Server and configures the Hadoop Metrics Sink on all hosts in the cluster automatically using an MSI Installer. After launching the MSI, you provide information about your SQL Server database and the cluster for the installer to handle configuration. 
+- **Manual Installation** - This installation method requires you to configure the SQL Server database, setup the Ambari SCOM Server and configure the Hadoop Metrics Sink. This provides the most flexible install option based on your environment.
+- **MSI Installation** - This installation method installs the Ambari SCOM Server and configures the Hadoop Metrics Sink on all hosts in the cluster automatically using an MSI Installer. After launching the MSI, you provide information about your SQL Server database and the cluster for the installer to handle configuration.
 
-## Manual Installation 
+## Manual Installation
 
 ### Configuring SQL Server
 
@@ -63,11 +61,9 @@ The following methods are available for installing Ambari SCOM Server:
 
 5. Create the Ambari SCOM database schema by running the `Hadoop-Metrics-SQLServer-CREATE.ddl` script.
 
-:::info
-The Hadoop Metrics DDL script will create a database called "HadoopMetrics".
-:::
+:::info The Hadoop Metrics DDL script will create a database called "HadoopMetrics". :::
 
-### Configuring Hadoop Metrics Sink 
+### Configuring Hadoop Metrics Sink
 
 #### Preparing the Metrics Sink
 
@@ -75,8 +71,7 @@ The Hadoop Metrics DDL script will create a database called "HadoopMetrics".
 
 2. Obtain the _Microsoft JDBC Driver 4.0 for SQL Server_ `sqljdbc4.jar` file.
 
-3. Copy `sqljdbc4.jar` and `metrics-sink-version.jar` to each host in the cluster. For example, copy to `C:\Ambari\metrics-sink-version.jar` and `C:\Ambari\sqljdbc4.jar`
-on each host.
+3. Copy `sqljdbc4.jar` and `metrics-sink-version.jar` to each host in the cluster. For example, copy to `C:\Ambari\metrics-sink-version.jar` and `C:\Ambari\sqljdbc4.jar` on each host.
 
 #### Setup Hadoop Metrics2 Interface
 
@@ -95,30 +90,27 @@ maptask.sink.sql.databaseUrl=jdbc:sqlserver://[server]:[port];databaseName=Hadoo
 reducetask.sink.sql.databaseUrl=jdbc:sqlserver://[server]:[port];databaseName=HadoopMetrics;user=[user];password=[password]
 ```
 
-:::info
-_Where:_
+:::info _Where:_
 
-* _server = the SQL Server hostname_
-* _port = the SQL Server port (for example, 1433)_
-* _user = the SQL Server user (for example, sa)_
-* _password = the SQL Server password (for example, BigData1)_
-:::
+- _server = the SQL Server hostname_
+- _port = the SQL Server port (for example, 1433)_
+- _user = the SQL Server user (for example, sa)_
+- _password = the SQL Server password (for example, BigData1)_ :::
 
 1. Update the Java classpath for each Hadoop service to include the `metrics-sink-<strong><em>version</em></strong>.jar` and `sqljdbc4.jar` files.
 
+   - Example: Updating the Java classpath for _HDP for Windows_ clusters
 
-    - Example: Updating the Java classpath for _HDP for Windows_ clusters
+     The `service.xml` files will be located in the `C:\hadoop\install\dir\bin` folder of each host in the cluster. The Java classpath is specified for each service in the `<arguments>` element of the `service.xml` file. For example, to update the Java classpath for the `NameNode` component, edit the `C:\hadoop\bin\namenode.xml` file.
 
-      The `service.xml` files will be located in the `C:\hadoop\install\dir\bin` folder of each host in the cluster. The Java classpath is specified for each service in the `<arguments>` element of the `service.xml` file. For example, to update the Java classpath for the `NameNode` component, edit the `C:\hadoop\bin\namenode.xml` file.
+     ```
+     ...
 
-        ```
-        ...
-        
-        ... -classpath ...;C:\Ambari\metrics-sink-1.5.1.2.0.0.0-673.jar;C:\Ambari\sqljdbc4.jar ...
-        
-        ...
-        
-        ```
+     ... -classpath ...;C:\Ambari\metrics-sink-1.5.1.2.0.0.0-673.jar;C:\Ambari\sqljdbc4.jar ...
+
+     ...
+
+     ```
 
 2. Restart Hadoop for these changes to take affect.
 
@@ -129,9 +121,8 @@ _Where:_
 ```sql
 select * from HadoopMetrics.dbo.MetricRecord
 ```
-:::info
-In the above SQL statement, `HadoopMetrics` is the database name.
-:::
+
+:::info In the above SQL statement, `HadoopMetrics` is the database name. :::
 
 ### Installing and Configuring Ambari SCOM Server
 
@@ -158,34 +149,30 @@ scom.sink.db.driver=com.microsoft.sqlserver.jdbc.SQLServerDriver
 scom.sink.db.url=jdbc:sqlserver://[server]:[port];databaseName=HadoopMetrics;user=[user];password=[password]
 ```
 
-:::info
-_Where:_
-  - _server = the SQL Server hostname_
-  - _port = the SQL Server port (for example, 1433)_
-  - _user = the SQL Server user (for example, sa)_
-  - _password = the SQL Server password (for example, BigData1)_
-:::
+:::info _Where:_
 
-6. Run the `org.apache.ambari.scom.AmbariServer` class from the Java command line to start the Ambari SCOM Server. 
+- _server = the SQL Server hostname_
+- _port = the SQL Server port (for example, 1433)_
+- _user = the SQL Server user (for example, sa)_
+- _password = the SQL Server password (for example, BigData1)_ :::
 
-:::info
-Be sure to include the following in the classpath:
-  - `ambari-scom-server-version.jar` file
-  - configuration folder containing the Ambari SCOM configuration files
-  - lib folder containing the Ambari SCOM dependencies
-  - folder containing the `clusterproperties.txt` file from the Hadoop install. For example, `c:\hadoop\install\dir`
-  - `sqljdbc4.jar` SQLServer JDBC Driver file
-::
-  
+6. Run the `org.apache.ambari.scom.AmbariServer` class from the Java command line to start the Ambari SCOM Server.
+
+:::info Be sure to include the following in the classpath:
+
+- `ambari-scom-server-version.jar` file
+- configuration folder containing the Ambari SCOM configuration files
+- lib folder containing the Ambari SCOM dependencies
+- folder containing the `clusterproperties.txt` file from the Hadoop install. For example, `c:\hadoop\install\dir`
+- `sqljdbc4.jar` SQLServer JDBC Driver file ::
+
 For example:
 
 ```bash
 java -server -XX:NewRatio=3 -XX:+UseConcMarkSweepGC -XX:-UseGCOverheadLimit -XX:CMSInitiatingOccupancyFraction=60 -Xms512m -Xmx2048m -cp "c:\ambari-scom\server\conf;c:\ambari-scom\server\lib\*;c:\jdbc\sqljdbc4.jar;c:\hadoop\install\dir;c:\ambari-scom\server\ambari-scom-server-1.5.1.2.0.0.0-673.jar" org.apache.ambari.scom.AmbariServer
 ```
 
-:::info
-In the above command, be sure to replace the Ambari SCOM version in the `ambari-scom-server-version.jar` and replace `c:\hadoop\install\dir` with the folder containing the `clusterproperties.txt` file.
-:::
+:::info In the above command, be sure to replace the Ambari SCOM version in the `ambari-scom-server-version.jar` and replace `c:\hadoop\install\dir` with the folder containing the `clusterproperties.txt` file. :::
 
 #### Verify the Server API
 
@@ -194,6 +181,7 @@ In the above command, be sure to replace the Ambari SCOM version in the `ambari-
 ```
 http://[ambari-scom-server]:8080/api/v1/clusters
 ```
+
 2. Verify that metrics are being reported.
 
 ```
@@ -217,33 +205,29 @@ http://[ambari-scom-server]:8080/api/v1/clusters/ambari/services/HDFS/components
 
 3. Run the `ambari-scom.msi` installer. The "Ambari SCOM Setup" dialog appears:
 
-     ![](./imgs/ambari-scom-msi2.png)
+   ![](./imgs/ambari-scom-msi2.png)
 
-4. Provide the following information: 
+4. Provide the following information:
 
-Field | Description
-------|------------
-Ambari SCOM package directory | The directory where the installer will place the Ambari SCOM Server packages. For example: C:\Ambari
-SQL Server hostname | The hostname of the SQL Server instance for Ambari SCOM Server to use to store Hadoop metrics.
-SQL Server port | The port of the SQL Server instance.
-SQL Server login | The login username.
-SQL Server password | The login password
-Path to SQL Server JDBC Driver (sqljdbc4.jar) | The path to the JDBC Driver JAR file.
-Path to the cluster layout file (clusterproperties.txt) | The path to the cluster layout properties file.
+| Field | Description |
+| --- | --- |
+| Ambari SCOM package directory | The directory where the installer will place the Ambari SCOM Server packages. For example: C:\Ambari |
+| SQL Server hostname | The hostname of the SQL Server instance for Ambari SCOM Server to use to store Hadoop metrics. |
+| SQL Server port | The port of the SQL Server instance. |
+| SQL Server login | The login username. |
+| SQL Server password | The login password |
+| Path to SQL Server JDBC Driver (sqljdbc4.jar) | The path to the JDBC Driver JAR file. |
+| Path to the cluster layout file (clusterproperties.txt) | The path to the cluster layout properties file. |
 
 5. You can optionally select to Start Services
 6. Click Install
 7. After completion, links are created on the desktop to "Start Ambari SCOM Server", "Browse Ambari API" and "Browse Ambari API Metrics". After starting the Ambari SCOM Server, browse the API and Metrics to confirm the server is working properly.
 
-:::info
-The MSI installer installation log can be found at `C:\AmbariInstallFiles\AmbariSetupTools\ambari.winpkg.install.log`
-:::
+:::info The MSI installer installation log can be found at `C:\AmbariInstallFiles\AmbariSetupTools\ambari.winpkg.install.log` :::
 
 ### Installing Ambari SCOM Management Pack
 
-:::info
-Before installing the Management pack, be sure to install the Ambari SCOM Server using the Ambari SCOM Server Installation instructions.
-:::
+:::info Before installing the Management pack, be sure to install the Ambari SCOM Server using the Ambari SCOM Server Installation instructions. :::
 
 #### Import the Management Pack
 
@@ -272,14 +256,13 @@ Ambari.SCOM.Monitoring.mpb
 Ambari.SCOM.Management.mpb
 Ambari.SCOM.Presentation.mpb
 ```
+
 10. Click "Open"
 11. Review the Import list and click "Install".
 
 12. The Ambari SCOM Management Pack installation will start.
 
-:::info
-The Ambari SCOM package also includes `AmbariSCOMManagementPack.msi` which is an alternative packaging of the `mp.zip`. This MSI is being made in **beta** form in this release.
-:::
+:::info The Ambari SCOM package also includes `AmbariSCOMManagementPack.msi` which is an alternative packaging of the `mp.zip`. This MSI is being made in **beta** form in this release. :::
 
 #### Create Run As Account
 
@@ -317,9 +300,7 @@ Perform the following to configure the Ambari SCOM Management Pack to talk to th
 http://[ambari-scom-server]:8080/api/
 ```
 
-:::info
-In the above Ambari URI, `ambari-scom-server` is the Ambari SCOM Server.
-:::
+:::info In the above Ambari URI, `ambari-scom-server` is the Ambari SCOM Server. :::
 
 6. Select the Run As Account that you created in Create Run As Account.
 
