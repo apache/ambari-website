@@ -1,3 +1,10 @@
+---
+title: Releasing Ambari
+variables:
+  majorVersion: "2.8"
+  minorVersion: "0"
+---
+
 # Releasing Ambari
 
 ## Useful Links
@@ -94,7 +101,7 @@ Thanks
 
 Create a branch for a release using branch-X.Y (ex: branch-2.1) as the name of the branch.
 
-Note: Going forward, we should be creating branch-{majorVersion}.{minorVersion), so that the same branch can be used for maintenance releases.
+Note: Going forward, we should be creating branch-{majorVersion}.{minorVersion}, so that the same branch can be used for maintenance releases.
 
 **Checkout the release branch**
 

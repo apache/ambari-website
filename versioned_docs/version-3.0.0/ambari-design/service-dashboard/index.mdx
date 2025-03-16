@@ -3,7 +3,7 @@
 This feature was first introduced in Ambari 2.1.0 release. Any Ambari release before 2.1.0 does not support this feature. Cluster is required to be upgraded to Ambari 2.1.0 or above to use this feature.
 
 :::caution
-This document assumes that the service metrics are being exposed via Ambari. If this is not the case then please refer to [Metrics](https://cwiki.apache.org/confluence/display/AMBARI/Metrics)document for more related information.
+This document assumes that the service metrics are being exposed via Ambari. If this is not the case then please refer to [Metrics ](https://cwiki.apache.org/confluence/display/AMBARI/Metrics) document for more related information.
 :::
 
 ## Introduction
@@ -98,9 +98,9 @@ A widget to display line or area graphs that are derived from one or more than o
 
 12. **values/name:** This field is used only for Graph widget type. This shows up as a label name in the legend for the dataset shown in a Graph widget type.
 
-13. **values/value:** This is the expression from which the value for the dataset is calculated. Expression contains references to the declared metric name and constant numbers which acts as valid operands. Expression also contains a valid set of operators {+,-,*,/} that can be used along with valid operands. Parentheses are also permitted in the expression.
+13. **values/value:** This is the expression from which the value for the dataset is calculated. Expression contains references to the declared metric name and constant numbers which acts as valid operands. Expression also contains a valid set of operators (`+`, `-`, `*`, `/`) that can be used along with valid operands. Parentheses are also permitted in the expression.
 
-14. **properties:** These contains set of properties specific to the widget type. For Graph widget type it contains display_unit, graph_type and time_range. t ime_range field is currently not honored in the UI.
+14. **properties:** These contains set of properties specific to the widget type. For Graph widget type it contains display_unit, graph_type and time_range. time_range field is currently not honored in the UI.
 
 ### Gauge
 
