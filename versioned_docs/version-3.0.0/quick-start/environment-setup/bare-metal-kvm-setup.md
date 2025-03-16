@@ -270,7 +270,7 @@ setenforce 0
 
 ## Next Steps
 
-Now that your bare metal or KVM environment is configured, proceed to the [Installation Guide](installation-guide.md) to install and configure Ambari Server and Agents. The installation guide provides standardized instructions that work across all environments (Vagrant, Docker, and bare metal/KVM).
+Now that your bare metal or KVM environment is configured, proceed to the [Installation Guide](../installation-guide.md) to install and configure Ambari Server and Agents. The installation guide provides standardized instructions that work across all environments (Vagrant, Docker, and bare metal/KVM).
 
 When following the installation guide, remember:
 

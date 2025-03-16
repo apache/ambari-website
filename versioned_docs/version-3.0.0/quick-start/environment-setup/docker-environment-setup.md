@@ -412,7 +412,7 @@ docker exec -it bigtop_hostname0 ls -la /var/log/
 
 ## Next Steps
 
-Now that your Docker environment is set up, proceed to the [Installation Guide](installation-guide.md) to install and configure Ambari Server and Agents. The installation guide provides standardized instructions that work across all environments (Vagrant, Docker, and bare metal/KVM).
+Now that your Docker environment is set up, proceed to the [Installation Guide](../installation-guide.md) to install and configure Ambari Server and Agents. The installation guide provides standardized instructions that work across all environments (Vagrant, Docker, and bare metal/KVM).
 
 When following the installation guide, remember:
 

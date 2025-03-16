@@ -199,7 +199,13 @@ These roadmap items represent the project's commitment to continuous improvement
 
 ## Upgrading to Apache Ambari 3.0.0
 
-For detailed instructions on upgrading from previous versions, please refer to the [Upgrade Guide](upgrade-guide.md).
+:::note
+
+TODO
+
+:::
+
+For detailed instructions on upgrading from previous versions, please refer to the Upgrade Guide.
 
 ## Compatibility Matrix
 

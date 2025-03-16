@@ -4,7 +4,7 @@ This guide covers the installation and setup of Apache Ambari on bare metal, KVM
 
 ## Prerequisites
 
-Ensure you have a working environment (bare metal, KVM, Docker, or [Vagrant setup](vagrant-environment-setup.md)) before proceeding.
+Ensure you have a working environment (bare metal, KVM, Docker, or [Vagrant setup](./environment-setup/vagrant-environment-setup.md)) before proceeding.
 
 ## 1. Setting up Ambari Repository
 
