@@ -1,8 +1,8 @@
 ---
 title: Releasing Ambari
 variables:
-  majorVersion: "2.8"
-  minorVersion: "0"
+  majorVersion: '2.8'
+  minorVersion: '0'
 ---
 
 # Releasing Ambari
@@ -11,13 +11,13 @@ variables:
 
 ### [Publishing Maven Artifacts](http://apache.org/dev/publishing-maven-artifacts.html)
 
-* Setting up release signing keys
-* Uploading artifacts to staging and release repositories
+- Setting up release signing keys
+- Uploading artifacts to staging and release repositories
 
 ### [Apache Release Guidelines](http://www.apache.org/legal/release-policy.html)
 
-* Release requirements
-* Process for staging
+- Release requirements
+- Process for staging
 
 ## Preparing for release
 
@@ -68,10 +68,10 @@ gpg2 --armor --export {username}@apache.org > {username}.asc
 Copy over {username}.asc to {username}@home.apache.org:public_html/~{username}.asc
 Verify URL http://home.apache.org/~{username}/{username}.asc
 Query PGP KeyServer http://pgp.mit.edu:11371/pks/lookup?search=0x{key}&op=vindex
-  
+
 Web of Trust:
 Request others to sign your PGP key.
- 
+
 Login at http://id.apache.org
 Add OpenPGP Fingerprint to your profile
 OpenPGP Public Key Primary Fingerprint: XXXX YYYY ZZZZ ....
@@ -101,7 +101,7 @@ Thanks
 
 Create a branch for a release using branch-X.Y (ex: branch-2.1) as the name of the branch.
 
-Note: Going forward, we should be creating branch-{majorVersion}.{minorVersion}, so that the same branch can be used for maintenance releases.
+Note: Going forward, we should be creating branch-[majorVersion].[minorVersion], so that the same branch can be used for maintenance releases.
 
 **Checkout the release branch**
 
@@ -152,9 +152,8 @@ git clean -f -x
 # Review and commit the changes to branch-X.Y
 git commit
 ```
-:::danger
-Ambari 2.7 and Earlier Releases (Deprecated)
-:::
+
+:::danger Ambari 2.7 and Earlier Releases (Deprecated) :::
 
 Older Ambari branches still required that you update every `pom.xml` manually through the below process:
 
@@ -223,7 +222,7 @@ svn commit -m "Updating KEYS for Ambari"
 
 **Setup Build**
 
-Setup Jenkins Job for the new branch on http://builds.apache.org 
+Setup Jenkins Job for the new branch on http://builds.apache.org
 
 ## Creating Release Candidate
 
@@ -301,9 +300,9 @@ public_html/apache-ambari-X.Y.Z-rc0
 
 **Call for a vote on the dev@ambari.apache.org mailing list with something like this:**
 
-I have created an ambari-** release candidate.
+I have created an ambari-\*\* release candidate.
 
-GIT source tag (r***)
+GIT source tag (r\*\*\*)
 
 ```
 https://git-wip-us.apache.org/repos/asf/ambari/repo?p=ambari.git;a=log;h=refs/tags/release-x.y.z-rc0
@@ -323,8 +322,8 @@ Once the vote passes/fails, send out an email with subject like "[RESULT] [VOTE]
 
 ## Publishing and Announcement
 
-* Login to [https://id.apache.org](https://id.apache.org) and verify the fingerprint of PGP key used to sign above is provided. (gpg --fingerprint)
-* Upload your PGP public key only to _/home/_
+- Login to [https://id.apache.org](https://id.apache.org) and verify the fingerprint of PGP key used to sign above is provided. (gpg --fingerprint)
+- Upload your PGP public key only to _/home/_
 
 Publish the release as below:
 
@@ -395,9 +394,9 @@ This step can be done only by a project PMC. If release manager is not an Ambari
 
 - Login to https://reporter.apache.org/addrelease.html?ambari with apache credentials.
 - Fill out the fields:
-    - Committe: ambari
-    - Full version name: 2.2.0
-    - Date of release (YYYY-MM-DD):  2015-12-19
+  - Committe: ambari
+  - Full version name: 2.2.0
+  - Date of release (YYYY-MM-DD): 2015-12-19
 - Submit the data
 - Verify that the submitted data is reflected at https://reporter.apache.org/?ambari
 
@@ -405,4 +404,4 @@ Performing this step keeps [https://reporter.apache.org/?ambari](https://reporte
 
 ## Publish Ambari artifacts to Maven central
 
-Please use the following [document](https://docs.google.com/document/d/1RjWQOaTUne6t8DPJorPhOMWAfOb6Xou6sAdHk96CHDw/edit) to publish Ambari artifacts to Maven central.  
+Please use the following [document](https://docs.google.com/document/d/1RjWQOaTUne6t8DPJorPhOMWAfOb6Xou6sAdHk96CHDw/edit) to publish Ambari artifacts to Maven central.
