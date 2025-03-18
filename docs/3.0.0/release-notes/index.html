@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-3.0.0 docs-doc-page docs-doc-id-release-notes" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">Apache Ambari 3.0.0 Release Notes | Apache Ambari</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://your-docusaurus-test-site.com/docs/3.0.0/release-notes"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="3.0.0"><meta data-rh="true" name="docusaurus_tag" content="docs-default-3.0.0"><meta data-rh="true" name="docsearch:version" content="3.0.0"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-3.0.0"><meta data-rh="true" property="og:title" content="Apache Ambari 3.0.0 Release Notes | Apache Ambari"><meta data-rh="true" name="description" content="Overview"><meta data-rh="true" property="og:description" content="Overview"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://your-docusaurus-test-site.com/docs/3.0.0/release-notes"><link data-rh="true" rel="alternate" href="https://your-docusaurus-test-site.com/docs/3.0.0/release-notes" hreflang="en"><link data-rh="true" rel="alternate" href="https://your-docusaurus-test-site.com/docs/3.0.0/release-notes" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.b0dee94f.css">
+<script src="/assets/js/runtime~main.b019bc5c.js" defer="defer"></script>
+<script src="/assets/js/main.55d87942.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/ambari-logo.png"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/ambari-logo.png" alt="Apache Ambari Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/ambari-logo.png" alt="Apache Ambari Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Apache Ambari</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/3.0.0/introduction">Docs</a><a href="https://cwiki.apache.org/confluence/display/AMBARI/Ambari" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Wiki<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Releases</a><ul class="dropdown__menu"><li><a href="https://www.apache.org/dyn/closer.cgi/ambari/ambari-3.0.0" target="_blank" rel="noopener noreferrer" class="dropdown__link">3.0.0<svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li><a href="https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.6" target="_blank" rel="noopener noreferrer" class="dropdown__link">2.7.6<svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li><a href="https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.5" target="_blank" rel="noopener noreferrer" class="dropdown__link">2.7.5<svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Project Information</a><ul class="dropdown__menu"><li><a href="/team" class="dropdown__link" target="_blank">Project Team</a></li><li><a href="https://issues.apache.org/jira/projects/AMBARI/issues" target="_blank" rel="noopener noreferrer" class="dropdown__link">JIRA<svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li><a href="https://www.meetup.com/Apache-Ambari-User-Group/" target="_blank" rel="noopener noreferrer" class="dropdown__link">User Group<svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li><a href="https://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer" class="dropdown__link">Project License<svg width="12" height="12" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a aria-current="page" class="navbar__link active" aria-haspopup="true" aria-expanded="false" role="button" href="/docs/3.0.0/release-notes">3.0.0</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/docs/next/release-notes">Next</a></li><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/docs/3.0.0/release-notes">3.0.0</a></li><li><a class="dropdown__link" href="/docs/2.7.6/introduction">2.7.6</a></li><li><a class="dropdown__link" href="/docs/2.7.5/introduction">2.7.5</a></li></ul></div><a href="https://github.com/apache/ambari" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/3.0.0/introduction">Introduction</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" href="/docs/3.0.0/release-notes">Apache Ambari 3.0.0 Release Notes</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/3.0.0/faq">Frequently Asked Questions (FAQ)</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/docs/3.0.0/quick-start/quick-start-guide">Quick Start</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/quick-start/quick-start-guide">Quick Start Guide</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" tabindex="0" href="/docs/3.0.0/quick-start/environment-setup/vagrant-environment-setup">Environment Setup</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/quick-start/environment-setup/vagrant-environment-setup">Vagrant Environment Setup for Apache Ambari</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/quick-start/environment-setup/docker-environment-setup">Docker Environment Setup for Apache Ambari</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/quick-start/environment-setup/bare-metal-kvm-setup">Bare Metal and KVM Environment Setup for Apache Ambari</a></li></ul></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/quick-start/installation-guide">Ambari Installation Guide</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/docs/3.0.0/ambari-design/">Ambari Design</a><button aria-label="Collapse sidebar category &#x27;Ambari Design&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/ambari-design/alerts">Alerts</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/3.0.0/kerberos">Automated Kerberizaton</a><button aria-label="Expand sidebar category &#x27;Automated Kerberizaton&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/3.0.0/blueprints">Blueprints</a><button aria-label="Expand sidebar category &#x27;Blueprints&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/ambari-design/enhanced-configs/">Enhanced Configs</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/ambari-design/service-dashboard/">Enhanced Service Dashboard</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/3.0.0/ambari-design/metrics/">Metrics</a><button aria-label="Expand sidebar category &#x27;Metrics&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/ambari-design/quick-links">Quick Links</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/3.0.0/ambari-design/stack-and-services/">Stacks and Services</a><button aria-label="Expand sidebar category &#x27;Stacks and Services&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/3.0.0/ambari-design/technology-stack">Technology Stack</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/3.0.0/ambari-design/views/">Views</a><button aria-label="Expand sidebar category &#x27;Views&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/docs/3.0.0/ambari-dev/">Ambari Development</a><button aria-label="Expand sidebar category &#x27;Ambari Development&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/docs/3.0.0/ambari-plugin-contribution/">Ambari Plugin Contributions</a><button aria-label="Expand sidebar category &#x27;Ambari Plugin Contributions&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/3.0.0/ambari-alerts">Ambari Alerts</a></li></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Apache Ambari 3.0.0 Release Notes</span><meta itemprop="position" content="1"></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: 3.0.0</span><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Apache Ambari 3.0.0 Release Notes</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2>
+<p>Apache Ambari 3.0.0 represents a significant milestone in the project&#x27;s development, bringing major improvements to cluster management capabilities, user experience, and platform support. This release focuses on modernizing the technology stack, enhancing security features, and improving overall stability and performance.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="release-highlights">Release Highlights<a href="#release-highlights" class="hash-link" aria-label="Direct link to Release Highlights" title="Direct link to Release Highlights">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="platform-support">Platform Support<a href="#platform-support" class="hash-link" aria-label="Direct link to Platform Support" title="Direct link to Platform Support">​</a></h3>
+<ul>
+<li>Added support for Rocky Linux 8 and 9 (<a href="https://issues.apache.org/jira/browse/AMBARI-26133" target="_blank" rel="noopener noreferrer">AMBARI-26133</a>)</li>
+<li>Added support for openEuler-22.03 (<a href="https://issues.apache.org/jira/browse/AMBARI-26126" target="_blank" rel="noopener noreferrer">AMBARI-26126</a>)</li>
+<li>Added Java 17 support (<a href="https://issues.apache.org/jira/browse/AMBARI-26142" target="_blank" rel="noopener noreferrer">AMBARI-26142</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26186" target="_blank" rel="noopener noreferrer">AMBARI-26186</a>)</li>
+<li>Added MySQL 8 support for Hive (<a href="https://issues.apache.org/jira/browse/AMBARI-26130" target="_blank" rel="noopener noreferrer">AMBARI-26130</a>)</li>
+<li>Enhanced Docker environment with bigtop/puppet<!-- -->:trunk-rockylinux-8<!-- --> image</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="new-services-and-components">New Services and Components<a href="#new-services-and-components" class="hash-link" aria-label="Direct link to New Services and Components" title="Direct link to New Services and Components">​</a></h3>
+<ul>
+<li><strong>Alluxio Support</strong>: Added support for Alluxio distributed file system (<a href="https://issues.apache.org/jira/browse/AMBARI-26055" target="_blank" rel="noopener noreferrer">AMBARI-26055</a>)</li>
+<li><strong>Ozone Support</strong>: Added Ozone as a file system service (<a href="https://issues.apache.org/jira/browse/AMBARI-24976" target="_blank" rel="noopener noreferrer">AMBARI-24976</a>)</li>
+<li><strong>Livy Support</strong>: Added Livy as individual service to Ambari Bigtop Stack (<a href="https://issues.apache.org/jira/browse/AMBARI-26090" target="_blank" rel="noopener noreferrer">AMBARI-26090</a>)</li>
+<li><strong>Ranger KMS Support</strong>: Added Ranger KMS support (<a href="https://issues.apache.org/jira/browse/AMBARI-26056" target="_blank" rel="noopener noreferrer">AMBARI-26056</a>)</li>
+<li><strong>Ambari Infra Support</strong>: Added support for Ambari Infra in Ambari Server Bigtop Stack (<a href="https://issues.apache.org/jira/browse/AMBARI-25934" target="_blank" rel="noopener noreferrer">AMBARI-25934</a>)</li>
+<li><strong>YARN Timeline Service V2</strong>: Added YARN TimelineService V2 and Registrydns support (<a href="https://issues.apache.org/jira/browse/AMBARI-25971" target="_blank" rel="noopener noreferrer">AMBARI-25971</a>)</li>
+<li><strong>DFSRouter Support</strong>: Added DFSRouter via &#x27;Actions Button&#x27; in HDFS summary page (<a href="https://issues.apache.org/jira/browse/AMBARI-26109" target="_blank" rel="noopener noreferrer">AMBARI-26109</a>)</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="monitoring-and-metrics-improvements">Monitoring and Metrics Improvements<a href="#monitoring-and-metrics-improvements" class="hash-link" aria-label="Direct link to Monitoring and Metrics Improvements" title="Direct link to Monitoring and Metrics Improvements">​</a></h3>
+<ul>
+<li><strong>Grafana Dashboards</strong>: Added component Grafana dashboards in Ambari metrics (<a href="https://issues.apache.org/jira/browse/AMBARI-25960" target="_blank" rel="noopener noreferrer">AMBARI-25960</a>)</li>
+<li><strong>Grafana Upgrade</strong>: Fixed issues in metrics Grafana dashboards after upgrade to 9.x (<a href="https://issues.apache.org/jira/browse/AMBARI-25975" target="_blank" rel="noopener noreferrer">AMBARI-25975</a>)</li>
+<li><strong>Dashboard Updates</strong>: Update dashboard definition when dashboard version is changed (<a href="https://issues.apache.org/jira/browse/AMBARI-25944" target="_blank" rel="noopener noreferrer">AMBARI-25944</a>)</li>
+<li><strong>Metrics Improvements</strong>:<!-- -->
+<ul>
+<li>Fixed metrics sortable functionality (<a href="https://issues.apache.org/jira/browse/AMBARI-26207" target="_blank" rel="noopener noreferrer">AMBARI-26207</a>)</li>
+<li>Fixed Ambari Grafana datasource plugin loading (<a href="https://issues.apache.org/jira/browse/AMBARI-25941" target="_blank" rel="noopener noreferrer">AMBARI-25941</a>)</li>
+<li>Fixed Ambari grafana ambari-server-jvm dashboard loading (<a href="https://issues.apache.org/jira/browse/AMBARI-25940" target="_blank" rel="noopener noreferrer">AMBARI-25940</a>)</li>
+<li>Resolved mutate related graphs for HBase &amp; AMS-HBase (<a href="https://issues.apache.org/jira/browse/AMBARI-25995" target="_blank" rel="noopener noreferrer">AMBARI-25995</a>)</li>
+<li>Synchronized batch size in Ambari metrics collector and AMS HBase (<a href="https://issues.apache.org/jira/browse/AMBARI-25945" target="_blank" rel="noopener noreferrer">AMBARI-25945</a>)</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="security-improvements">Security Improvements<a href="#security-improvements" class="hash-link" aria-label="Direct link to Security Improvements" title="Direct link to Security Improvements">​</a></h3>
+<ul>
+<li>
+<p><strong>Dependency Upgrades to Address CVEs</strong>:</p>
+<ul>
+<li>Upgraded commons-collections to resolve CVEs (<a href="https://issues.apache.org/jira/browse/AMBARI-26185" target="_blank" rel="noopener noreferrer">AMBARI-26185</a>)</li>
+<li>Upgraded logback to 1.5.16 (<a href="https://issues.apache.org/jira/browse/AMBARI-26306" target="_blank" rel="noopener noreferrer">AMBARI-26306</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26074" target="_blank" rel="noopener noreferrer">AMBARI-26074</a>)</li>
+<li>Upgraded PostgreSQL from 42.2.2 to 42.3.8 (<a href="https://issues.apache.org/jira/browse/AMBARI-25953" target="_blank" rel="noopener noreferrer">AMBARI-25953</a>)</li>
+<li>Upgraded spring-security-core from 5.7.2 to 5.7.8 (<a href="https://issues.apache.org/jira/browse/AMBARI-25952" target="_blank" rel="noopener noreferrer">AMBARI-25952</a>)</li>
+<li>Upgraded net.sf.ehcache to 3.10.0 (<a href="https://issues.apache.org/jira/browse/AMBARI-26076" target="_blank" rel="noopener noreferrer">AMBARI-26076</a>)</li>
+<li>Resolved snakeyaml 1.12 CVE (<a href="https://issues.apache.org/jira/browse/AMBARI-26184" target="_blank" rel="noopener noreferrer">AMBARI-26184</a>)</li>
+<li>Updated org.codehaus.jackson<!-- -->:jackson-mapper-asl<!-- --> dependency (<a href="https://issues.apache.org/jira/browse/AMBARI-25848" target="_blank" rel="noopener noreferrer">AMBARI-25848</a>)</li>
+<li>Upgraded Hadoop dependency version (<a href="https://issues.apache.org/jira/browse/AMBARI-25986" target="_blank" rel="noopener noreferrer">AMBARI-25986</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Security Enhancements</strong>:</p>
+<ul>
+<li>Fixed Kerberos encryption issues (<a href="https://issues.apache.org/jira/browse/AMBARI-26277" target="_blank" rel="noopener noreferrer">AMBARI-26277</a>)</li>
+<li>Fixed Kerberos Jinja2 Template Error (<a href="https://issues.apache.org/jira/browse/AMBARI-26093" target="_blank" rel="noopener noreferrer">AMBARI-26093</a>)</li>
+<li>Fixed security vulnerability CVE-2016-2183 (<a href="https://issues.apache.org/jira/browse/AMBARI-26122" target="_blank" rel="noopener noreferrer">AMBARI-26122</a>)</li>
+<li>Fixed default SSL Ciphers of port 8440/8441 that were too weak (<a href="https://issues.apache.org/jira/browse/AMBARI-26118" target="_blank" rel="noopener noreferrer">AMBARI-26118</a>)</li>
+<li>Added password validation criteria for Ambari local users (<a href="https://issues.apache.org/jira/browse/AMBARI-26061" target="_blank" rel="noopener noreferrer">AMBARI-26061</a>)</li>
+<li>Improved database password character type requirements (<a href="https://issues.apache.org/jira/browse/AMBARI-26236" target="_blank" rel="noopener noreferrer">AMBARI-26236</a>)</li>
+<li>Fixed Knox SSO login to Ambari (<a href="https://issues.apache.org/jira/browse/AMBARI-26307" target="_blank" rel="noopener noreferrer">AMBARI-26307</a>)</li>
+<li>Added documentation on how to report security issues (<a href="https://issues.apache.org/jira/browse/AMBARI-26012" target="_blank" rel="noopener noreferrer">AMBARI-26012</a>)</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="user-interface-improvements">User Interface Improvements<a href="#user-interface-improvements" class="hash-link" aria-label="Direct link to User Interface Improvements" title="Direct link to User Interface Improvements">​</a></h3>
+<ul>
+<li>
+<p><strong>UI Framework Upgrades</strong>:</p>
+<ul>
+<li>Upgraded jQuery and Bootstrap to latest versions (<a href="https://issues.apache.org/jira/browse/AMBARI-25289" target="_blank" rel="noopener noreferrer">AMBARI-25289</a>)</li>
+<li>Fixed outdated ember-collection dependency (<a href="https://issues.apache.org/jira/browse/AMBARI-25988" target="_blank" rel="noopener noreferrer">AMBARI-25988</a>)</li>
+<li>Fixed test failures caused by jQuery upgrade (<a href="https://issues.apache.org/jira/browse/AMBARI-26146" target="_blank" rel="noopener noreferrer">AMBARI-26146</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>UI Fixes and Enhancements</strong>:</p>
+<ul>
+<li>Fixed tooltip display issues (<a href="https://issues.apache.org/jira/browse/AMBARI-26251" target="_blank" rel="noopener noreferrer">AMBARI-26251</a>)</li>
+<li>Fixed Configuration Group creation (<a href="https://issues.apache.org/jira/browse/AMBARI-26257" target="_blank" rel="noopener noreferrer">AMBARI-26257</a>)</li>
+<li>Fixed stack and versions page display issues (<a href="https://issues.apache.org/jira/browse/AMBARI-26200" target="_blank" rel="noopener noreferrer">AMBARI-26200</a>)</li>
+<li>Fixed style rendering errors (<a href="https://issues.apache.org/jira/browse/AMBARI-26199" target="_blank" rel="noopener noreferrer">AMBARI-26199</a>)</li>
+<li>Fixed dropdown menu flex layout overflow (<a href="https://issues.apache.org/jira/browse/AMBARI-26205" target="_blank" rel="noopener noreferrer">AMBARI-26205</a>)</li>
+<li>Fixed Ambari host page action button (<a href="https://issues.apache.org/jira/browse/AMBARI-26194" target="_blank" rel="noopener noreferrer">AMBARI-26194</a>)</li>
+<li>Fixed redirection issue of cluster creation flow (<a href="https://issues.apache.org/jira/browse/AMBARI-26183" target="_blank" rel="noopener noreferrer">AMBARI-26183</a>)</li>
+<li>Improved time range selector (<a href="https://issues.apache.org/jira/browse/AMBARI-26198" target="_blank" rel="noopener noreferrer">AMBARI-26198</a>)</li>
+<li>Reduced websocket connections in web UI to improve performance (<a href="https://issues.apache.org/jira/browse/AMBARI-25928" target="_blank" rel="noopener noreferrer">AMBARI-25928</a>)</li>
+<li>Added validation for Download CSV on Admin/Kerberos tab (<a href="https://issues.apache.org/jira/browse/AMBARI-26102" target="_blank" rel="noopener noreferrer">AMBARI-26102</a>)</li>
+<li>Fixed issue with selecting all hosts in install wizard (<a href="https://issues.apache.org/jira/browse/AMBARI-26120" target="_blank" rel="noopener noreferrer">AMBARI-26120</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Service UI Enhancements</strong>:</p>
+<ul>
+<li>Added quicklink for HiveServer2 web UI (<a href="https://issues.apache.org/jira/browse/AMBARI-26270" target="_blank" rel="noopener noreferrer">AMBARI-26270</a>)</li>
+<li>Added server link for ZK Admin server (<a href="https://issues.apache.org/jira/browse/AMBARI-26201" target="_blank" rel="noopener noreferrer">AMBARI-26201</a>)</li>
+<li>Fixed capacity-scheduler views (<a href="https://issues.apache.org/jira/browse/AMBARI-26255" target="_blank" rel="noopener noreferrer">AMBARI-26255</a>)</li>
+<li>Removed Google Analytics as per ASF Privacy Policy (<a href="https://issues.apache.org/jira/browse/AMBARI-26103" target="_blank" rel="noopener noreferrer">AMBARI-26103</a>)</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="core-improvements">Core Improvements<a href="#core-improvements" class="hash-link" aria-label="Direct link to Core Improvements" title="Direct link to Core Improvements">​</a></h3>
+<ul>
+<li>
+<p><strong>Java 17 Support</strong>:</p>
+<ul>
+<li>Full compatibility with JDK 17 (<a href="https://issues.apache.org/jira/browse/AMBARI-26142" target="_blank" rel="noopener noreferrer">AMBARI-26142</a>)</li>
+<li>Added Ambari Java Home configuration for JDK 17 (<a href="https://issues.apache.org/jira/browse/AMBARI-26238" target="_blank" rel="noopener noreferrer">AMBARI-26238</a>)</li>
+<li>Fixed ambari-env.sh after JDK upgrade (<a href="https://issues.apache.org/jira/browse/AMBARI-26233" target="_blank" rel="noopener noreferrer">AMBARI-26233</a>)</li>
+<li>Fixed NoClassesFoundToAnalyzeException when compiling with JDK 17 (<a href="https://issues.apache.org/jira/browse/AMBARI-26275" target="_blank" rel="noopener noreferrer">AMBARI-26275</a>)</li>
+<li>Fixed annotation processing issue in ConfigurationTest (<a href="https://issues.apache.org/jira/browse/AMBARI-26203" target="_blank" rel="noopener noreferrer">AMBARI-26203</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Python 3 Support</strong>:</p>
+<ul>
+<li>Made Ambari support Python 3 environment (<a href="https://issues.apache.org/jira/browse/AMBARI-26000" target="_blank" rel="noopener noreferrer">AMBARI-26000</a>)</li>
+<li>Fixed Python 3 compilation errors (<a href="https://issues.apache.org/jira/browse/AMBARI-26121" target="_blank" rel="noopener noreferrer">AMBARI-26121</a>)</li>
+<li>Fixed Python 3 type encoding errors (<a href="https://issues.apache.org/jira/browse/AMBARI-26062" target="_blank" rel="noopener noreferrer">AMBARI-26062</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26068" target="_blank" rel="noopener noreferrer">AMBARI-26068</a>)</li>
+<li>Fixed SyntaxWarnings after moving to Python 3 (<a href="https://issues.apache.org/jira/browse/AMBARI-26070" target="_blank" rel="noopener noreferrer">AMBARI-26070</a>)</li>
+<li>Fixed all Python script files for Python 3 (<a href="https://issues.apache.org/jira/browse/AMBARI-26100" target="_blank" rel="noopener noreferrer">AMBARI-26100</a>)</li>
+<li>Fixed Ranger script file for Python 3 (<a href="https://issues.apache.org/jira/browse/AMBARI-26096" target="_blank" rel="noopener noreferrer">AMBARI-26096</a>)</li>
+<li>Added dependency python3-distro for ambari-server (<a href="https://issues.apache.org/jira/browse/AMBARI-26119" target="_blank" rel="noopener noreferrer">AMBARI-26119</a>)</li>
+<li>Fixed PortAlert test failures due to Python 2 to 3 upgrade (<a href="https://issues.apache.org/jira/browse/AMBARI-26105" target="_blank" rel="noopener noreferrer">AMBARI-26105</a>)</li>
+<li>Fixed TestConfigs Python test case failures (<a href="https://issues.apache.org/jira/browse/AMBARI-26081" target="_blank" rel="noopener noreferrer">AMBARI-26081</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Code Modernization</strong>:</p>
+<ul>
+<li>Added Ruff integration for Python code linting (<a href="https://issues.apache.org/jira/browse/AMBARI-26147" target="_blank" rel="noopener noreferrer">AMBARI-26147</a>)</li>
+<li>Converted string formatting to f-strings (<a href="https://issues.apache.org/jira/browse/AMBARI-26243" target="_blank" rel="noopener noreferrer">AMBARI-26243</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26244" target="_blank" rel="noopener noreferrer">AMBARI-26244</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26245" target="_blank" rel="noopener noreferrer">AMBARI-26245</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26286" target="_blank" rel="noopener noreferrer">AMBARI-26286</a>)</li>
+<li>Implemented Git Version Control for Ambari Jenkinsfile (<a href="https://issues.apache.org/jira/browse/AMBARI-26097" target="_blank" rel="noopener noreferrer">AMBARI-26097</a>)</li>
+<li>Switched PhantomJS used by Karma tests to chromium-browser (<a href="https://issues.apache.org/jira/browse/AMBARI-26113" target="_blank" rel="noopener noreferrer">AMBARI-26113</a>)</li>
+<li>Configured Chromium Browser in Jenkins file (<a href="https://issues.apache.org/jira/browse/AMBARI-26114" target="_blank" rel="noopener noreferrer">AMBARI-26114</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Build and Packaging Improvements</strong>:</p>
+<ul>
+<li>Fixed Ambari Server parallel compilation and packaging issues (<a href="https://issues.apache.org/jira/browse/AMBARI-26191" target="_blank" rel="noopener noreferrer">AMBARI-26191</a>)</li>
+<li>Fixed RPM build failures (<a href="https://issues.apache.org/jira/browse/AMBARI-26319" target="_blank" rel="noopener noreferrer">AMBARI-26319</a>)</li>
+<li>Fixed RPM packaging errors for ambari-web and ambari-views (<a href="https://issues.apache.org/jira/browse/AMBARI-26125" target="_blank" rel="noopener noreferrer">AMBARI-26125</a>)</li>
+<li>Fixed server build failure due to ambari-serviceadvisor version (<a href="https://issues.apache.org/jira/browse/AMBARI-25920" target="_blank" rel="noopener noreferrer">AMBARI-25920</a>)</li>
+<li>Fixed ambari-admin compilation issues (<a href="https://issues.apache.org/jira/browse/AMBARI-25968" target="_blank" rel="noopener noreferrer">AMBARI-25968</a>)</li>
+<li>Fixed issue with ambari-admin build entering testing phase (<a href="https://issues.apache.org/jira/browse/AMBARI-26132" target="_blank" rel="noopener noreferrer">AMBARI-26132</a>)</li>
+<li>Added distro dependency to Ambari Agent (<a href="https://issues.apache.org/jira/browse/AMBARI-26197" target="_blank" rel="noopener noreferrer">AMBARI-26197</a>)</li>
+<li>Fixed jersey conflict error when starting Ambari server (<a href="https://issues.apache.org/jira/browse/AMBARI-26320" target="_blank" rel="noopener noreferrer">AMBARI-26320</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Service Improvements</strong>:</p>
+<ul>
+<li>Updated component versions to align with Ambari Bigtopstack 3.3.0 (<a href="https://issues.apache.org/jira/browse/AMBARI-26087" target="_blank" rel="noopener noreferrer">AMBARI-26087</a>)</li>
+<li>Upgraded service versions to Bigtop 3.3.0 (<a href="https://issues.apache.org/jira/browse/AMBARI-25965" target="_blank" rel="noopener noreferrer">AMBARI-25965</a>)</li>
+<li>Upgraded Bigtop Stack ZK to Zookeeper 3.7.2 (<a href="https://issues.apache.org/jira/browse/AMBARI-26088" target="_blank" rel="noopener noreferrer">AMBARI-26088</a>)</li>
+<li>Enabled Spark to use Hadoop native libraries for better performance (<a href="https://issues.apache.org/jira/browse/AMBARI-25987" target="_blank" rel="noopener noreferrer">AMBARI-25987</a>)</li>
+<li>Fixed Hive installation failures due to missing dependencies (<a href="https://issues.apache.org/jira/browse/AMBARI-26326" target="_blank" rel="noopener noreferrer">AMBARI-26326</a>)</li>
+<li>Set up Hive&#x27;s xms config (<a href="https://issues.apache.org/jira/browse/AMBARI-26305" target="_blank" rel="noopener noreferrer">AMBARI-26305</a>)</li>
+<li>Fixed HDFS web service check (<a href="https://issues.apache.org/jira/browse/AMBARI-26276" target="_blank" rel="noopener noreferrer">AMBARI-26276</a>)</li>
+<li>Fixed incorrect Ambari infra-solr service config (<a href="https://issues.apache.org/jira/browse/AMBARI-25970" target="_blank" rel="noopener noreferrer">AMBARI-25970</a>)</li>
+<li>Fixed wrong config file name in Spark service advisor (<a href="https://issues.apache.org/jira/browse/AMBARI-25932" target="_blank" rel="noopener noreferrer">AMBARI-25932</a>)</li>
+<li>Increased default value of phoenix.mutate.maxSizeBytes (<a href="https://issues.apache.org/jira/browse/AMBARI-25977" target="_blank" rel="noopener noreferrer">AMBARI-25977</a>)</li>
+<li>Fixed HBase config issue (<a href="https://issues.apache.org/jira/browse/AMBARI-25827" target="_blank" rel="noopener noreferrer">AMBARI-25827</a>)</li>
+<li>Fixed default value in hive-site.xml (<a href="https://issues.apache.org/jira/browse/AMBARI-25897" target="_blank" rel="noopener noreferrer">AMBARI-25897</a>)</li>
+<li>Added host and user to the tagsync log&#x27;s file name (<a href="https://issues.apache.org/jira/browse/AMBARI-26139" target="_blank" rel="noopener noreferrer">AMBARI-26139</a>)</li>
+<li>Fixed issue with Zeppelin not downloading interpreter dependencies (<a href="https://issues.apache.org/jira/browse/AMBARI-25981" target="_blank" rel="noopener noreferrer">AMBARI-25981</a>)</li>
+<li>Removed hive.load.data.owner from Hive configuration (<a href="https://issues.apache.org/jira/browse/AMBARI-26129" target="_blank" rel="noopener noreferrer">AMBARI-26129</a>)</li>
+<li>Removed Phoenix configuration from HBase (<a href="https://issues.apache.org/jira/browse/AMBARI-25921" target="_blank" rel="noopener noreferrer">AMBARI-25921</a>)</li>
+<li>Fixed missing theme.json in HDFS/YARN/MR (<a href="https://issues.apache.org/jira/browse/AMBARI-25917" target="_blank" rel="noopener noreferrer">AMBARI-25917</a>)</li>
+<li>Fixed missing service_advisor.py in some services (<a href="https://issues.apache.org/jira/browse/AMBARI-25894" target="_blank" rel="noopener noreferrer">AMBARI-25894</a>)</li>
+<li>Fixed issue with &#x27;supported-refresh-commands&#x27; element (<a href="https://issues.apache.org/jira/browse/AMBARI-25863" target="_blank" rel="noopener noreferrer">AMBARI-25863</a>)</li>
+<li>Reduced excess Zookeeper and Hadoop logging (<a href="https://issues.apache.org/jira/browse/AMBARI-24140" target="_blank" rel="noopener noreferrer">AMBARI-24140</a>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Bug Fixes</strong>:</p>
+<ul>
+<li>Fixed OceanBase support in Ambari MySQL DDL (<a href="https://issues.apache.org/jira/browse/AMBARI-26273" target="_blank" rel="noopener noreferrer">AMBARI-26273</a>)</li>
+<li>Fixed regex pattern flag position in ambari_jinja2 filters (<a href="https://issues.apache.org/jira/browse/AMBARI-26269" target="_blank" rel="noopener noreferrer">AMBARI-26269</a>)</li>
+<li>Fixed invalid parameter issue in HostInfo.py (<a href="https://issues.apache.org/jira/browse/AMBARI-26271" target="_blank" rel="noopener noreferrer">AMBARI-26271</a>)</li>
+<li>Fixed initialization issue in InitializerModule (<a href="https://issues.apache.org/jira/browse/AMBARI-26111" target="_blank" rel="noopener noreferrer">AMBARI-26111</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-25883" target="_blank" rel="noopener noreferrer">AMBARI-25883</a>)</li>
+<li>Fixed PYTHONPATH resolution (<a href="https://issues.apache.org/jira/browse/AMBARI-26115" target="_blank" rel="noopener noreferrer">AMBARI-26115</a>)</li>
+<li>Fixed issue with checking firewalld status (<a href="https://issues.apache.org/jira/browse/AMBARI-26235" target="_blank" rel="noopener noreferrer">AMBARI-26235</a>)</li>
+<li>Fixed ClusterNotFoundException during host confirmation (<a href="https://issues.apache.org/jira/browse/AMBARI-26234" target="_blank" rel="noopener noreferrer">AMBARI-26234</a>)</li>
+<li>Fixed NumberFormatException handling (<a href="https://issues.apache.org/jira/browse/AMBARI-26144" target="_blank" rel="noopener noreferrer">AMBARI-26144</a>)</li>
+<li>Fixed OozieUtils (<a href="https://issues.apache.org/jira/browse/AMBARI-26239" target="_blank" rel="noopener noreferrer">AMBARI-26239</a>)</li>
+<li>Fixed shell.py execution and import order (<a href="https://issues.apache.org/jira/browse/AMBARI-26232" target="_blank" rel="noopener noreferrer">AMBARI-26232</a>)</li>
+<li>Fixed Ambari cluster deployment blockage (<a href="https://issues.apache.org/jira/browse/AMBARI-26187" target="_blank" rel="noopener noreferrer">AMBARI-26187</a>)</li>
+<li>Enhanced error logging for run function in shell script (<a href="https://issues.apache.org/jira/browse/AMBARI-26094" target="_blank" rel="noopener noreferrer">AMBARI-26094</a>)</li>
+<li>Fixed various test failures after JDK upgrade (<a href="https://issues.apache.org/jira/browse/AMBARI-26222" target="_blank" rel="noopener noreferrer">AMBARI-26222</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26215" target="_blank" rel="noopener noreferrer">AMBARI-26215</a>, <a href="https://issues.apache.org/jira/browse/AMBARI-26211" target="_blank" rel="noopener noreferrer">AMBARI-26211</a>)</li>
+<li>Fixed checkstyle errors (<a href="https://issues.apache.org/jira/browse/AMBARI-26212" target="_blank" rel="noopener noreferrer">AMBARI-26212</a>)</li>
+<li>Fixed Ambari Component Installation Failure (<a href="https://issues.apache.org/jira/browse/AMBARI-26323" target="_blank" rel="noopener noreferrer">AMBARI-26323</a>)</li>
+<li>Fixed alter dispatcher (<a href="https://issues.apache.org/jira/browse/AMBARI-26240" target="_blank" rel="noopener noreferrer">AMBARI-26240</a>)</li>
+<li>Corrected spelling mistakes in documentation (<a href="https://issues.apache.org/jira/browse/AMBARI-26104" target="_blank" rel="noopener noreferrer">AMBARI-26104</a>)</li>
+</ul>
+</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="known-issues">Known Issues<a href="#known-issues" class="hash-link" aria-label="Direct link to Known Issues" title="Direct link to Known Issues">​</a></h2>
+<ul>
+<li>Timeline Service Reader may fail to start if HBase is not installed (<a href="https://issues.apache.org/jira/browse/AMBARI-26248" target="_blank" rel="noopener noreferrer">AMBARI-26248</a>)</li>
+<li>Timeline Service v2 may fail to start due to issues with leveldb state store directory creation (<a href="https://issues.apache.org/jira/browse/AMBARI-26249" target="_blank" rel="noopener noreferrer">AMBARI-26249</a>)</li>
+<li>Some LDAP/AD authentication issues may occur with previously synced users (<a href="https://issues.apache.org/jira/browse/AMBARI-26304" target="_blank" rel="noopener noreferrer">AMBARI-26304</a>)</li>
+<li>DFSRouter command script path may not be correct (<a href="https://issues.apache.org/jira/browse/AMBARI-26116" target="_blank" rel="noopener noreferrer">AMBARI-26116</a>)</li>
+<li>Module &#x27;status_params&#x27; may have no attribute &#x27;router_pid_file&#x27; (<a href="https://issues.apache.org/jira/browse/AMBARI-26141" target="_blank" rel="noopener noreferrer">AMBARI-26141</a>)</li>
+<li>_threadlocal may have no uid because it is always None (<a href="https://issues.apache.org/jira/browse/AMBARI-26241" target="_blank" rel="noopener noreferrer">AMBARI-26241</a>)</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="roadmap">Roadmap<a href="#roadmap" class="hash-link" aria-label="Direct link to Roadmap" title="Direct link to Roadmap">​</a></h2>
+<p>The Apache Ambari project has an ambitious roadmap for future releases. The following initiatives are planned for upcoming development cycles:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="technology-stack-modernization">Technology Stack Modernization<a href="#technology-stack-modernization" class="hash-link" aria-label="Direct link to Technology Stack Modernization" title="Direct link to Technology Stack Modernization">​</a></h3>
+<ul>
+<li><strong>Spring Framework 6 Upgrade</strong>: Migrate from current Spring version to Spring 6 to leverage the latest features, performance improvements, and security enhancements.</li>
+<li><strong>Ubuntu Support</strong>: Extend platform compatibility to include Ubuntu, providing more deployment options for users.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-and-operations">Deployment and Operations<a href="#deployment-and-operations" class="hash-link" aria-label="Direct link to Deployment and Operations" title="Direct link to Deployment and Operations">​</a></h3>
+<ul>
+<li><strong>Docker Automation</strong>: Develop comprehensive Docker-based automation for cluster deployment, making it easier to provision and manage Ambari clusters in containerized environments.</li>
+<li><strong>Enhanced Containerization</strong>: Improve container orchestration capabilities for both development and production environments.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="frontend-modernization">Frontend Modernization<a href="#frontend-modernization" class="hash-link" aria-label="Direct link to Frontend Modernization" title="Direct link to Frontend Modernization">​</a></h3>
+<ul>
+<li><strong>jQuery Bug Fixes</strong>: Continue to address and resolve UI issues resulting from the jQuery upgrade.</li>
+<li><strong>Micro-Frontend Architecture</strong>: Implement a gradual transition from the current Ember.js framework to React using a micro-frontend approach, allowing for incremental modernization without disrupting existing functionality.</li>
+<li><strong>UI/UX Improvements</strong>: Enhance the user interface with modern design patterns and improved user experience.</li>
+</ul>
+<p>These roadmap items represent the project&#x27;s commitment to continuous improvement and adaptation to evolving technologies in the big data ecosystem. Community contributions and feedback on these initiatives are welcome.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="upgrading-to-apache-ambari-300">Upgrading to Apache Ambari 3.0.0<a href="#upgrading-to-apache-ambari-300" class="hash-link" aria-label="Direct link to Upgrading to Apache Ambari 3.0.0" title="Direct link to Upgrading to Apache Ambari 3.0.0">​</a></h2>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>TODO</p></div></div>
+<p>For detailed instructions on upgrading from previous versions, please refer to the Upgrade Guide.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="compatibility-matrix">Compatibility Matrix<a href="#compatibility-matrix" class="hash-link" aria-label="Direct link to Compatibility Matrix" title="Direct link to Compatibility Matrix">​</a></h2>
+<table><thead><tr><th>Component</th><th>Supported Versions</th></tr></thead><tbody><tr><td>Operating Systems</td><td>Rocky Linux 8, Rocky Linux 9, openEuler-22.03, CentOS 7.x, RHEL 7.x, RHEL 8.x</td></tr><tr><td>Java</td><td>OpenJDK 8, OpenJDK 11, OpenJDK 17</td></tr><tr><td>Database</td><td>PostgreSQL 10+, MySQL 5.7+, MySQL 8+, MariaDB 10.2+, OceanBase</td></tr><tr><td>Browser</td><td>Chrome 80+, Firefox 78+, Edge 80+</td></tr></tbody></table>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="download">Download<a href="#download" class="hash-link" aria-label="Direct link to Download" title="Direct link to Download">​</a></h2>
+<p>Apache Ambari 3.0.0 can be downloaded from the <a href="https://ambari.apache.org/download.html" target="_blank" rel="noopener noreferrer">Apache Ambari Download Page</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="verification">Verification<a href="#verification" class="hash-link" aria-label="Direct link to Verification" title="Direct link to Verification">​</a></h2>
+<p>It is essential that you verify the integrity of the downloaded files using the PGP signatures and SHA256 checksums.</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic"># Verify the SHA256 checksum</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">sha256sum </span><span class="token parameter variable" style="color:#36acaa">--check</span><span class="token plain"> apache-ambari-3.0.0.tar.gz.sha256</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic"># Verify the PGP signature</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">gpg </span><span class="token parameter variable" style="color:#36acaa">--verify</span><span class="token plain"> apache-ambari-3.0.0.tar.gz.asc apache-ambari-3.0.0.tar.gz</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>The PGP signatures can be verified using the public keys of the Apache Ambari Release Managers, which can be found on the <a href="https://ambari.apache.org/download.html" target="_blank" rel="noopener noreferrer">Apache Ambari Download Page</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="acknowledgments">Acknowledgments<a href="#acknowledgments" class="hash-link" aria-label="Direct link to Acknowledgments" title="Direct link to Acknowledgments">​</a></h2>
+<p>Apache Ambari 3.0.0 is the result of significant contributions from the Apache Ambari community. We would like to thank all the contributors who have helped make this release possible:</p>
+<ul>
+<li>jialiang</li>
+<li>zrain</li>
+<li>Peng Lu</li>
+<li>Mohammad Arshad</li>
+<li>yaruyng</li>
+<li>tongxiaojun</li>
+<li>Sandeep Kumar</li>
+<li>coldless177</li>
+<li>Vishal Suvagia</li>
+<li>zhenye zhang</li>
+<li>yaolei</li>
+<li>xjmu</li>
+<li>Himanshu Maurya</li>
+<li>timyuer</li>
+<li>Ananya Singh</li>
+<li>rzuo</li>
+<li>Viraj Jasani</li>
+<li>William Horn</li>
+<li>vanshuhassija</li>
+<li>Yu Hou</li>
+<li>basapuram-kumar</li>
+<li>Prabhjyot Singh</li>
+<li>Brahma Reddy Battula</li>
+<li>Basapuram Kumar</li>
+<li>Shreeya Sand</li>
+<li>Bhavik Patel</li>
+<li>lupeng</li>
+<li>piaolingzxh</li>
+<li>Murali Krishna</li>
+<li>LiJie20190102</li>
+<li>HARSHITH GANDHE</li>
+<li>userhimanshuverma</li>
+<li>Arnout Engelen</li>
+<li>wangda</li>
+<li>Dmytro Sen</li>
+<li>Rich Bowen</li>
+<li>Shubham Sharma</li>
+<li>Weijian Wen</li>
+<li>Will Guo</li>
+<li>guluo</li>
+<li>Peng Lee</li>
+<li>liqinwyyx</li>
+<li>and many others</li>
+</ul>
+<p>Special thanks to our Release Manager(s) for their dedication and hard work in preparing this release.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="community">Community<a href="#community" class="hash-link" aria-label="Direct link to Community" title="Direct link to Community">​</a></h2>
+<p>We welcome your feedback and contributions to Apache Ambari:</p>
+<ul>
+<li><a href="https://ambari.apache.org/mail-lists.html" target="_blank" rel="noopener noreferrer">Mailing Lists</a></li>
+<li><a href="https://issues.apache.org/jira/projects/AMBARI" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
+<li><a href="https://github.com/apache/ambari" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="license">License<a href="#license" class="hash-link" aria-label="Direct link to License" title="Direct link to License">​</a></h2>
+<p>Apache Ambari is released under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache License, Version 2.0</a>.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/vivostar/vivostar.github.io/tree/master/versioned_docs/version-3.0.0/release-notes.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/3.0.0/introduction"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Introduction</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/3.0.0/faq"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Frequently Asked Questions (FAQ)</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a></li><li><a href="#release-highlights" class="table-of-contents__link toc-highlight">Release Highlights</a><ul><li><a href="#platform-support" class="table-of-contents__link toc-highlight">Platform Support</a></li><li><a href="#new-services-and-components" class="table-of-contents__link toc-highlight">New Services and Components</a></li><li><a href="#monitoring-and-metrics-improvements" class="table-of-contents__link toc-highlight">Monitoring and Metrics Improvements</a></li><li><a href="#security-improvements" class="table-of-contents__link toc-highlight">Security Improvements</a></li><li><a href="#user-interface-improvements" class="table-of-contents__link toc-highlight">User Interface Improvements</a></li><li><a href="#core-improvements" class="table-of-contents__link toc-highlight">Core Improvements</a></li></ul></li><li><a href="#known-issues" class="table-of-contents__link toc-highlight">Known Issues</a></li><li><a href="#roadmap" class="table-of-contents__link toc-highlight">Roadmap</a><ul><li><a href="#technology-stack-modernization" class="table-of-contents__link toc-highlight">Technology Stack Modernization</a></li><li><a href="#deployment-and-operations" class="table-of-contents__link toc-highlight">Deployment and Operations</a></li><li><a href="#frontend-modernization" class="table-of-contents__link toc-highlight">Frontend Modernization</a></li></ul></li><li><a href="#upgrading-to-apache-ambari-300" class="table-of-contents__link toc-highlight">Upgrading to Apache Ambari 3.0.0</a></li><li><a href="#compatibility-matrix" class="table-of-contents__link toc-highlight">Compatibility Matrix</a></li><li><a href="#download" class="table-of-contents__link toc-highlight">Download</a></li><li><a href="#verification" class="table-of-contents__link toc-highlight">Verification</a></li><li><a href="#acknowledgments" class="table-of-contents__link toc-highlight">Acknowledgments</a></li><li><a href="#community" class="table-of-contents__link toc-highlight">Community</a></li><li><a href="#license" class="table-of-contents__link toc-highlight">License</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright 2025 Apache Ambari. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
