@@ -460,30 +460,30 @@ A `components` block may exist within a `service` descriptor block. This block i
 
 The following example is annotated for descriptive purposes. The annotations are not valid in a real JSON-formatted file.
 
-```json5
+```
 {
   // Properties that can be used in variable replacement operations.
   // For example, ${keytab_dir} will resolve to "/etc/security/keytabs".
   // Since variable replacement is recursive, ${realm} will resolve
   // to ${kerberos-env/realm}, which in-turn will resolve to the
   // declared default realm for the cluster
-  properties: {
-    realm: '${kerberos-env/realm}',
-    keytab_dir: '/etc/security/keytabs',
+  "properties": {
+    "realm": "${kerberos-env/realm}",
+    "keytab_dir": "/etc/security/keytabs"
   },
   // A list of global Kerberos identities. These may be referenced
   // using /identity_name. For example the “spnego” identity may be
   // referenced using “/spnego”
-  identities: [
+  "identities": [
     {
-      name: 'spnego',
+      "name": "spnego",
       // Details about this identity's principal. This instance does not
       // declare any value for configuration or local username. That is
       // left up to the services and components use wish to reference
       // this principal and set overrides for those values.
-      principal: {
-        value: 'HTTP/_HOST@${realm}',
-        type: 'service',
+      "principal": {
+        "value": "HTTP/_HOST@${realm}",
+        "type" : "service"
       },
       // Details about this identity’s keytab file. This keytab file
       // will be created in the configured keytab file directory with
@@ -498,31 +498,31 @@ The following example is annotated for descriptive purposes. The annotations are
       // be set in any configuration file by default. Services and
       // components need to reference this identity to update this
       // value as needed.
-      keytab: {
-        file: '${keytab_dir}/spnego.service.keytab',
-        owner: {
-          name: 'root',
-          access: 'r',
+      "keytab": {
+        "file": "${keytab_dir}/spnego.service.keytab",
+        "owner": {
+          "name": "root",
+          "access": "r"
         },
-        group: {
-          name: '${cluster-env/user_group}',
-          access: 'r',
-        },
-      },
+        "group": {
+          "name": "${cluster-env/user_group}",
+          "access": "r"
+        }
+      }
     },
     {
-      name: 'smokeuser',
+      "name": "smokeuser",
       // Details about this identity's principal. This instance declares
       // a configuration and local username mapping. Services and
       // components can override this to set additional configurations
       // that should be set to this principal value.  Overriding the
       // local username may create undesired behavior since there may be
       // conflicting entries in relevant auth-to-local rule sets.
-      principal: {
-        value: '${cluster-env/smokeuser}@${realm}',
-        type: 'user',
-        configuration: 'cluster-env/smokeuser_principal_name',
-        local_username: '${cluster-env/smokeuser}',
+      "principal": {
+        "value": "${cluster-env/smokeuser}@${realm}",
+        "type" : "user",
+        "configuration": "cluster-env/smokeuser_principal_name",
+        "local_username" : "${cluster-env/smokeuser}"
       },
       // Details about this identity’s keytab file. This keytab file
       // will be created in the configured keytab file directory with
@@ -534,20 +534,20 @@ The following example is annotated for descriptive purposes. The annotations are
       // is desired that multiple keytab files are created, these
       // values may be overridden in a reference within a service or
       // component.
-      keytab: {
-        file: '${keytab_dir}/smokeuser.headless.keytab',
-        owner: {
-          name: '${cluster-env/smokeuser}',
-          access: 'r',
+      "keytab": {
+        "file": "${keytab_dir}/smokeuser.headless.keytab",
+        "owner": {
+          "name": "${cluster-env/smokeuser}",
+          "access": "r"
         },
-        group: {
-          name: '${cluster-env/user_group}',
-          access: 'r',
+        "group": {
+          "name": "${cluster-env/user_group}",
+          "access": "r"
         },
-        configuration: 'cluster-env/smokeuser_keytab',
-      },
-    },
-  ],
+        "configuration": "cluster-env/smokeuser_keytab"
+      }
+    }
+  ]
 }
 ```
 
@@ -555,53 +555,53 @@ The following example is annotated for descriptive purposes. The annotations are
 
 The following example is annotated for descriptive purposes. The annotations are not valid in a real JSON-formatted file.
 
-```json5
+```
 {
   // One or more services may be listed in a service-level Kerberos
   // Descriptor file
-  services: [
+  "services": [
     {
-      name: 'SERVICE_1',
+      "name": "SERVICE_1",
       // Service-level identities to be created if this service is installed.
       // Any relevant keytab files will be distributed to hosts with at least
       // one of the components on it.
-      identities: [
+      "identities": [
         // Service-specific identity declaration, declaring all properties
         // needed initiate the creation of the principal and keytab files,
         // as well as setting the service-specific  configurations.  This may
         // be referenced by contained components using ../service1_identity.
         {
-          name: 'service1_identity',
-          principal: {
-            value: 'service1/_HOST@${realm}',
-            type: 'service',
-            configuration: 'service1-site/service1.principal',
+          "name": "service1_identity",
+          "principal": {
+            "value": "service1/_HOST@${realm}",
+            "type" : "service",
+            "configuration": "service1-site/service1.principal"
           },
-          keytab: {
-            file: '${keytab_dir}/service1.service.keytab',
-            owner: {
-              name: '${service1-env/service_user}',
-              access: 'r',
+          "keytab": {
+            "file": "${keytab_dir}/service1.service.keytab",
+            "owner": {
+              "name": "${service1-env/service_user}",
+              "access": "r"
             },
-            group: {
-              name: '${cluster-env/user_group}',
-              access: 'r',
+            "group": {
+              "name": "${cluster-env/user_group}",
+              "access": "r"
             },
-            configuration: 'service1-site/service1.keytab.file',
-          },
+            "configuration": "service1-site/service1.keytab.file"
+          }
         },
         // Service-level identity referencing the stack-level spnego
         // identity and overriding the principal and keytab configuration
         // specifications.
         {
-          name: 'service1_spnego',
-          reference: '/spnego',
-          principal: {
-            configuration: 'service1-site/service1.web.principal',
+          "name": "service1_spnego",
+          "reference": "/spnego",
+          "principal": {
+            "configuration": "service1-site/service1.web.principal"
           },
-          keytab: {
-            configuration: 'service1-site/service1.web.keytab.file',
-          },
+          "keytab": {
+            "configuration": "service1-site/service1.web.keytab.file"
+          }
         },
         // Service-level identity referencing the stack-level smokeuser
         // identity. No properties are being overridden and overriding
@@ -610,135 +610,137 @@ The following example is annotated for descriptive purposes. The annotations are
         // keytab file is distributed to all hosts where components of this
         // this service are installed.
         {
-          name: 'service1_smokeuser',
-          reference: '/smokeuser',
-        },
+          "name": "service1_smokeuser",
+          "reference": "/smokeuser"
+        }
       ],
       // Properties related to this service that require the auth-to-local
       // rules to be dynamically generated based on identities create for
       // the cluster.
-      auth_to_local_properties: ['service1-site/security.auth_to_local'],
+      "auth_to_local_properties" : [
+        "service1-site/security.auth_to_local"
+      ],
       // Configuration properties to be set when this service is installed,
       // no matter which components are installed
-      configurations: [
+      "configurations": [
         {
-          'service-site': {
-            'service1.security.authentication': 'kerberos',
-            'service1.security.auth_to_local': '',
-          },
-        },
+          "service-site": {
+            "service1.security.authentication": "kerberos",
+            "service1.security.auth_to_local": ""
+          }
+        }
       ],
       // A list of components related to this service
-      components: [
+      "components": [
         {
-          name: 'COMPONENT_1',
+          "name": "COMPONENT_1",
           // Component-specific identities to be created when this component
           // is installed.  Any keytab files specified will be distributed
           // only to the hosts where this component is installed.
-          identities: [
+          "identities": [
             // An identity "local" to this component
             {
-              name: 'component1_service_identity',
-              principal: {
-                value: 'component1/_HOST@${realm}',
-                type: 'service',
-                configuration: 'service1-site/comp1.principal',
-                local_username: '${service1-env/service_user}',
+              "name": "component1_service_identity",
+              "principal": {
+                "value": "component1/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "service1-site/comp1.principal",
+                "local_username" : "${service1-env/service_user}"
               },
-              keytab: {
-                file: '${keytab_dir}/s1c1.service.keytab',
-                owner: {
-                  name: '${service1-env/service_user}',
-                  access: 'r',
+              "keytab": {
+                "file": "${keytab_dir}/s1c1.service.keytab",
+                "owner": {
+                  "name": "${service1-env/service_user}",
+                  "access": "r"
                 },
-                group: {
-                  name: '${cluster-env/user_group}',
-                  access: '',
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
                 },
-                configuration: 'service1-site/comp1.keytab.file',
-              },
+                "configuration": "service1-site/comp1.keytab.file"
+              }
             },
             // The stack-level spnego identity overridden to set component-specific
             // configurations
             {
-              name: 'component1_spnego_1',
-              reference: '/spnego',
-              principal: {
-                configuration: 'service1-site/comp1.spnego.principal',
+              "name": "component1_spnego_1",
+              "reference": "/spnego",
+              "principal": {
+                "configuration": "service1-site/comp1.spnego.principal"
               },
-              keytab: {
-                configuration: 'service1-site/comp1.spnego.keytab.file',
-              },
+              "keytab": {
+                "configuration": "service1-site/comp1.spnego.keytab.file"
+              }
             },
             // The stack-level spnego identity overridden to set a different set of component-specific
             // configurations
             {
-              name: 'component1_spnego_2',
-              reference: '/spnego',
-              principal: {
-                configuration: 'service1-site/comp1.someother.principal',
+              "name": "component1_spnego_2",
+              "reference": "/spnego",
+              "principal": {
+                "configuration": "service1-site/comp1.someother.principal"
               },
-              keytab: {
-                configuration: 'service1-site/comp1.someother.keytab.file',
-              },
-            },
+              "keytab": {
+                "configuration": "service1-site/comp1.someother.keytab.file"
+              }
+            }
           ],
           // Component-specific configurations to set if this component is installed
-          configurations: [
+          "configurations": [
             {
-              'service-site': {
-                'comp1.security.type': 'kerberos',
-              },
-            },
-          ],
+              "service-site": {
+                "comp1.security.type": "kerberos"
+              }
+            }
+          ]
         },
         {
-          name: 'COMPONENT_2',
-          identities: [
+          "name": "COMPONENT_2",
+          "identities": [
             {
-              name: 'component2_service_identity',
-              principal: {
-                value: 'component2/_HOST@${realm}',
-                type: 'service',
-                configuration: 'service1-site/comp2.principal',
-                local_username: '${service1-env/service_user}',
+              "name": "component2_service_identity",
+              "principal": {
+                "value": "component2/_HOST@${realm}",
+                "type" : "service",
+                "configuration": "service1-site/comp2.principal",
+                "local_username" : "${service1-env/service_user}"
               },
-              keytab: {
-                file: '${keytab_dir}/s1c2.service.keytab',
-                owner: {
-                  name: '${service1-env/service_user}',
-                  access: 'r',
+              "keytab": {
+                "file": "${keytab_dir}/s1c2.service.keytab",
+                "owner": {
+                  "name": "${service1-env/service_user}",
+                  "access": "r"
                 },
-                group: {
-                  name: '${cluster-env/user_group}',
-                  access: '',
+                "group": {
+                  "name": "${cluster-env/user_group}",
+                  "access": ""
                 },
-                configuration: 'service1-site/comp2.keytab.file',
-              },
+                "configuration": "service1-site/comp2.keytab.file"
+              }
             },
             // The service-level service1_identity identity overridden to
             // set component-specific configurations
             {
-              name: 'component2_service1_identity',
-              reference: '../service1_identity',
-              principal: {
-                configuration: 'service1-site/comp2.service.principal',
+              "name": "component2_service1_identity",
+              "reference": "../service1_identity",
+              "principal": {
+                "configuration": "service1-site/comp2.service.principal"
               },
-              keytab: {
-                configuration: 'service1-site/comp2.service.keytab.file',
-              },
-            },
+              "keytab": {
+                "configuration": "service1-site/comp2.service.keytab.file"
+              }
+            }
           ],
-          configurations: [
+          "configurations" : [
             {
-              'service-site': {
-                'comp2.security.type': 'kerberos',
-              },
-            },
-          ],
-        },
-      ],
-    },
-  ],
+              "service-site" : {
+                "comp2.security.type": "kerberos"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 ```

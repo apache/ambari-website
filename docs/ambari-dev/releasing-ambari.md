@@ -1,10 +1,3 @@
----
-title: Releasing Ambari
-variables:
-  majorVersion: '2.8'
-  minorVersion: '0'
----
-
 # Releasing Ambari
 
 ## Useful Links
