@@ -17,6 +17,8 @@ const sidebars = {
 
   ambariSidebar: [
     "introduction",
+    "release-notes",
+    "faq",
     {
       type: "category", 
       label: "Quick Start",
@@ -24,7 +26,18 @@ const sidebars = {
       collapsed: false,
       items: [
         "quick-start/quick-start-guide",
-        "quick-start/quick-start-for-new-vm-users"
+        {
+          type: "category",
+          label: "Environment Setup",
+          collapsible: true,
+          collapsed: false,
+          items: [
+            "quick-start/environment-setup/vagrant-environment-setup",
+            "quick-start/environment-setup/docker-environment-setup",
+            "quick-start/environment-setup/bare-metal-kvm-setup"
+          ]
+        },
+        "quick-start/installation-guide"
       ]
     },
     {
@@ -108,14 +121,14 @@ const sidebars = {
             "ambari-design/views/view-definition"
           ]
         }
-
       ]
     },
-    
     {
       type: "category", 
       label: "Ambari Development",
-      link: {type: "doc", id: "ambari-dev/index"},
+      collapsible: true,
+      collapsed: false,
+      link: {type: 'doc', id: 'ambari-dev/index'},
       items: [
         "ambari-dev/development-process-for-new-major-features",
         "ambari-dev/ambari-code-layout",
@@ -133,11 +146,10 @@ const sidebars = {
         "ambari-dev/verifying-release-candidate"
       ]
     },
-
     {
       type: "category", 
       label: "Ambari Plugin Contributions",
-      link: {type: "doc", id: "ambari-plugin-contribution/index"},
+      link: {type: 'doc', id: 'ambari-plugin-contribution/index'},
       items: [
         {
           type: "category", 
@@ -150,10 +162,8 @@ const sidebars = {
         "ambari-plugin-contribution/step-by-step"
       ]
     },
-
     "ambari-alerts"
   ]
-
 };
 
 module.exports = sidebars;

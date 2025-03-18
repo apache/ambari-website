@@ -1,16 +1,10 @@
----
-title: Ambari Development
-variables:
-  AMBARI_DIR: /path/to/ambari
----
-
 # Ambari Development
 
 ## Checking out Ambari source
 
 Follow the instructions under [Checkout source code](./how-to-contribute.md) section of "How to contribute" guide.
 
-We'll refer to the top-level "ambari" directory as `{AMBARI_DIR}` in this document.
+We'll refer to the top-level "ambari" directory as `AMBARI_DIR` in this document.
 
 ## Tools needed to build Ambari
 
@@ -108,7 +102,7 @@ Note: Replace `${AMBARI_VERSION}` with a 4-digit version you want the artifacts 
 **Note**: If running into errors while compiling the ambari-metrics package due to missing the artifacts of jms, jmxri, jmxtools:
 
 ```
-[ERROR] Failed to execute goal on project ambari-metrics-kafka-sink: Could not resolve dependencies for project org.apache.ambari:ambari-metrics-kafka-sink:jar:2.0.0-0: The following artifacts could not be resolved: javax.jms:jms:jar:1.1, com.sun.jdmk:jmxtools:jar:1.2.1, com.sun.jmx:jmxri:jar:1.2.1: Could not transfer artifact javax.jms:jms:jar:1.1 from/to java.net (https://maven-repository.dev.java.net/nonav/repository) of type legacy using the available factories WagonRepositoryConnectorFactory
+[ERROR] Failed to execute goal on project ambari-metrics-kafka-sink: Could not resolve dependencies for project org.apache.ambari:ambari-metrics-kafka-sink:jar:2.0.0-0: The following artifacts could not be resolved: javax.jms:jms:jar:1.1, com.sun.jdmk:jmxtools:jar:1.2.1, com.sun.jmx:jmxri:jar:1.2.1: Could not transfer artifact javax.jms:jms:jar:1.1 from/to java.net (https://maven-repository.dev.java.net/nonav/repository): No connector available to access repository java.net (https://maven-repository.dev.java.net/nonav/repository) of type legacy using the available factories WagonRepositoryConnectorFactory
 ```
 
 The work around is to manually install the three missing artifacts:
@@ -159,15 +153,15 @@ mvn -B clean install package jdeb:jdeb -DskipTests -Dpython.ver="python >= 2.6" 
 
 Ambari Server will create following packages
 
-- RPM will be created under `{AMBARI_DIR}`/ambari-server/target/rpm/ambari-server/RPMS/noarch.
+- RPM will be created under `AMBARI_DIR`/ambari-server/target/rpm/ambari-server/RPMS/noarch.
 
-- DEB will be created under `{AMBARI_DIR}`/ambari-server/target/
+- DEB will be created under `AMBARI_DIR`/ambari-server/target/
 
 Ambari Agent will create following packages
 
-- RPM will be created under `{AMBARI_DIR}`/ambari-agent/target/rpm/ambari-agent/RPMS/x86_64.
+- RPM will be created under `AMBARI_DIR`/ambari-agent/target/rpm/ambari-agent/RPMS/x86_64.
 
-- DEB will be created under `{AMBARI_DIR}`/ambari-agent/target
+- DEB will be created under `AMBARI_DIR`/ambari-agent/target
 
 Optional parameters:
 

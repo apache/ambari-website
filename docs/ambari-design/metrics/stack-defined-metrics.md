@@ -10,8 +10,7 @@ Location of the **metrics.json** in the stack:
 
 Level|Location|Comment
 -----|--------|-------
-Cluster & Host | ganglia_properties.json | Presently, this file defines metrics for Host Component and Service Components as well but these are only used for older versions of stack < 2.0 and unit tests.
-The Cluster and Host sections of this json file drive the Dashboard graphs.
+Cluster & Host | ganglia_properties.json | Presently, this file defines metrics for Host Component and Service Components as well but these are only used for older versions of stack < 2.0 and unit tests.<br></br>The Cluster and Host sections of this json file drive the Dashboard graphs.
 Component & Host Component | common-services.&lt;SERVICE_NAME&gt; | This file contains definition of metrics mapping for Ambari Metrics (type = ganglia) and JMX.
 
 **Note**: The individual stacks that override behavior from common services can redefine the metrics.json file, the inheritance is all-or-nothing, meaning if metrics.json file is present in the child stack, it will override the metrics.json from common-services
@@ -23,9 +22,9 @@ Key|Allowed Values|Comments
 Type  |"ganglia" / "jmx" |type = ganglia implies Metrics Service request fulfilled by either a Ganglia (up to version 2.0) or Ambari Metrics (2.0 and above) backend service, this decision is taken by Ambari server at runtime.
 Category | "default" / "performance" ... |This is to group metrics into subsets for better navigability
 Metrics |metricKey : `{ "metricName": "", "pointInTime": "", "temporal": "" }` | metricKey = Key to be used by REST API. This is unique for a service and identifies the requested metric as well as what endpoint to use for serving the data (AMS vs JMX)
-metricName = Name to use for the Metrics Service backend
-pointInTime = Get latest value, no time range query allowed
-temporal = Time range query supported
+  * metricName = Name to use for the Metrics Service backend
+  * pointInTime = Get latest value, no time range query allowed
+  * temporal = Time range query supported
 
 Example:
 

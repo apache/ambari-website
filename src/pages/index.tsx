@@ -54,7 +54,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg margin-bottom--sm"
-            to="/docs/quick-start/quick-start-guide">
+            to="/docs/3.0.0/introduction">
             GET STARTED
           </Link>
         </div>
@@ -82,7 +82,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
          <Link
             className="button button--primary button--lg margin-right--sm"
-            to="/docs/quick-start/quick-start-guide">
+            to="/docs/3.0.0/introduction">
             GET STARTED
           </Link>
           <Link

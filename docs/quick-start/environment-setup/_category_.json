@@ -1,0 +1,8 @@
+{
+  "label": "Environment Setup",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Configure your environment for Apache Ambari installation using Vagrant, Docker, or Bare Metal/KVM"
+  }
+}

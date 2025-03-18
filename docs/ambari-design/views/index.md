@@ -30,7 +30,7 @@ The following section describes the basic terminology associated with views.
 
 A view can consist of **client-side assets** (i.e. the UI that is exposed in Ambari Web) and **server-side resources** (i.e. the classes that expose REST end points). When the view loads into Ambari Web, the view UI can use the view server-side resources as necessary to deliver the view functionality.
 
-![Apache Ambari > Views > view-components.jpg](./imgs/view-components.jpg 'Apache Ambari > Views > view-components.jpg')
+![Apache Ambari > Views > view-components.jpg](./imgs/view-components.jpg)
 
 ### Client-side Assets
 
@@ -68,17 +68,7 @@ view.jar
 
 Multiple versions of a given view can be deployed into Ambari and multiple instances of each view can be created for each version. For example, I can have a view named FILES and deploy versions 0.1.0 and 0.2.0. I can then create instances of each version `FILES_0.1.0` and `FILES_0.2.0` allowing some Ambari users to have an older version of FILES (0.1.0), and other users to have a newer version (0.2.0).
 
-## Versions and Instances
-
-Multiple versions of a given view can be deployed into Ambari and multiple instances of each view can be created for each version. For example, I can have a view named FILES and deploy versions 0.1.0 and 0.2.0. I can then create instances of each version `FILES_0.1.0` and `FILES_0.2.0` allowing some Ambari users to have an older version of FILES (0.1.0), and other users to have a newer version (0.2.0). I can also create multiple instances for each version, configuring each differently.
-
-![Apache Ambari > Views > view-versions.jpg](./imgs/view-versions.jpg 'Apache Ambari > Views > view-versions.jpg')
-
-### Instance Configuration Parameters
-
-As part of a view definition, the instance configuration parameters are specified (i.e. "these parameters are needed to configure an instance of this view"). When you create a view instance, you specify the configuration parameters specific to that instance. Since parameters are scoped to a particular view instance, you can have multiple instances of a view, each instance configured differently.
-
-Using the example above, I can create two instances of the `FILES_0.2.0` version, one instance that is configured a certain way and the second that is configured differently. This allows some Ambari users to use `FILES` one way, and other users a different way.
+Using the example above, I can create two instances of the `FILES_0.2.0` version, one instance that is configured a certain way and the second that is configured differently. This allows some Ambari users to use FILES one way, and other users a different way.
 
 See [Framework Services](./framework-services.md) for more information on instance configuration properties.
 
@@ -86,4 +76,4 @@ See [Framework Services](./framework-services.md) for more information on instan
 
 The lifecycle of a view is shown below. As you deploy a view and create instances of a view, server-side framework events are invoked. See [Framework Services](./framework-services.md) for more information on capabilities that the framework exposes on the server-side for views.
 
-![Apache Ambari > Views > view-lifecycle.png](./imgs/view-lifecycle.png 'Apache Ambari > Views > view-lifecycle.png')
+![Apache Ambari > Views > view-lifecycle.png](./imgs/view-lifecycle.png)

@@ -14,25 +14,25 @@ Apache Ambari 3.0.0 can be installed in several different environments:
 
 The Vagrant environment provides a quick way to set up a development cluster using virtual machines on your local computer. This is ideal for testing and development purposes.
 
-[View Vagrant Environment Setup Guide](/docs/quick-start/environment-setup/vagrant-environment-setup)
+[View Vagrant Environment Setup Guide](environment-setup/vagrant-environment-setup.md)
 
 ### 2. Docker Environment
 
 The Docker environment offers a lightweight, containerized approach using multiple containers with one server and two agents. This setup uses Rocky Linux 8 as the base image and includes container networking, SSH setup, and security configuration.
 
-[View Docker Environment Setup Guide](/docs/quick-start/environment-setup/docker-environment-setup)
+[View Docker Environment Setup Guide](environment-setup/docker-environment-setup.md)
 
 ### 3. Bare Metal/KVM Setup
 
 For production deployments or larger development environments, the Bare Metal/KVM setup covers both physical servers and KVM virtual machines. This guide includes detailed system requirements, network configuration, and both development and production security settings.
 
-[View Bare Metal/KVM Setup Guide](/docs/quick-start/environment-setup/bare-metal-kvm-setup)
+[View Bare Metal/KVM Setup Guide](environment-setup/bare-metal-kvm-setup.md)
 
 ## Installation Guide
 
 Once you have set up your environment using one of the methods above, you can proceed with the Ambari installation process:
 
-[View Installation Guide](/docs/quick-start/installation-guide)
+[View Installation Guide](installation-guide.md)
 
 ## Key Features in Ambari 3.0.0
 
@@ -77,11 +77,11 @@ Apache Ambari 3.0.0 includes numerous enhancements and improvements across vario
 - **Rocky Linux 8 Compatibility** - Added support for Rocky Linux 8 deployments
 - **Enhanced Installation Workflows** - Streamlined installation process across environments
 
-For a complete list of new features, improvements, and fixes, please refer to the [Release Notes](/docs/release-notes).
+For a complete list of new features, improvements, and fixes, please refer to the [Release Notes](release-notes.md)
 
 ## Getting Help
 
-If you encounter any issues during setup or installation, please refer to our [FAQ](/docs/faq) for common questions and troubleshooting tips.
+If you encounter any issues during setup or installation, please refer to our [FAQ](faq.md) for common questions and troubleshooting tips.
 
 For additional help, you can:
 

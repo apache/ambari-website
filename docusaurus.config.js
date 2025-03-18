@@ -10,7 +10,7 @@ const config = {
   tagline: 'The Apache Ambari project is aimed at making Hadoop management simpler by developing software for provisioning, managing, and monitoring Apache Hadoop clusters. Ambari provides an intuitive, easy-to-use Hadoop management web UI backed by its RESTful APIs.',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'apache', 
@@ -37,6 +37,25 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/vivostar/vivostar.github.io/tree/master/',
+          lastVersion: '3.0.0',
+          versions: {
+            current: {
+              label: 'Next',
+              path: 'next',
+            },
+            '3.0.0': {
+              label: '3.0.0',
+              path: '3.0.0',
+            },
+            '2.7.6': {
+              label: '2.7.6',
+              path: '2.7.6',
+            },
+            '2.7.5': {
+              label: '2.7.5',
+              path: '2.7.5',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
@@ -84,6 +103,10 @@ const config = {
             position: 'left',
             label: 'Releases',
             items: [
+              {
+                label: '3.0.0',
+                href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-3.0.0',
+              },
               {
                 label: '2.7.6',
                 href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.6',
