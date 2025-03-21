@@ -36,11 +36,21 @@ Repeat these steps for all the branches that needs to be synced with the remote.
 
 Apache Ambari uses JIRA to track issues including bugs and improvements, and uses Github pull requests to manage code reviews and code merges. Major design changes are discussed in JIRA and implementation changes are discussed in pull requests after a pull request is created.
 
+:::note Important Changes to JIRA Registration
+* JIRA registration is currently closed to the public
+* To get a JIRA account:
+  1. Register on [Apache JIRA](https://issues.apache.org/jira)
+  2. Contact a PMC member to approve your registration
+* Alternatively, you can:
+  1. Submit your Pull Request first
+  2. Community members will help create the corresponding JIRA ticket for you
+:::
+
 * Find an existing Apache JIRA that the change pertains to
     * Do not create a new JIRA if the change is minor and relates to an existing JIRA; add to the existing discussion and work instead
     * Look for existing pull requests that are linked from the JIRA, to understand if someone is already working on the JIRA
 
-* If the change is new, then create a new JIRA:
+* If the change is new and you have JIRA access, then create a new JIRA:
     * Provide a descriptive Title
     * Write a detailed Description. For bug reports, this should ideally include a short reproduction of the problem. For new features, it may include a design document.
     * Fill the required fields:
@@ -54,6 +64,11 @@ Apache Ambari uses JIRA to track issues including bugs and improvements, and use
         * Component. Choose the components that are affected by this change. Choose from Ambari Components
         * Affects Version. For Bugs, assign at least one version that is known to exhibit the problem or need the change
     * Do not include a patch file; pull requests are used to propose the actual change.
+
+* If you don't have JIRA access:
+    * Submit your Pull Request first
+    * In the PR description, clearly describe the issue or improvement
+    * A community member will create a JIRA ticket and link it to your PR
 
 ### Pull Request
 

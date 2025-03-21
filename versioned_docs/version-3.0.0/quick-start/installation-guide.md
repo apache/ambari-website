@@ -2,6 +2,42 @@
 
 This guide covers the installation and setup of Apache Ambari on bare metal, KVM, Docker, or Vagrant environments.
 
+## Important: Firewall Configuration
+
+:::tip Before You Begin
+Firewall settings can significantly impact cluster functionality by blocking necessary communication ports between components. Please review the following guidelines carefully.
+:::
+
+### Development & Testing Environments
+For development or testing environments, consider disabling the firewall:
+```bash
+systemctl stop firewalld
+systemctl disable firewalld
+```
+
+### Production Environments
+
+#### For System Administrators
+Configure the firewall to allow required Hadoop ecosystem ports based on your specific component deployment:
+
+| Component | Ports | Purpose |
+|-----------|-------|---------|
+| Ambari Server | 8080, 8440, 8441 | Web UI, Agent communication |
+| Core Hadoop | 8020, 9000, 50070, 50075 | HDFS NameNode, DataNode HTTP |
+| YARN | 8032, 8088, 19888 | ResourceManager, UI, JobHistory |
+| Hive | 9083, 10000 | Metastore, HiveServer2 |
+
+:::note NodeManager Ports
+YARN NodeManagers allocate containers on dynamically assigned ports (default range: 32768-65535).
+This range can be restricted via `yarn.nodemanager.resource.ports` in `yarn-site.xml`
+:::
+
+:::info For General Users
+If you're not familiar with advanced network configuration, we recommend:
+- Disabling the firewall during initial setup and cluster testing
+- Consulting with a network security specialist for production deployments
+:::
+
 ## Prerequisites
 
 Ensure you have a working environment (bare metal, KVM, Docker, or [Vagrant setup](./environment-setup/vagrant-environment-setup.md)) before proceeding.
@@ -204,16 +240,10 @@ Default credentials:
 
 ## Troubleshooting
 
-1. If you encounter firewall issues, disable it (for development environments only):
-```bash
-systemctl stop firewalld
-systemctl disable firewalld
-```
+1. Ensure proper hostname resolution by configuring `/etc/hosts` on all nodes.
 
-2. Ensure proper hostname resolution by configuring `/etc/hosts` on all nodes.
+2. For MySQL 8 connection issues, verify the JDBC URL includes the correct SSL parameters in `ambari.properties`.
 
-3. For MySQL 8 connection issues, verify the JDBC URL includes the correct SSL parameters in `ambari.properties`.
-
-4. Check service logs:
+3. Check service logs:
 - Ambari Server: `/var/log/ambari-server/ambari-server.log`
 - Ambari Agent: `/var/log/ambari-agent/ambari-agent.log`
