@@ -78,8 +78,8 @@ For development environments, you may disable the firewall:
 
 ```bash
 # Disable and stop firewalld
-systemctl disable firewalld
 systemctl stop firewalld
+systemctl disable firewalld
 ```
 
 
@@ -167,6 +167,12 @@ dnf repolist | grep devel
 ```bash
 # Install OpenJDK 8
 dnf install -y java-1.8.0-openjdk-devel
+
+# Install OpenJDK 17
+dnf install -y java-17-openjdk-devel
+
+# Configure wich version to use
+alternatives --config java
 
 # Verify Java installation
 java -version
