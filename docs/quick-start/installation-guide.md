@@ -238,6 +238,10 @@ Default credentials:
 - Username: admin
 - Password: admin
 
+## 8. Set the repository URL for the Apache Bigtop stack
+Select your OS and set the base URL
+For example: Redhat 8 BaseURL: http://repos.bigtop.apache.org/releases/3.3.0/rockylinux/8/x86_64
+
 ## Troubleshooting
 
 1. Ensure proper hostname resolution by configuring `/etc/hosts` on all nodes.

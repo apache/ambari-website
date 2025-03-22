@@ -41,10 +41,15 @@ For production environments, requirements will vary based on cluster size and wo
 ### Which operating systems are supported?
 
 Ambari 3.0.0 supports:
-- Rocky Linux 8
-- CentOS 7
-- Red Hat Enterprise Linux 7 and 8
-- Ubuntu 18.04 and 20.04
+- RHEL (Redhat Enterprise Linux) 8, 7.4, 7.3, 7.2
+- CentOS 7.4, 7.3, 7.2
+- OEL (Oracle Enterprise Linux) 7.4, 7.3, 7.2
+- Amazon Linux 2
+- SLES (SuSE Linux Enterprise Server) 12 SP3, 12 SP2
+- Ubuntu 20.04, 18.04 
+- Debian 9
+- Rocky Linux 9, 8
+- openEuler-22.03
 
 ### How do I enable the Rocky-Devel repository?
 
@@ -78,6 +83,10 @@ To permanently disable SELinux, edit `/etc/selinux/config` and set:
 ```
 SELINUX=disabled
 ```
+
+### How do I disable the firewall (using systemd)?
+1. systemctl stop firewalld
+2. systemctl disable firewalld
 
 ### How do I configure the hosts file correctly?
 
