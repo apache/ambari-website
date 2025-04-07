@@ -4,10 +4,73 @@ sidebar_position: 2
 
 # Apache Ambari 3.0.0 Release Notes
 
+## Download
+
+Apache Ambari 3.0.0 can be downloaded from the [Apache Ambari Download Page](https://apache-ambari.com/download/).
+
 ## Overview
 
 :::tip Major Release
 Apache Ambari 3.0.0 represents a significant milestone in the project's development, bringing major improvements to cluster management capabilities, user experience, and platform support. This release focuses on modernizing the technology stack, enhancing security features, and improving overall stability and performance.
+:::
+
+## Acknowledgment and Important Notes
+
+### A Message to Our Community
+
+:::info Important Transition
+We want to acknowledge that Ambari 3.0 represents a significant milestone as the first major release since the HDP project became closed source. Due to this transition, we have made some important decisions:
+
+- The 2.7.x series has reached End-of-Life (EOL) and will no longer be maintained, as we no longer have access to the HDP packaging source code.
+- Version 3.0 marks the beginning of our new mainline branch, which will receive primary maintenance and development focus.
+:::
+
+### From Our Hearts to the Community
+
+:::note A Journey Together
+The path to this release has been long and challenging. Our community has weathered significant changes and obstacles:
+
+<div class="alert alert--secondary">
+
+- 🔄 Community restructuring and transitions
+- 👥 A significantly reduced contributor base
+- 🛠 Critical infrastructure challenges, especially around RPM distribution
+- 🔨 Profound organizational changes
+
+</div>
+:::
+
+:::tip Thank You
+To every user who has stood by Ambari through these times: your patience and understanding mean more to us than words can express. We know this release has been a long time coming, and we are truly sorry for keeping you waiting.
+:::
+
+:::info With Gratitude
+Our hearts are filled with gratitude for:
+
+<div class="alert alert--success">
+
+- 🌟 The pioneers who laid Ambari's foundation
+- ⭐️ The steadfast contributors who've stayed with us through the storms
+- 💫 Every community member whose belief in open source has never wavered
+
+</div>
+
+This release exists because of your unwavering support and dedication to the open source spirit. Your commitment has been our guiding light through these challenging times.
+:::
+
+### Technical Changes
+
+#### Apache Bigtop Integration
+:::tip New Integration
+We are pleased to announce that Ambari 3.0 now uses Apache Bigtop for component packaging:
+
+<div class="alert alert--success">
+
+- 📦 [Apache Bigtop](https://github.com/apache/bigtop/) is now our default packaging system
+- 🔧 Bigtop Stack serves as the default project stack
+- 🚀 This integration provides a more sustainable and community-driven approach to package management
+
+</div>
 :::
 
 ## Release Highlights
@@ -24,11 +87,15 @@ For developers interested in compiling components for the Ambari Bigtop Stack, w
 
 ### Platform Support
 
-- Added support for Rocky Linux 8 and 9 ([AMBARI-26133](https://issues.apache.org/jira/browse/AMBARI-26133))
-- Added support for openEuler-22.03 ([AMBARI-26126](https://issues.apache.org/jira/browse/AMBARI-26126))
-- Added Java 17 support ([AMBARI-26142](https://issues.apache.org/jira/browse/AMBARI-26142), [AMBARI-26186](https://issues.apache.org/jira/browse/AMBARI-26186))
-- Added MySQL 8 support for Hive ([AMBARI-26130](https://issues.apache.org/jira/browse/AMBARI-26130))
-- Enhanced Docker environment with bigtop/puppet:trunk-rockylinux-8 image
+<div class="alert alert--info">
+
+- ✅ Added support for Rocky Linux 8 and 9 ([AMBARI-26133](https://issues.apache.org/jira/browse/AMBARI-26133))
+- ✅ Added support for openEuler-22.03 ([AMBARI-26126](https://issues.apache.org/jira/browse/AMBARI-26126))
+- ☕️ Added Java 17 support ([AMBARI-26142](https://issues.apache.org/jira/browse/AMBARI-26142), [AMBARI-26186](https://issues.apache.org/jira/browse/AMBARI-26186))
+- 🗄 Added MySQL 8 support for Hive ([AMBARI-26130](https://issues.apache.org/jira/browse/AMBARI-26130))
+- 📈 Enhanced Docker environment with bigtop/puppet:trunk-rockylinux-8 image
+
+</div>
 
 ### New Services and Components
 
@@ -159,7 +226,6 @@ For developers interested in compiling components for the Ambari Bigtop Stack, w
   - Fixed issue with 'supported-refresh-commands' element ([AMBARI-25863](https://issues.apache.org/jira/browse/AMBARI-25863))
   - Reduced excess Zookeeper and Hadoop logging ([AMBARI-24140](https://issues.apache.org/jira/browse/AMBARI-24140))
 
-
 - **Bug Fixes**:
   - Fixed OceanBase support in Ambari MySQL DDL ([AMBARI-26273](https://issues.apache.org/jira/browse/AMBARI-26273))
   - Fixed regex pattern flag position in ambari_jinja2 filters ([AMBARI-26269](https://issues.apache.org/jira/browse/AMBARI-26269))
@@ -178,77 +244,6 @@ For developers interested in compiling components for the Ambari Bigtop Stack, w
   - Fixed Ambari Component Installation Failure ([AMBARI-26323](https://issues.apache.org/jira/browse/AMBARI-26323))
   - Fixed alter dispatcher ([AMBARI-26240](https://issues.apache.org/jira/browse/AMBARI-26240))
   - Corrected spelling mistakes in documentation ([AMBARI-26104](https://issues.apache.org/jira/browse/AMBARI-26104))
-
-## Acknowledgments
-
-:::tip Our Amazing Contributors 🌟
-Apache Ambari 3.0.0 represents the collective effort of our incredible community. We are deeply honored to recognize the individuals who have shaped this milestone release:
-
-<div class="alert alert--success">
-
-### Core Contributors 💫
-These dedicated individuals have made substantial contributions to this release:
-
-- **jialiang** 🏆
-- **zrain** 🏆
-- **Peng Lu** 🏆
-- **Mohammad Arshad** 🏆
-- **Sandeep Kumar** 🏆
-- **coldless177** 🏆
-- **Vishal Suvagia** 🏆
-- **zhenye zhang** 🏆
-- **yaolei** 🏆
-- **xjmu** 🏆
-- **Himanshu Maurya** 🏆
-- **timyuer** 🏆
-- **yaruyng** 🏆
-- **tongxiaojun** 🏆
-
-### Community Champions 🌠
-Their valuable contributions have helped drive the project forward:
-
-- **Ananya Singh**
-- **rzuo**
-- **Viraj Jasani**
-- **William Horn**
-- **vanshuhassija**
-- **Yu Hou**
-- **basapuram-kumar**
-- **Prabhjyot Singh**
-- **Brahma Reddy Battula**
-- **Basapuram Kumar**
-- **Shreeya Sand**
-- **Bhavik Patel**
-
-### Technical Innovators ⚡
-Their technical expertise has been instrumental:
-
-- **lupeng**
-- **piaolingzxh**
-- **Murali Krishna**
-- **LiJie20190102**
-- **HARSHITH GANDHE**
-- **userhimanshuverma**
-- **Arnout Engelen**
-- **wangda**
-- **Dmytro Sen**
-- **Rich Bowen**
-- **Shubham Sharma**
-- **Weijian Wen**
-- **Will Guo**
-- **guluo**
-- **Peng Lee**
-- **liqinwyyx**
-
-</div>
-
-:::note Special Recognition 🎖
-A special note of appreciation goes to our Release Manager(s), whose tireless coordination and attention to detail have been crucial in bringing this release to fruition.
-:::
-
-:::tip Join Our Community! 🤝
-Every contribution, no matter how small, helps make Ambari better. We welcome new contributors to join our vibrant community!
-:::
 
 ## Known Issues
 
@@ -300,9 +295,6 @@ For detailed instructions on upgrading from previous versions, please refer to t
 | Database | PostgreSQL 10+, MySQL 5.7+, MySQL 8+, MariaDB 10.2+, OceanBase |
 | Browser | Chrome 80+, Firefox 78+, Edge 80+ |
 
-## Download
-
-Apache Ambari 3.0.0 can be downloaded from the [Apache Ambari Download Page](https://ambari.apache.org/download.html).
 
 ## Verification
 
@@ -314,5 +306,88 @@ sha256sum --check apache-ambari-3.0.0.tar.gz.sha256
 
 # Verify the PGP signature
 gpg --verify apache-ambari-3.0.0.tar.gz.asc apache-ambari-3.0.0.tar.gz
-
 ```
+
+The PGP signatures can be verified using the public keys of the Apache Ambari Release Managers, which can be found on the [Apache Ambari Download Page](https://ambari.apache.org/download.html).
+
+## Acknowledgments
+
+:::tip Our Amazing Contributors 🌟
+Apache Ambari 3.0.0 represents the collective effort of our incredible community. We are deeply honored to recognize the individuals who have shaped this milestone release:
+
+<div class="alert alert--success">
+
+### Core Contributors 💫
+These dedicated individuals have made substantial contributions to this release:
+
+- **jialiang** 🏆
+- **zrain** 🏆
+- **Peng Lu** 🏆
+- **Mohammad Arshad** 🏆
+- **Sandeep Kumar** 🏆
+- **coldless177** 🏆
+- **Vishal Suvagia** 🏆
+- **zhenye zhang** 🏆
+- **yaolei** 🏆
+- **xjmu** 🏆
+- **Himanshu Maurya** 🏆
+- **timyuer** 🏆
+- **yaruyng** 🏆
+- **tongxiaojun** 🏆
+### Community Champions 🌠
+Their valuable contributions have helped drive the project forward:
+
+- **Ananya Singh**
+- **rzuo**
+- **Viraj Jasani**
+- **William Horn**
+- **vanshuhassija**
+- **Yu Hou**
+- **basapuram-kumar**
+- **Prabhjyot Singh**
+- **Brahma Reddy Battula**
+- **Basapuram Kumar**
+- **Shreeya Sand**
+- **Bhavik Patel**
+
+### Technical Innovators ⚡
+Their technical expertise has been instrumental:
+
+- **lupeng**
+- **piaolingzxh**
+- **Murali Krishna**
+- **LiJie20190102**
+- **HARSHITH GANDHE**
+- **userhimanshuverma**
+- **Arnout Engelen**
+- **wangda**
+- **Dmytro Sen**
+- **Rich Bowen**
+- **Shubham Sharma**
+- **Weijian Wen**
+- **Will Guo**
+- **guluo**
+- **Peng Lee**
+- **liqinwyyx**
+
+</div>
+
+:::note Special Recognition 🎖
+A special note of appreciation goes to our Release Manager(s), whose tireless coordination and attention to detail have been crucial in bringing this release to fruition.
+:::
+
+:::tip Join Our Community! 🤝
+Every contribution, no matter how small, helps make Ambari better. We welcome new contributors to join our vibrant community!
+:::
+
+## Community
+
+We welcome your feedback and contributions to Apache Ambari:
+
+- [Mailing Lists](https://ambari.apache.org/mail-lists.html)
+- [Issue Tracker](https://issues.apache.org/jira/projects/AMBARI)
+- [GitHub Repository](https://github.com/apache/ambari)
+
+## License
+
+Apache Ambari is released under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).

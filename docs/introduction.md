@@ -29,17 +29,14 @@ Ambari enables Application Developers and System Integrators to:
 
 ## Getting Started with Ambari
 
-Follow the [installation guide for Ambari 2.7.6](https://cwiki.apache.org/confluence/display/AMBARI/Installation+Guide+for+Ambari+2.7.6).
+Follow the [quick start guide for Ambari 3.0.0](quick-start/quick-start-guide.md).
 
 Note: Ambari currently supports the 64-bit version of the following Operating Systems:
 
-* RHEL (Redhat Enterprise Linux) 7.4, 7.3, 7.2
-* CentOS 7.4, 7.3, 7.2
-* OEL (Oracle Enterprise Linux) 7.4, 7.3, 7.2
-* Amazon Linux 2
-* SLES (SuSE Linux Enterprise Server) 12 SP3, 12 SP2
-* Ubuntu 14 and 16
-* Debian 9
+* Rocky Linux 8
+* Rocky Linux 9
+* OpenEuler 22
+* Other operating systems will be supported in future releases.
 
 ## Get Involved
 

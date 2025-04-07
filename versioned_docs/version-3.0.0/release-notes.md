@@ -4,6 +4,10 @@ sidebar_position: 2
 
 # Apache Ambari 3.0.0 Release Notes
 
+## Download
+
+Apache Ambari 3.0.0 can be downloaded from the [Apache Ambari Download Page](https://apache-ambari.com/download/).
+
 ## Overview
 
 :::tip Major Release
@@ -291,9 +295,6 @@ For detailed instructions on upgrading from previous versions, please refer to t
 | Database | PostgreSQL 10+, MySQL 5.7+, MySQL 8+, MariaDB 10.2+, OceanBase |
 | Browser | Chrome 80+, Firefox 78+, Edge 80+ |
 
-## Download
-
-Apache Ambari 3.0.0 can be downloaded from the [Apache Ambari Download Page](https://ambari.apache.org/download.html).
 
 ## Verification
 
