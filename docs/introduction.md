@@ -54,28 +54,45 @@ https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
 https://apache-ambari.com/dist/bigtop//3.3.0/rocky9/
 
 
-## Create a local yum
-step 1.Create createrepo
-```
-sudo dnf install createrepo
-```
-step 2.Create directory
-```
-sudo mkdir -p /var/www/html/ambari-repo
-sudo chmod -R 755 /var/www/html/ambari-repo
-```
-step 3.Download and move RPM software package
-```
-cd /var/www/html/ambari-repo
-sudo wget -r -np -nH --cut-dirs=2 --reject "index.html*" https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
+## Creating Local Repository
+1. Install createrepo package
 
-sudo wget -r -np -nH --cut-dirs=2 --reject "index.html*" https://apache-ambari.com/dist/bigtop//3.3.0/rocky9/
-```
-step 4.Create yum metadata
-```
+sudo dnf install createrepo
+
+2. Create repository directory
+
+sudo mkdir -p /var/www/html/ambari-repo/{ambari,bigtop}
+sudo chmod -R 755 /var/www/html/ambari-repo
+
+3. Download and move RPM packages
+
+# For Rocky Linux 8:
+cd /var/www/html/ambari-repo/ambari
+wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.com/dist/ambari/3.0.0/rocky8/
+
+cd /var/www/html/ambari-repo/bigtop
+wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.com/dist/bigtop/3.3.0/rocky8/
+
+# For Rocky Linux 9:
+cd /var/www/html/ambari-repo/ambari
+wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.com/dist/ambari/3.0.0/rocky9/
+
+cd /var/www/html/ambari-repo/bigtop
+wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.com/dist/bigtop/3.3.0/rocky9/
+
+4. Create repository metadata
+
 cd /var/www/html/ambari-repo
-sudo createrepo .
-```
+sudo createrepo ambari
+sudo createrepo bigtop
+
+Important Notes
+
+- All packages are built for x86_64 architecture
+- Packages are tested on Rocky Linux 8 and 9
+- Updates are provided on a best-effort basis
+
+
 
 ## Ambari 3.0.0
 

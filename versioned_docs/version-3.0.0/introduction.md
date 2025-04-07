@@ -53,28 +53,18 @@ https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
 https://apache-ambari.com/dist/bigtop//3.3.0/rocky9/
 
 
-
-
-# Apache Ambari Download
-1. Download Links for Apache Ambari 3.0.0
-https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
-
-2. Download Links for Apache Ambari Bigtop stack 3.0.0
-https://apache-ambari.com/dist/bigtop//3.3.0/rocky9/
-
-
 ## Creating Local Repository
-step 1.Install createrepo package
-```
+1. Install createrepo package
+
 sudo dnf install createrepo
-```
-step 2.Create repository directory
-```
+
+2. Create repository directory
+
 sudo mkdir -p /var/www/html/ambari-repo/{ambari,bigtop}
 sudo chmod -R 755 /var/www/html/ambari-repo
-```
-step 3.Download and move RPM packages
-```
+
+3. Download and move RPM packages
+
 # For Rocky Linux 8:
 cd /var/www/html/ambari-repo/ambari
 wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.com/dist/ambari/3.0.0/rocky8/
@@ -88,22 +78,24 @@ wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.co
 
 cd /var/www/html/ambari-repo/bigtop
 wget -r -np -nH --cut-dirs=4 --reject 'index.html*' https://www.apache-ambari.com/dist/bigtop/3.3.0/rocky9/
-```
-step 4.Create repository metadata
-```
+
+4. Create repository metadata
+
 cd /var/www/html/ambari-repo
 sudo createrepo ambari
 sudo createrepo bigtop
-```
+
 Important Notes
+
 - All packages are built for x86_64 architecture
 - Packages are tested on Rocky Linux 8 and 9
 - Updates are provided on a best-effort basis
 
 
+
 ## Ambari 3.0.0
 
-| component | CPU | SO| Version |
+| component | CPU | OS | Version |
 | --- | --- | ---- | ---- |
 | ambari-agent | x86_64 | Rocky Linux 9 | ambari-agent-3.0.0.0-0.x86_64.rpm |
 | ambari-server | x86_64 | Rocky Linux 9 | ambari-server-3.0.0.0-0.x86_64.rpm |
@@ -112,7 +104,7 @@ Important Notes
 
 ## bigtop stack 3.3.0 
 
-| component | CPU | SO | Version |
+| component | CPU | OS | Version |
 | --- | --- | ---- | ---- |
 | alluxio | x86_64 | Rocky Linux 9 | alluxio_3_3_0-2.9.3-1.el9.x86_64.rpm  |
 | bigtop-groovy | x86_64 | Rocky Linux 9 | bigtop-groovy-2.5.4-1.el9.noarch.rpm |
