@@ -96,7 +96,7 @@ Important Notes
 
 ## Ambari 3.0.0
 
-| component | CPU | SO| Version |
+| component | CPU | OS | Version |
 | --- | --- | ---- | ---- |
 | ambari-agent | x86_64 | Rocky Linux 9 | ambari-agent-3.0.0.0-0.x86_64.rpm |
 | ambari-server | x86_64 | Rocky Linux 9 | ambari-server-3.0.0.0-0.x86_64.rpm |
@@ -105,7 +105,7 @@ Important Notes
 
 ## bigtop stack 3.3.0 
 
-| component | CPU | SO | Version |
+| component | CPU | OS | Version |
 | --- | --- | ---- | ---- |
 | alluxio | x86_64 | Rocky Linux 9 | alluxio_3_3_0-2.9.3-1.el9.x86_64.rpm  |
 | bigtop-groovy | x86_64 | Rocky Linux 9 | bigtop-groovy-2.5.4-1.el9.noarch.rpm |
