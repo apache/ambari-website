@@ -47,6 +47,9 @@ jobs:
           echo 'staging:'           > .asf.yaml
           echo '  profile: ~'       >> .asf.yaml
           echo '  whoami: asf-site' >> .asf.yaml
+          echo "" >> .asf.yaml
+          echo 'publish:'           > .asf.yaml
+          echo '  whoami: asf-site' >> .asf.yaml
           git add .asf.yaml
           git commit -m '.asf.yaml'
           git push origin asf-site

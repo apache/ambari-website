@@ -184,7 +184,10 @@ const config = {
         additionalLanguages: ['bash', 'diff', 'json'],
       },
     }),
-  plugins: ['docusaurus-plugin-less',],
+  plugins: [
+    'docusaurus-plugin-less',
+    require.resolve('./src/plugins/csp-plugin'),
+  ],
 };
 
 export default config;
