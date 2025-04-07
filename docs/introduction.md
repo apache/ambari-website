@@ -46,7 +46,7 @@ Visit the [Ambari Wiki](https://cwiki.apache.org/confluence/display/AMBARI/Ambar
 
 
 
-# Apache Ambari 社区下载站点
+# Apache Ambari Download
 1. Download Links for Apache Ambari 3.0.0
 https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
 
@@ -54,38 +54,32 @@ https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
 https://apache-ambari.com/dist/bigtop//3.3.0/rocky9/
 
 
-## 创建本地仓库
-step 1.安装 createrepo 软件包
+## Create a local yum
+step 1.Create createrepo
 ```
 sudo dnf install createrepo
 ```
-step 2.创建仓库目录
+step 2.Create directory
 ```
 sudo mkdir -p /var/www/html/ambari-repo
 sudo chmod -R 755 /var/www/html/ambari-repo
 ```
-step 3.下载并移动 RPM 软件包
+step 3.Download and move RPM software package
 ```
 cd /var/www/html/ambari-repo
 sudo wget -r -np -nH --cut-dirs=2 --reject "index.html*" https://apache-ambari.com/dist/ambari/3.0.0/rocky9/
 
 sudo wget -r -np -nH --cut-dirs=2 --reject "index.html*" https://apache-ambari.com/dist/bigtop//3.3.0/rocky9/
 ```
-step 4.创建仓库元数据
+step 4.Create yum metadata
 ```
 cd /var/www/html/ambari-repo
 sudo createrepo .
 ```
 
-重要说明
-- 所有软件包均针对 x86_64 架构构建
-- 软件包已在 Rocky Linux 8 和 9 上测试
-- 更新基于最大努力原则提供
-
-
 ## Ambari 3.0.0
 
-| 组件 | CPU 构架 | 支持操作系统 | 版本 |
+| component | CPU | SO| Version |
 | --- | --- | ---- | ---- |
 | ambari-agent | x86_64 | Rocky Linux 9 | ambari-agent-3.0.0.0-0.x86_64.rpm |
 | ambari-server | x86_64 | Rocky Linux 9 | ambari-server-3.0.0.0-0.x86_64.rpm |
@@ -94,7 +88,7 @@ sudo createrepo .
 
 ## bigtop stack 3.3.0 
 
-| 组件 | CPU 构架 | 支持操作系统 | 版本 |
+| component | CPU | SO | Version |
 | --- | --- | ---- | ---- |
 | alluxio | x86_64 | Rocky Linux 9 | alluxio_3_3_0-2.9.3-1.el9.x86_64.rpm  |
 | bigtop-groovy | x86_64 | Rocky Linux 9 | bigtop-groovy-2.5.4-1.el9.noarch.rpm |
