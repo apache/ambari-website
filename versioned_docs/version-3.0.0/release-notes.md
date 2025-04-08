@@ -4,10 +4,6 @@ sidebar_position: 2
 
 # Apache Ambari 3.0.0 Release Notes
 
-## Download
-
-Apache Ambari 3.0.0 can be downloaded from the [Apache Ambari Download Page](https://apache-ambari.com/download/).
-
 ## Overview
 
 :::tip Major Release
@@ -317,7 +313,7 @@ Apache Ambari 3.0.0 represents the collective effort of our incredible community
 
 <div class="alert alert--success">
 
-### Core Contributors 💫
+###  Contributors 💫
 These dedicated individuals have made substantial contributions to this release:
 
 - **jialiang** 🏆
@@ -334,8 +330,6 @@ These dedicated individuals have made substantial contributions to this release:
 - **timyuer** 🏆
 - **yaruyng** 🏆
 - **tongxiaojun** 🏆
-### Community Champions 🌠
-Their valuable contributions have helped drive the project forward:
 
 - **Ananya Singh**
 - **rzuo**
@@ -350,8 +344,6 @@ Their valuable contributions have helped drive the project forward:
 - **Shreeya Sand**
 - **Bhavik Patel**
 
-### Technical Innovators ⚡
-Their technical expertise has been instrumental:
 
 - **lupeng**
 - **piaolingzxh**
