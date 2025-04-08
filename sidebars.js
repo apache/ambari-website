@@ -26,6 +26,7 @@ const sidebars = {
       "collapsed": false,
       "items": [
         "quick-start/quick-start-guide",
+        "quick-start/download",
         {
           "type": "category",
           "label": "Environment Setup",
