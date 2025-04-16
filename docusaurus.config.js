@@ -47,13 +47,13 @@ const config = {
               label: '3.0.0',
               path: '3.0.0',
             },
-            '2.7.6': {
-              label: '2.7.6',
-              path: '2.7.6',
+            '2.7.9': {
+              label: '2.7.9',
+              path: '2.7.9',
             },
-            '2.7.5': {
-              label: '2.7.5',
-              path: '2.7.5',
+            '2.7.8': {
+              label: '2.7.8',
+              path: '2.7.8',
             },
           },
         },
@@ -108,12 +108,12 @@ const config = {
                 href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-3.0.0',
               },
               {
-                label: '2.7.6',
-                href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.6',
+                label: '2.7.9',
+                href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.9',
               },
               {
-                label: '2.7.5',
-                href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.5',
+                label: '2.7.8',
+                href: 'https://www.apache.org/dyn/closer.cgi/ambari/ambari-2.7.8',
               },
             ],
           },
