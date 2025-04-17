@@ -29,7 +29,7 @@ Ambari enables Application Developers and System Integrators to:
 
 ## Getting Started with Ambari
 
-Follow the [installation guide for Ambari 2.7.6](https://cwiki.apache.org/confluence/display/AMBARI/Installation+Guide+for+Ambari+2.7.6).
+Follow the [installation guide for Ambari 2.7.9](https://cwiki.apache.org/confluence/display/AMBARI/Installation+Guide+for+Ambari+2.7.9).
 
 Note: Ambari currently supports the 64-bit version of the following Operating Systems:
 
