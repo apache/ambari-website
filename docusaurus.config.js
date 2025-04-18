@@ -122,7 +122,7 @@ const config = {
             position: 'left',
             label: 'Project Information',
             items: [
-            /* Temporarily commented out because these two documents are too large and depend on the Ambari project generation.
+              /* Temporarily commented out because these two documents are too large and depend on the Ambari project generation.
                  They cannot be treated as static files pushed to git, and they also block the GitHub workflow process.
              {
                 label: 'Old Version Website',
@@ -157,10 +157,6 @@ const config = {
                 target: '_blank',
                 to: '/old/mail-lists.html',
               },*/
-              {
-                label: "Project License",
-                href: 'https://www.apache.org/licenses/'
-              }
             ],
           },
           {
@@ -172,6 +168,46 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          {
+            title: 'Legal',
+            type: 'dropdown',
+            position: 'left',
+            label: 'Apache',
+            items: [
+              {
+                label: 'License',
+                href: 'https://www.apache.org/licenses/',
+              },
+              {
+                label: 'Apache Software Foundation',
+                href: 'https://www.apache.org/',
+              },
+              {
+                label: 'ApacheCon Events',
+                href: 'https://www.apachecon.com/',
+              },
+              {
+                label: 'Privacy Policy',
+                href: 'https://privacy.apache.org/policies/privacy-policy-public.html',
+              },
+              {
+                label: 'Security',
+                href: 'https://www.apache.org/security/',
+              },
+              {
+                label: 'Trademarks',
+                href: 'https://www.apache.org/foundation/marks/',
+              },
+              {
+                label: 'Sponsorship',
+                href: 'https://www.apache.org/foundation/sponsorship.html',
+              },
+              {
+                label: 'Thanks our Sponsors',
+                href: 'https://www.apache.org/foundation/thanks.html',
+              },
+            ],
+          },
         ],
       },
       footer: {
@@ -182,12 +218,12 @@ const config = {
         theme: themes.github,
         darkTheme: themes.dracula,
         additionalLanguages: ['bash', 'diff', 'json'],
-      },
+      }
     }),
-  plugins: [
-    'docusaurus-plugin-less',
-    require.resolve('./src/plugins/csp-plugin'),
-  ],
-};
+    plugins: [
+      'docusaurus-plugin-less',
+      require.resolve('./src/plugins/csp-plugin'),
+    ],
+  };
 
 export default config;
