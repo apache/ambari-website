@@ -91,6 +91,6 @@ If you encounter any issues during setup or installation, please refer to our [*
 
 For additional help, you can:
 
-- Join the [**Ambari mailing lists**](https://ambari.apache.org/mail-lists.html)
+- Join the [**Ambari mailing lists**](mailing-list.md)
 - File issues in the [**Ambari JIRA**](https://issues.apache.org/jira/projects/AMBARI)
 - Contribute to the [**Ambari Wiki**](https://cwiki.apache.org/confluence/display/AMBARI/Ambari)
