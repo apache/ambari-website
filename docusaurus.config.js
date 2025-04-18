@@ -122,72 +122,58 @@ const config = {
             position: 'left',
             label: 'Project Information',
             items: [
-            /* Temporarily commented out because these two documents are too large and depend on the Ambari project generation.
-                 They cannot be treated as static files pushed to git, and they also block the GitHub workflow process.
-             {
-                label: 'Old Version Website',
-                target: '_blank',
-                to: '/old/',
+              {
+                label: 'Apache Software Foundation',
+                href: 'https://www.apache.org/',
               },
               {
-                label: 'Swagger API Doc',
-                target: '_blank',
-                to: '/swagger/',
+                label: 'ApacheCon Events',
+                href: 'https://www.apachecon.com/',
               },
               {
-                label: 'Java Doc',
-                target: '_blank',
-                to: '/javadoc/apidocs',
-              },*/
-              {
-                label: 'Project Team',
-                target: '_blank',
-                to: '/team',
+                label: 'Mailing List',
+                href: 'mailto:dev@ambari.apache.org',
               },
-              {
-                label: 'JIRA',
-                href: 'https://issues.apache.org/jira/projects/AMBARI/issues',
-              },
-              {
-                label: 'User Group',
-                href: 'https://www.meetup.com/Apache-Ambari-User-Group/',
-              },
- /*             {
-                label: 'Maling List',
-                target: '_blank',
-                to: '/old/mail-lists.html',
-              },*/
-              {
-                label: "Project License",
-                href: 'https://www.apache.org/licenses/'
-              }
             ],
           },
           {
-            type: 'docsVersionDropdown',
-            position: 'right',
-          },
-          {
-            href: 'https://github.com/apache/ambari',
-            label: 'GitHub',
-            position: 'right',
+            title: 'Legal',
+            type: 'dropdown',
+            position: 'left',
+            label: 'Apache',
+            items: [
+              {
+                label: 'License',
+                href: 'https://www.apache.org/licenses/',
+              },
+              {
+                label: 'Privacy Policy',
+                href: 'https://privacy.apache.org/policies/privacy-policy-public.html',
+              },
+              {
+                label: 'Security',
+                href: 'https://www.apache.org/security/',
+              },
+              {
+                label: 'Trademarks',
+                href: 'https://www.apache.org/foundation/marks/',
+              },
+              {
+                label: 'Sponsorship',
+                href: 'https://www.apache.org/foundation/sponsorship.html',
+              },
+              {
+                label: 'Thanks our Sponsors',
+                href: 'https://www.apache.org/foundation/thanks.html',
+              },
+            ],
           },
         ],
       },
       footer: {
-        style: 'dark',
-        copyright: `Copyright ${new Date().getFullYear()} Apache Ambari. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: themes.github,
-        darkTheme: themes.dracula,
-        additionalLanguages: ['bash', 'diff', 'json'],
-      },
+        copyright: `Copyright 2025 Apache Ambari. Built with Docusaurus.<br/>Apache Ambari and the Apache Ambari logo are trademarks of The Apache Software Foundation.`,
+      }
     }),
-  plugins: [
-    'docusaurus-plugin-less',
-    require.resolve('./src/plugins/csp-plugin'),
-  ],
 };
 
-export default config;
+module.exports = config;

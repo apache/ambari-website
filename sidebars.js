@@ -188,7 +188,55 @@ const sidebars = {
         "ambari-plugin-contribution/step-by-step"
       ]
     },
-    "ambari-alerts"
+    "ambari-alerts",
+    {
+      "type": "category",
+      "label": "Apache",
+      "collapsible": true,
+      "collapsed": false,
+      "items": [
+        {
+          "type": "link",
+          "label": "Foundation",
+          "href": "https://www.apache.org/"
+        },
+        {
+          "type": "link",
+          "label": "Events",
+          "href": "https://www.apachecon.com/"
+        },
+        {
+          "type": "link",
+          "label": "License",
+          "href": "https://www.apache.org/licenses/"
+        },
+        {
+          "type": "link",
+          "label": "Thanks",
+          "href": "https://www.apache.org/foundation/thanks.html"
+        },
+        {
+          "type": "link",
+          "label": "Security",
+          "href": "https://www.apache.org/security/" // if we have specific security.html, it should be here
+        },
+        {
+          "type": "link",
+          "label": "Sponsorship",
+          "href": "https://www.apache.org/foundation/sponsorship.html"
+        },
+        {
+          "type": "link",
+          "label": "Trademarks",
+          "href": "https://www.apache.org/foundation/marks/"
+        },
+        {
+          "type": "link",
+          "label": "Privacy",
+          "href": "https://privacy.apache.org/policies/privacy-policy-public.html"
+        },
+      ]
+    }
   ]
 };
 
