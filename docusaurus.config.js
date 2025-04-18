@@ -160,6 +160,15 @@ const config = {
             ],
           },
           {
+            type: 'docsVersionDropdown',
+            position: 'right',
+          },
+          {
+            href: 'https://github.com/apache/ambari',
+            label: 'GitHub',
+            position: 'right',
+          },
+          {
             title: 'Legal',
             type: 'dropdown',
             position: 'left',
