@@ -122,18 +122,41 @@ const config = {
             position: 'left',
             label: 'Project Information',
             items: [
-              {
-                label: 'Apache Software Foundation',
-                href: 'https://www.apache.org/',
+              /* Temporarily commented out because these two documents are too large and depend on the Ambari project generation.
+                 They cannot be treated as static files pushed to git, and they also block the GitHub workflow process.
+             {
+                label: 'Old Version Website',
+                target: '_blank',
+                to: '/old/',
               },
               {
-                label: 'ApacheCon Events',
-                href: 'https://www.apachecon.com/',
+                label: 'Swagger API Doc',
+                target: '_blank',
+                to: '/swagger/',
               },
               {
-                label: 'Mailing List',
-                href: 'mailto:dev@ambari.apache.org',
+                label: 'Java Doc',
+                target: '_blank',
+                to: '/javadoc/apidocs',
+              },*/
+              {
+                label: 'Project Team',
+                target: '_blank',
+                to: '/team',
               },
+              {
+                label: 'JIRA',
+                href: 'https://issues.apache.org/jira/projects/AMBARI/issues',
+              },
+              {
+                label: 'User Group',
+                href: 'https://www.meetup.com/Apache-Ambari-User-Group/',
+              },
+ /*             {
+                label: 'Maling List',
+                target: '_blank',
+                to: '/old/mail-lists.html',
+              },*/
             ],
           },
           {
@@ -145,6 +168,14 @@ const config = {
               {
                 label: 'License',
                 href: 'https://www.apache.org/licenses/',
+              },
+              {
+                label: 'Apache Software Foundation',
+                href: 'https://www.apache.org/',
+              },
+              {
+                label: 'ApacheCon Events',
+                href: 'https://www.apachecon.com/',
               },
               {
                 label: 'Privacy Policy',
@@ -171,9 +202,19 @@ const config = {
         ],
       },
       footer: {
-        copyright: `Copyright 2025 Apache Ambari. Built with Docusaurus.<br/>Apache Ambari and the Apache Ambari logo are trademarks of The Apache Software Foundation.`,
+        style: 'dark',
+        copyright: `Copyright ${new Date().getFullYear()} Apache Ambari. Built with Docusaurus.`,
+      },
+      prism: {
+        theme: themes.github,
+        darkTheme: themes.dracula,
+        additionalLanguages: ['bash', 'diff', 'json'],
       }
     }),
-};
+    plugins: [
+      'docusaurus-plugin-less',
+      require.resolve('./src/plugins/csp-plugin'),
+    ],
+  };
 
-module.exports = config;
+export default config;
