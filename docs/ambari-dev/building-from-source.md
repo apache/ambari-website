@@ -19,6 +19,9 @@ Before you begin, ensure you have the following requirements installed:
 - Ambari Metrics: JDK 8
 - Ambari Infra: JDK 8
 
+### Additional Packages
+- snappy-devel
+
 ## Building Ambari Main Project
 
 ### 1. Clone the Repository

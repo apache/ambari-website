@@ -107,3 +107,35 @@ Test reports can be found in the following locations after test execution:
 :::tip
 When debugging test failures, check these report directories for detailed test execution logs and stack traces.
 :::
+
+# Running Tests in Apache Ambari Metrics
+
+### 1. Install Prequisites
+Ambari Metrics requires a few more prerequisite for unit testing.
+
+```bash
+yum install -y krb5-devel
+pip3 install distro kerberos
+```
+
+## Java Tests
+
+### Running All Java Tests
+To run all Java tests for the Ambari Metrics:
+```bash
+mvn test \
+    -DskipPythonTests \
+    -Dmaven.test.failure.ignore \
+    -Dmaven.artifact.threads=10 \
+    -Drat.skip
+```
+
+## All Tests (Python and Java)
+
+To run all Java tests for the Ambari Metrics:
+```bash
+mvn test \
+    -Dmaven.test.failure.ignore \
+    -Dmaven.artifact.threads=10 \
+    -Drat.skip
+```
