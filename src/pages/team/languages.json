@@ -148,9 +148,7 @@
         "gitUrl": "https://github.com/virajjasani",
         "githubId": "virajjasani",
         "name": "Viraj Jasani"
-      }
-    ],
-    "committer": [
+      },
       {
         "apacheId": "jialiang",
         "avatarUrl": "https://avatars.githubusercontent.com/u/18082602?v=4",
@@ -158,7 +156,9 @@
         "gitUrl": "https://github.com/Jialiangc",
         "githubId": "Jialiangc",
         "name": "Jialiang Cai"
-      },
+      }
+    ],
+    "committer": [
       {
         "apacheId": "zhangyu",
         "avatarUrl": "https://avatars.githubusercontent.com/u/16508606?v=4",
