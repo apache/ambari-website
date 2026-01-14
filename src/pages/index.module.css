@@ -16,14 +16,33 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .heroBanner {
+    padding: 2rem 1rem;
+  }
+}
+
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  flex-wrap: wrap;
+  gap: 0.05rem;
 }
 
-.button_icon{
+@media screen and (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buttons :global(.button) {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.button_icon {
   margin-right: 8px;
   margin-top: -5px;
   width: 28px;
