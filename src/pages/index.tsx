@@ -88,7 +88,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--outline button--lg margin-left--sm"
             to="https://github.com/apache/ambari"
-            onMouseOver={() => changeFlag(1)} onMouseOut={() => changeFlag(2)}
+            onMouseOver={() => changeFlag(0)} onMouseOut={() => changeFlag(2)}
             >
               <img className={styles.button_icon} src={useBaseUrl('/img/github' + flag + '.svg')} alt="github"/>
               <span>GITHUB</span>

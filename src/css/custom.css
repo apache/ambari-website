@@ -20,7 +20,7 @@
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
+[data-theme="dark"] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -38,10 +38,9 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
-[data-theme='dark'] .docusaurus-highlight-code-line {
+[data-theme="dark"] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
-
 
 .hero {
   color: var(--ifm-color-hero-title);
@@ -52,9 +51,28 @@
 }
 
 .hero .hero__title {
-  font-size: 5rem;
+  font-size: 5rem !important;
 }
 
 .hero .hero__subtitle {
-  font-size: 2rem;
+  font-size: 2rem !important;
+}
+
+@media screen and (max-width: 996px) {
+  .hero .hero__title {
+    font-size: 4rem !important;
+  }
+  .hero .hero__subtitle {
+    font-size: 1.75rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero .hero__title {
+    font-size: 3.5rem !important;
+  }
+  .hero .hero__subtitle {
+    font-size: 1.4rem !important;
+    padding: 0 0.5rem !important;
+  }
 }
