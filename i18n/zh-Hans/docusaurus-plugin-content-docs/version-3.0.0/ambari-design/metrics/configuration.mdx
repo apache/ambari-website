@@ -1,0 +1,193 @@
+---
+title: 配置
+---
+
+{/*
+   Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+*/}
+
+# 配置 {#configuration}
+
+## 指标收集器 {#metrics-collector}
+
+配置类型|文件路径|注释
+---------------|-------------------------------------------------|----------------------------------------
+ams-site|/etc/ambari-metrics-collector/conf/ams-site.xml|控制 API 守护进程和聚合器线程的设置。
+ams-env|/etc/ambari-metrics-collector/conf/ams-env.sh|API 守护进程的内存 / PATH 设置
+ams-hbase-site|/etc/ams-hbase/conf/hbase-site.xml<br></br>/etc/ambari-metrics-collector/conf/hbase-site.xml|用于指标数据的 HBase 存储设置。
+ams-hbase-env|/etc/ams-hbase/conf/hbase-env.sh|HBase 存储的内存 / PATH 设置。<br></br>**注意**：在嵌入式模式下，master 和 regionserver 的堆内存设置会汇总为单个 HBase 守护进程的总内存。
+
+## 指标监控器 {#metrics-monitor}
+
+配置类型|文件路径|注释
+---------------|-------------------------------------------------|----------------------------------------
+ams-env|/etc/ambari-metrics-monitor/conf/ams-env.sh|用于修改日志和 pid 目录，与上述配置相同，两个组件共用。
+metric_groups|/etc/ambari-metrics-monitor/conf/metric_groups.conf|UI 中不可用。用于控制上报哪些 **HOST/SYSTEM** 指标。
+metric_monitor|/etc/ambari-metrics-monitor/conf/metric_monitor.ini|UI 中不可用。监控器守护进程的设置。
+
+## 指标收集器 - ams-site - 配置详情 {#metric-collector---ams-site---configuration-details}
+
+* 修改时间聚合数据的保留间隔。有关聚合的更多信息，请参阅聚合部分：API 规范
+（注意：在 Ambari 2.0 和 2.1 中，Phoenix 版本不支持 Alter TTL 查询。因此只能在安装时从 UI 修改。解决方法请参阅已知问题部分。）
+
+配置类型|文件路径|注释
+---------------|-------------------------------------------------|----------------------------------------
+timeline.metrics.host.aggregator.ttl|86400|1 分钟分辨率数据清理间隔。默认 1 天。
+timeline.metrics.host.aggregator.minute.ttl|604800|基于主机的 X 分钟分辨率数据清理间隔。默认 7 天。<br></br>（X = 可配置间隔，默认间隔为 2 分钟）
+timeline.metrics.host.aggregator.hourly.ttl|2592000|基于主机的小时分辨率数据清理间隔。默认 30 天。
+timeline.metrics.host.aggregator.daily.ttl|31536000|基于主机的天分辨率数据清理间隔。默认 1 年。
+timeline.metrics.cluster.aggregator.minute.ttl|2592000|集群范围的分钟分辨率数据清理间隔。默认 30 天。
+timeline.metrics.cluster.aggregator.hourly.ttl|31536000|集群范围的小时分辨率数据清理间隔。默认 1 年。
+timeline.metrics.cluster.aggregator.daily.ttl|63072000|集群范围的天分辨率数据清理间隔。默认 2 年。
+**注意**：1 分钟分辨率表存储 1 天的原始精度数据；当用户查询过去 1 小时的数据时，AMS API 返回原始精度数据。
+
+* 修改 HOST 和 CLUSTER 聚合器的聚合间隔。
+唤醒时，只要上次运行时间不是太旧，聚合器线程就会从（上次运行时间 + 间隔）继续运行。
+
+属性|默认值|描述
+---------------|-------------------------------------------------|----------------------------------------
+timeline.metrics.host.aggregator.minute.interval|120|分钟分辨率主机聚合器的休眠秒数。默认分辨率为 2 分钟。
+timeline.metrics.host.aggregator.hourly.interval|3600|小时分辨率主机聚合器的休眠秒数。默认分辨率为 1 小时。
+timeline.metrics.host.aggregator.daily.interval|86400|天分辨率主机聚合器的休眠秒数。默认分辨率为 24 小时。
+timeline.metrics.cluster.aggregator.minute.interval|120|分钟分辨率集群聚合器的休眠秒数。默认分辨率为 2 分钟。
+timeline.metrics.cluster.aggregator.hourly.interval|3600|小时分辨率集群聚合器的休眠秒数。默认 1 小时。
+timeline.metrics.cluster.aggregator.daily.interval|86400|天分辨率集群聚合器的休眠秒数。默认 24 小时。
+
+* 修改检查点信息。聚合器在本地文件系统中存储时间戳或上次运行时间。
+读取上次运行时间后，只要（currentTime - lastRunTime）< multipler * aggregation_interval，聚合器线程就决定进行聚合。每个聚合器的乘数均可配置。
+
+属性|默认值|描述
+---------------|-------------------------------------------------|----------------------------------------
+timeline.metrics.host.aggregator.minute.checkpointCutOffMultiplier|2|乘数值 * 间隔 = 允许的最大检查点延迟。如果聚合器检查点大于最大允许延迟，聚合器将丢弃该检查点。
+timeline.metrics.host.aggregator.hourly.checkpointCutOffMultiplier|2|同上
+timeline.metrics.host.aggregator.daily.checkpointCutOffMultiplier|1|同上
+timeline.metrics.cluster.aggregator.minute.checkpointCutOffMultiplier|2|同上
+timeline.metrics.cluster.aggregator.hourly.checkpointCutOffMultiplier|2|同上
+timeline.metrics.cluster.aggregator.daily.checkpointCutOffMultiplier|1|同上
+timeline.metrics.aggregator.checkpoint.dir|/var/lib/ambari-metrics-collector/checkpoint|存储聚合器检查点的目录。请改为永久位置，以免检查点丢失。
+
+* 其他重要配置属性
+
+属性|默认值|描述
+---------------|-------------------------------------------------|----------------------------------------
+timeline.metrics.host.aggregator.*.disabled|false|禁用基于主机的 * 聚合。（* => minute/hourly/daily）
+timeline.metrics.cluster.aggregator.*.disabled|false|禁用基于集群的 * 聚合。（* => minute/hourly/daily）
+timeline.metrics.cluster.aggregator.minute.timeslice.interval|30|集群级分钟聚合所需数据的最低分辨率。
+timeline.metrics.hbase.data.block.encoding|FAST_DIFF|通过设置 DATA_BLOCK_ENCODING 属性在表上启用编解码器。默认编码为 FAST_DIFF，只能在创建表之前更改。
+timeline.metrics.hbase.compression.scheme|SNAPPY|设置方案前必须安装并提供压缩代码。默认压缩为 SNAPPY。设置为 None 可禁用。只能在创建表之前更改。
+timeline.metrics.service.default.result.limit|5760|返回行数的最大结果限制。计算方式：4 个聚合指标/分钟 * 60 * 24，即检索 1 天的聚合数据。
+timeline.metrics.service.checkpointDelay|60|首次运行或检查点过旧时的休眠秒数。
+timeline.metrics.service.resultset.fetchSize|2000|聚合器查询的 JDBC resultset 预取大小。
+timeline.metrics.service.cluster.aggregator.appIds|datanode,nodemanager,hbase|用于聚合应用程序主机级指标的应用程序 ID 列表。例如：跨 Yarn Nodemanagers 的 bytes_read。
+
+## 在分布式模式下配置 Ambari Metrics 服务 {#configuring-ambari-metrics-service-in-distributed-mode}
+
+在分布式模式下，指标收集器写入集群的 HDFS。目前分布式模式不支持多模式指标收集器，但计划允许指标收集器水平扩展，以支持多节点 HBase 存储层。
+
+**注意**：确保收集器所在主机有本地 Datanode，这使 AMS HBase 可以跨 DN 可用的数据卷分片读写，从而获得明显优势。
+
+以下步骤可在安装时或部署后执行，以在分布式模式下配置指标收集器。注意：如果在安装后配置，数据不会自动复制到 HDFS。
+
+1. 编辑 ams-site，设置 timeline.metrics.service.operation.mode = distributed
+2. 编辑 ams-hbase-site：
+      - 设置 hbase.rootdir = hdfs://namenode-host;:8020/user/ams/hbase [启用 NN HA 时为 hdfs://nameservice-id/user/ams/hbase]
+      （注意：此处的 /user/ams/hbase 是存储指标数据的 HDFS 目录）
+      - 设置 hbase.cluster.distributed = true
+      - 添加 dfs.client.read.shortcircuit = true（存在本地 DN 时的优化）
+3. 重启指标收集器
+
+**注意**：在 Ambari 2.0.x 中，如果启用了 Namenode HA，以分布式模式部署 AMS 存在错误。请按照此 JIRA 中列出的说明执行解决方法步骤：([AMBARI-10707](https://issues.apache.org/jira/browse/AMBARI-10707))
+
+**注意**：在 Ambari 2.2.1 中，Stack advisor 会通过建议自动更改分布式模式的依赖配置。理想情况下唯一需要更改的配置是 timeline.metrics.service.operation.mode = distributed，其他配置（hbase.rootdir、hbase.cluster.distributed 和 dfs.client.read.shortcircuit）会自动更改。
+
+## 将数据从嵌入式模式迁移到分布式模式 {#migrating-data-from-embedded-to-distributed-mode}
+
+将现有指标数据迁移到 HDFS 并以分布式模式启动 AMS 的步骤：
+
+* 停止 AMS 指标收集器
+* 为 ams 用户创建 hdfs 目录，例如：
+
+    ```bash
+    su - hdfs -c 'hdfs dfs -mkdir /user/ams'
+    su - hdfs -c 'hdfs dfs -chown ams:hadoop /user/ams'
+    ```
+* 将 AMS 本地目录（ams-hbase-site 中 hbase.rootdir 的现有值）中的指标数据复制到 HDFS 目录。例如：
+
+    ```bash
+    cd /var/lib/ambari-metrics-collector/
+    su - hdfs -c 'hdfs dfs -copyFromLocal hbase hdfs://    <namnode-http-address>:8020/user/ams/'
+    su - hdfs -c 'hdfs dfs -chown -R ams:hadoop /user/ams/hbase'
+    ```
+
+* 完成分布式模式所需更改后，启动指标收集器。
+
+## 启用 HBase 区域、用户和表指标 {#enabling-hbase-region-user-and-table-metrics}
+
+Ambari 默认禁用 HBase 指标（按区域、按用户和按表）。HBase 指标可能很多并导致性能问题。HBase RegionServer 指标默认可用。
+
+如果希望 Ambari 收集 HBase（按区域、按用户和按表）指标，可以执行以下操作。**强烈建议**测试启用此选项，并确认 AMS 性能可接受。
+
+### 分步指南 {#step-by-step-guide}
+1. 在 Ambari Server 上浏览到：
+
+     ```bash
+     var/lib/ambari-server/resources/stacks/HDP/3.0/services/HBASE/     package/templates
+     ```
+2. 当 Ambari 早于 2.7.0 时，在 Ambari Server 上浏览到：
+
+     ```bash
+     var/lib/ambari-server/resources/common-services/HBASE/     $VERSION/package/templates
+     ```
+3. 编辑以下模板文件：
+
+     ```bash
+     hadoop-metrics2-hbase.properties-GANGLIA-MASTER.j2
+     hadoop-metrics2-hbase.properties-GANGLIA-RS.j2 
+     ```
+4. 注释掉（或删除）以下行：
+
+     ```bash
+     *.source.filter.class=org.apache.hadoop.metrics2.filter.     RegexFilter
+     hbase.*.source.filter.exclude=.*(Regions|Users|Tables).*
+     ```
+5. 保存模板文件，然后重启 Ambari Server，再重启 HBase，使更改生效。
+
+:::tip
+如果将 Ambari 升级到较新版本，需要在模板文件中重新应用此更改。
+:::
+
+## 启用 HDFS 按用户指标 {#enabling-hdfs-per-user-metrics}
+
+HDFS 按用户指标默认不会发出。启用前请谨慎操作，并务必参考客户端和服务端口号的详细信息。
+
+若要在 Grafana 实例中使用 HDFS - Users 仪表盘以及查看 HDFS 按用户指标，需要将这些自定义属性添加到配置中。
+
+### 分步指南 {#step-by-step-guide-1}
+在 Ambari 中，HDFS > Configs > Advanced > Custom hdfs-site，添加以下属性。
+
+```
+dfs.namenode.servicerpc-address=<namenodehost>:8021
+
+ipc.8020.callqueue.impl=org.apache.hadoop.ipc.FairCallQueue
+
+ipc.8020.backoff.enable=true
+
+ipc.8020.scheduler.impl=org.apache.hadoop.ipc.DecayRpcScheduler
+
+ipc.8020.scheduler.priority.levels=3
+
+ipc.8020.decay-scheduler.backoff.responsetime.enable=true
+
+ipc.8020.decay-scheduler.backoff.responsetime.thresholds=10,20,30
+```
+
+**注意事项**
+客户端端口：8020（如果不同，请在所有键中替换为相应端口）注意事项：
+
+* 服务端口：8021（如果不同，请在第一个值中替换为相应端口）
+* namenodehost：必须是 FQDN。
+添加这些属性后，应如下所示。
+![](@site/versioned_docs/version-3.0.0/ambari-design/metrics/imgs/enabling-hdfs-user-metrics.png "Enabling Hdfs User Metrics")
+
+**重启 HDFS 后应能看到指标发出。现在还应能在 Grafana 中使用 HDFS - Users 仪表盘。**

@@ -1,0 +1,208 @@
+---
+title: Enhanced 服务仪表板
+---
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+# Enhanced 服务仪表板 {#enhanced-service-dashboard}
+
+此功能首次在 Ambari 2.1.0 版本中引入。2.1.0 之前的任何 Ambari 版本都不支持此功能。集群必须升级到 Ambari 2.1.0 或更高版本才能使用此功能。
+
+:::caution
+本文假设服务指标通过 Ambari 暴露。如果不是这种情况，请参阅 [Metrics ](https://cwiki.apache.org/confluence/display/AMBARI/Metrics) 文档了解更多相关信息。
+:::
+
+## 简介 {#introduction}
+
+Enhanced Service Dashboard 一词表示可以无缝地向服务摘要页和热力图页添加新 widget。此功能支持将 widget 定义以 JSON 格式随 stack service 一起打包。安装服务时，这些 widget 定义会作为默认 widget 显示在服务摘要页和热力图页上。此外，还可以随时在已部署的集群中为服务创建新的 widget。
+
+在安装服务时显示默认服务仪表板 widget 包括 3 个步骤：
+
+1. 将服务指标推送到 Ambari Metric Collector。
+
+2. 在 Ambari 的服务 metrics.json 文件中声明服务指标。此步骤是通过 Ambari RESTful API 暴露指标所必需的。
+
+3. 在 widgets.json 文件中定义服务 widget。
+
+:::tip
+Widget 从服务指标获取要绘制的数据。定义 widget 前，务必确认所需服务指标已从 Ambari 指标 endpoint 暴露。
+:::
+
+## 服务仪表板 Widgets {#service-dashboard-widgets}
+
+Ambari 支持 4 种 widget 类型：
+
+1. Graph
+2. Gauge
+3. Number
+4. Template
+
+### Graph {#graph}
+
+用于显示一段时间内根据一个或多个服务指标值生成的折线图或面积图的 widget。
+![](@site/versioned_docs/version-3.0.0/ambari-design/service-dashboard/imgs/graphs.png "Graphs")
+
+### Graph Widget 定义 {#graph-widget-definition}
+
+```json
+{
+ "widget_name": "Memory Utilization",
+ "description": "Percentage of total memory allocated to containers running in the cluster.",
+ "widget_type": "GRAPH",
+ "is_visible": true,
+ "metrics": [
+   {
+     "name": "yarn.QueueMetrics.Queue=root.AllocatedMB",
+     "metric_path": "metrics/yarn/Queue/root/AllocatedMB",
+     "service_name": "YARN",
+     "component_name": "RESOURCEMANAGER",
+     "host_component_criteria": "host_components/HostRoles/ha_state=ACTIVE"
+   },
+   {
+     "name": "yarn.QueueMetrics.Queue=root.AvailableMB",
+     "metric_path": "metrics/yarn/Queue/root/AvailableMB",
+     "service_name": "YARN",
+     "component_name": "RESOURCEMANAGER",
+     "host_component_criteria": "host_components/HostRoles/ha_state=ACTIVE"
+   }
+ ],
+ "values": [
+   {
+     "name": "Memory Utilization",
+     "value": "${(yarn.QueueMetrics.Queue=root.AllocatedMB / (yarn.QueueMetrics.Queue=root.AllocatedMB + yarn.QueueMetrics.Queue=root.AvailableMB)) * 100}"
+   }
+ ],
+ "properties": {
+   "display_unit": "%",
+   "graph_type": "LINE",
+   "time_range": "1"
+ }
+}
+```
+
+1. **widget_name：** 这是 UI 中显示的 widget 名称。
+
+2. **description：** UI 中显示的 widget 描述。
+
+3. **widget_type：** widget 使用此信息根据指标数据创建 widget。
+
+4. **is_visible：** 此布尔值决定 widget 是否默认显示在服务摘要页上。
+
+5. **metrics：** 包含组成该 widget 的所有指标定义的数组。
+
+6. **metrics/name：** 服务推送到 sink 或作为 JMX 属性发出的指标实际名称。
+
+7. **metrics/metric_path** **：** 上述 metrics/name 在服务 metrics.json 文件中映射到的路径。指标值会通过 Ambari API 的服务组件或主机组件 endpoint，在相同路径的 metrics 属性中暴露。
+
+8. **metrics/service_name：** 发出指标的组件所属服务名称。
+
+9. **metrics/component_name：** 发出指标的组件名称。
+
+10. **metrics/host_component_criteria：** 这是可选字段。存在此字段表示该指标是主机组件指标，而不是服务组件指标。如果要在主机组件 endpoint 上查询指标，需要在此指定选择主机组件的条件。如果将其留为空格字符串，则会为该指标查询找到的第一个主机组件。
+
+11. **values：** Graph widget 的数据集数组。对于其他 widget 类型，此数组始终只有一个元素。
+
+12. **values/name：** 此字段仅用于 Graph widget 类型，在 Graph widget 中显示的数据集图例中作为标签名称出现。
+
+13. **values/value：** 用于计算数据集值的表达式。表达式包含对已声明指标名称的引用和作为有效操作数的常量数字，也包含可与有效操作数一起使用的运算符集合（`+`、`-`、`*`、`/`）。表达式中也允许使用括号。
+
+14. **properties：** 包含特定于 widget 类型的一组属性。对于 Graph widget 类型，它包含 display_unit、graph_type 和 time_range。UI 当前不会处理 time_range 字段。
+
+### Gauge {#gauge}
+
+用于显示根据一个指标当前值或多个指标当前值计算出的百分比的 widget。
+![](@site/versioned_docs/version-3.0.0/ambari-design/service-dashboard/imgs/gauge.png "Gauge")
+
+### Number {#number}
+
+用于显示数字的 widget，可选择显示单位；该数字可以根据一个指标当前值或多个指标当前值计算得出。
+
+![](@site/versioned_docs/version-3.0.0/ambari-design/service-dashboard/imgs/number.png "Number")
+
+### Template {#template}
+
+用于显示一个或多个数字以及嵌入字符串的 widget，这些数字根据一个指标当前值或多个指标当前值计算得出。
+
+指标的聚合函数
+
+聚合函数仅适用于服务组件级指标，不支持主机组件级指标。
+
+Ambari Metrics System 支持 4 种聚合类型：
+
+1. **max**：所有主机组件中的指标最大值
+2. **min**：所有主机组件中的指标最小值
+3. **avg**：所有主机组件中的指标平均值
+4. **sum**：每个主机组件记录的指标值之和
+
+默认情况下，Ambari Metrics System 在计算服务组件指标值时使用平均聚合函数，但可以通过在指标名称后添加聚合函数名称（._max、._min、._avg 和 ._sum）覆盖此行为。
+
+```json
+{
+ "widget_name": "Blocked Updates",
+ "description": "Number of milliseconds updates have been blocked so the memstore can be flushed.",
+ "default_section_name": "HBASE_SUMMARY",
+ "widget_type": "GRAPH",
+ "is_visible": true,
+ "metrics": [
+   {
+     "name": "regionserver.Server.updatesBlockedTime._sum",
+     "metric_path": "metrics/hbase/regionserver/Server/updatesBlockedTime._sum",
+     "service_name": "HBASE",
+     "component_name": "HBASE_REGIONSERVER"
+   }
+ ],
+ "values": [
+   {
+     "name": "Updates Blocked Time",
+     "value": "${regionserver.Server.updatesBlockedTime._sum}"
+   }
+ ],
+ "properties": {
+   "display_unit": "ms",
+   "graph_type": "LINE",
+   "time_range": "1"
+ }
+}
+```
+
+## Widget 操作： {#widget-operations}
+
+包含 widgets.json 和 metrics.json 文件的服务还具备以下功能：
+
+1. **Widget Browser**，用于执行 widget 相关操作。
+
+2. **Create widget wizard**，用于在集群中创建所需的新服务 widget。
+
+3. **Edit widget wizard**，用于创建后编辑服务 widget。
+
+## 小组件浏览器 {#widget-browser}
+
+Widget Browser 是执行 widget 操作的地方，例如从仪表板添加或删除 widget、与其他用户共享 widget 以及删除 widget。创建新 widget 时，用户可以选择是否与其他用户共享。用户创建的 widget、与用户共享的 widget，以及 stack 中定义的默认服务 widget，都会在该用户的 widget browser 中提供。
+![](@site/versioned_docs/version-3.0.0/ambari-design/service-dashboard/imgs/widget-browser.png "Widget Browser")
+
+### 创建小组件向导 {#create-widget-wizard}
+
+可以使用包含 3 个步骤的创建小组件向导，根据已暴露的服务指标创建所需的自定义小组件。
+![](@site/versioned_docs/version-3.0.0/ambari-design/service-dashboard/imgs/create-widget.png "Create Widget")
+
+## 使用增强服务仪表板功能 {#using-enhanced-service-dashboard-feature}
+
+如果 Ambari 中的现有服务正在将指标推送到 Ambari metrics collector，则只需进行少量工作。这包括为服务添加 metrics.json 和 widgets.json 文件，可能还包括修改 metainfo.xml 文件。
+
+:::tip
+[AMBARI-9910](https://issues.apache.org/jira/browse/AMBARI-9910) 为 Accumulo 服务页面添加了小组件，可作为使用增强服务仪表板功能的参考示例。
+:::
