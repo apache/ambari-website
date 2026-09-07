@@ -16,15 +16,47 @@
  */
 
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
+import {readFile, readdir} from 'node:fs/promises';
 import test from 'node:test';
 import yaml from 'js-yaml';
+import createNextDocRedirects from '../src/plugins/next-doc-redirects.js';
 
 const read = file => readFile(new URL(`../${file}`, import.meta.url), 'utf8');
 const workflow = yaml.load(await read('.github/workflows/website.yml'));
 const asf = yaml.load(await read('.asf.yaml'));
 const pkg = JSON.parse(await read('package.json'));
 const deployAction = workflow.jobs.deploy.steps.find(step => step.uses?.startsWith('peaceiris/actions-gh-pages@'));
+
+test('Next redirects replace obsolete monitoring without changing historical versions', () => {
+  assert.deepEqual(createNextDocRedirects('/docs/3.1.0/ambari-dev/code-review-guidelines'), [
+    '/docs/next/ambari-dev/code-review-guidelines',
+  ]);
+  assert.ok(createNextDocRedirects('/docs/3.1.0/monitoring/queries-and-dashboards').includes(
+    '/docs/next/ambari-design/metrics/metrics-collector-api-specification',
+  ));
+  assert.ok(createNextDocRedirects('/docs/3.1.0/ambari-design/blueprints/').includes('/docs/next/blueprints'));
+  for (const version of ['3.0.0', '2.7.9', '2.7.8', 'next']) {
+    assert.equal(createNextDocRedirects(`/docs/${version}/introduction`), undefined);
+  }
+});
+
+test('every previously published Next document has a replacement route', async () => {
+  async function documentRoutes(directory, version) {
+    const files = await readdir(new URL(`../${directory}/`, import.meta.url), {recursive: true});
+    return Promise.all(files.filter(file => /\.mdx?$/.test(file)).map(async file => {
+      const content = await read(`${directory}/${file}`);
+      const frontmatter = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      const slug = frontmatter ? yaml.load(frontmatter[1])?.slug : undefined;
+      const route = slug?.replace(/^\//, '') || file.replace(/\.mdx?$/, '').replace(/\/index$/, '');
+      return `/docs/${version}/${route}`;
+    }));
+  }
+  const replacements = new Set((await documentRoutes('versioned_docs/version-3.1.0', '3.1.0'))
+    .flatMap(route => createNextDocRedirects(route)));
+  for (const route of await documentRoutes('docs', 'next')) {
+    assert.ok(replacements.has(route), `Missing replacement: ${route}`);
+  }
+});
 
 test('ASF publication and deployment target the same output branch', () => {
   assert.equal(asf.publish.whoami, 'asf-site');

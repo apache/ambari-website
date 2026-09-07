@@ -1,0 +1,42 @@
+---
+title: Stack and Service Overview
+---
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+# Stack and Service Overview {#stack-and-service-overview}
+
+![Stack and service descriptors, inheritance, resolved components, packages, dependencies, and lifecycle commands](/img/3.1.0/handdrawn/stack-service-anatomy-en.webp)
+
+*A Stack version resolves inherited and child service definitions before Ambari assigns components and executes lifecycle commands.*
+
+## Lifecycle {#lifecycle}
+
+Ambari installs and manages a stack version by resolving its services, selecting component hosts, applying configuration dependencies, and invoking component lifecycle commands. A component normally supports install, start, stop, status, and configure operations; custom commands may extend that lifecycle.
+
+## Inheritance {#inheritance}
+
+The BIGTOP stack uses stack-level services that may inherit from `common-services`. A child descriptor can add components or configuration and can override inherited values. Service inheritance is explicit in `metainfo.xml`; stack inheritance controls the files and directories supplied by a parent stack version.
+
+## Telemetry {#telemetry}
+
+The retained `metrics.json` contract defines a small set of direct-JMX values needed by management workflows. The Prometheus/VictoriaMetrics design uses `telemetry.json` as the separate time-series collection description. Keep these files distinct: management values are not historical monitoring samples.
+
+## Current Provider {#current-provider}
+
+The current metrics provider is VictoriaMetrics, with single-node and distributed components represented by the BIGTOP service definition. Provider packaging and runtime deployment are documented in [RPM Packaging](../../platform/rpm-packaging.md). This overview intentionally excludes retired AMS/Ganglia and Ember-specific procedures.

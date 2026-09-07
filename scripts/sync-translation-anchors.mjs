@@ -18,6 +18,7 @@
 import {readFile, readdir, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {parseArgs} from 'node:util';
 import {unified} from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
@@ -26,9 +27,14 @@ import {toString} from 'mdast-util-to-string';
 import {createSlugger, DEFAULT_PARSE_FRONT_MATTER, parseMarkdownFile, parseMarkdownHeadingId} from '@docusaurus/utils';
 
 const siteDir = fileURLToPath(new URL('../', import.meta.url));
-const sourceDir = path.join(siteDir, 'versioned_docs/version-3.0.0');
-const localeDir = path.join(siteDir, 'i18n/zh-Hans/docusaurus-plugin-content-docs/version-3.0.0');
-const excluded = new Set(process.argv.slice(2));
+const {values: {version}, positionals} = parseArgs({
+  options: {version: {type: 'string', default: '3.0.0'}},
+  allowPositionals: true,
+});
+if (!/^\d+\.\d+\.\d+$/.test(version)) throw new Error('Expected a documentation version such as 3.1.0');
+const sourceDir = path.join(siteDir, 'versioned_docs', `version-${version}`);
+const localeDir = path.join(siteDir, 'i18n/zh-Hans/docusaurus-plugin-content-docs', `version-${version}`);
+const excluded = new Set(positionals);
 
 async function documentsIn(directory) {
   const files = [];

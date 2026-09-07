@@ -1,0 +1,42 @@
+---
+title: 堆栈和服务概览
+---
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+# 堆栈和服务概览 {#stack-and-service-overview}
+
+![Stack 和服务描述符、继承、组件、软件包、依赖关系及生命周期命令](/img/3.1.0/handdrawn/stack-service-anatomy-zh.webp)
+
+*Ambari 先解析 Stack 版本继承的服务定义和子服务覆盖，再分配组件并执行生命周期命令。*
+
+## 生命周期 {#lifecycle}
+
+Ambari 通过解析服务、选择组件主机、应用配置依赖并调用组件生命周期命令来安装和管理堆栈版本。组件通常支持安装、启动、停止、状态和配置操作；自定义命令可以扩展该生命周期。
+
+## 继承 {#inheritance}
+
+BIGTOP 堆栈使用可以从 `common-services` 继承的堆栈级服务。子描述符可以添加组件或配置，也可以覆盖继承值。服务继承在 `metainfo.xml` 中显式声明；堆栈继承控制父堆栈版本提供的文件和目录。
+
+## 遥测 {#telemetry}
+
+保留的 `metrics.json` 只定义管理工作流所需的少量直接 JMX 值。Prometheus/VictoriaMetrics 使用独立的 `telemetry.json` 描述时序指标采集。请保持二者相互独立：管理值不是历史监控样本。
+
+## 当前提供程序 {#current-provider}
+
+当前指标提供程序是 VictoriaMetrics，其单节点和分布式组件由 BIGTOP 服务定义表示。提供程序打包和运行时部署记录在 [RPM 打包](../../platform/rpm-packaging.md)中。本概览有意排除已退出的 AMS/Ganglia 和 Ember 专用流程。

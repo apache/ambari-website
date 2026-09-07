@@ -36,6 +36,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          includeCurrentVersion: false,
           sidebarPath: require.resolve('./sidebars.js'),
           beforeDefaultRemarkPlugins: [require('./src/plugins/localized-doc-links')],
           // Enable breadcrumbs for better navigation
@@ -45,9 +46,11 @@ const config = {
           editLocalizedFiles: true,
           lastVersion: '3.0.0',
           versions: {
-            current: {
-              label: 'Next',
-              path: 'next',
+            '3.1.0': {
+              label: '3.1.0 (Preview)',
+              path: '3.1.0',
+              banner: 'unreleased',
+              noIndex: true,
             },
             '3.0.0': {
               label: '3.0.0',
@@ -231,6 +234,9 @@ const config = {
     plugins: [
       'docusaurus-plugin-less',
       require.resolve('./src/plugins/csp-plugin'),
+      ['@docusaurus/plugin-client-redirects', {
+        createRedirects: require('./src/plugins/next-doc-redirects'),
+      }],
     ],
   };
 
