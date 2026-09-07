@@ -16,7 +16,7 @@
  */
 
 import {test, expect, type Page} from '@playwright/test';
-import {existsSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import path from 'node:path';
 
 const zh = '\u7b80\u4f53\u4e2d\u6587';
@@ -122,12 +122,12 @@ test('missing pages recover through the default 404 page and language menu', asy
   await expect(page.getByRole('link', {name: start, exact: true})).toBeVisible();
 });
 
-test('translated and fallback documents link to each other in the current language', async ({page}) => {
+test('document links retain the current language', async ({page}) => {
   await page.goto('/zh-Hans/docs/3.0.0/faq');
   const fallback = page.locator('article a[href="/zh-Hans/docs/3.0.0/ambari-dev/how-to-commit"]');
   await expect(fallback).toBeVisible();
   await fallback.click();
-  await expect(page.getByTestId('translation-fallback')).toBeVisible();
+  await expect(page.getByTestId('translation-fallback')).toHaveCount(fallbackCount('ambari-dev/how-to-commit.md'));
   const translated = page.locator('article a[href="/zh-Hans/docs/3.0.0/ambari-dev/how-to-contribute"]');
   await translated.click();
   await expect(page.getByTestId('translation-fallback')).toHaveCount(fallbackCount('ambari-dev/how-to-contribute.md'));
@@ -135,6 +135,33 @@ test('translated and fallback documents link to each other in the current langua
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
   }
+});
+
+test('all 3.0.0 routes render Chinese metadata without fallback', async ({request}) => {
+  const data = JSON.parse(readFileSync('.docusaurus/globalData.json', 'utf8'));
+  const version = data['docusaurus-plugin-content-docs'].default.versions.find(item => item.name === '3.0.0');
+  expect(version.docs).toHaveLength(75);
+  for (const document of version.docs) {
+    const response = await request.get(document.path);
+    expect(response.ok(), document.path).toBe(true);
+    const html = await response.text();
+    expect(/<html[^>]*lang="zh-Hans"/.test(html), document.path).toBe(true);
+    expect(html.includes('data-testid="translation-fallback"'), document.path).toBe(false);
+    expect(/<title[^>]*>[^<]*[\u3400-\u9fff]/.test(html), document.path).toBe(true);
+  }
+});
+
+test('coding guide sidebar uses translated document labels', async ({page, isMobile}) => {
+  await page.goto('/zh-Hans/docs/3.0.0/ambari-dev/coding-guidelines-for-ambari');
+  await expect(page.locator('html')).toHaveAttribute('data-has-hydrated', 'true');
+  if (isMobile) {
+    await page.locator('.navbar__toggle').click();
+    await expect(page.locator('.navbar-sidebar')).toBeVisible();
+  }
+  const sidebar = page.locator(isMobile ? '.navbar-sidebar__items--show-secondary .navbar-sidebar__item:not([inert])' : 'aside.theme-doc-sidebar-container');
+  const labels = await sidebar.locator('.menu__link').allTextContents();
+  expect(labels.length).toBeGreaterThan(30);
+  for (const label of labels) expect(label).toMatch(/[\u3400-\u9fff]/);
 });
 
 test('version menu preserves the selected language', async ({page, isMobile}) => {

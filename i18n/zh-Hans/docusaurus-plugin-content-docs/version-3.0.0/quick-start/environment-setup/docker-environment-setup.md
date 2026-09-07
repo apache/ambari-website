@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
+title: Apache Ambari 的 Docker 环境设置
 ---
+
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with

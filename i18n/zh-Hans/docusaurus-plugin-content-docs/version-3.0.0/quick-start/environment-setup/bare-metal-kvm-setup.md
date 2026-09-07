@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
+title: Apache Ambari 裸机和 KVM 环境设置
 ---
+
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with

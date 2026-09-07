@@ -59,12 +59,11 @@ string and heading anchor. They are not in-place React state changes.
 
 ## Translation Scope
 
-The initial Chinese translation includes the homepage, navigation, team page,
-and 18 documents from version 3.0.0: introduction, FAQ, release notes, quick
-start, downloads, installation, mailing lists, three environment guides, five
-core development guides, and three architecture overview pages.
+The Chinese translation includes the homepage, navigation, team page, and all
+75 documents from version 3.0.0, including installation, development, release,
+Stack/service definitions, Blueprints, Kerberos, metrics, Views, and plugins.
 
-`Next`, 2.7.9, 2.7.8, and untranslated 3.0.0 documents keep the English
+`Next`, 2.7.9, and 2.7.8 documents keep the English
 content with a visible fallback notice and a link to the English page. There
 is no duplicate copy of the English documentation in the translation tree.
 Translation preserves the source's technical content, including historical
@@ -89,6 +88,11 @@ heading IDs, including duplicate suffixes. Reference shared images through
 `@site/versioned_docs/...` rather than copying binaries. The
 `localized-doc-links` remark plugin normalizes explicit relative document links
 so Docusaurus can resolve translated and English fallback files together.
+
+Each Chinese document has an explicit translated `title` in its front matter.
+This prevents license comments before the H1 from causing Docusaurus to use
+the filename as its sidebar label or page title. After translating headings,
+run `node scripts/sync-translation-anchors.mjs` to synchronize their IDs.
 
 ## Verification
 

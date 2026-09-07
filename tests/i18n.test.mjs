@@ -22,6 +22,7 @@ import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import {unified} from 'unified';
 import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
 import {toString} from 'mdast-util-to-string';
 import {createSlugger, DEFAULT_PARSE_FRONT_MATTER, parseMarkdownFile, parseMarkdownHeadingId, resolveMarkdownLinkPathname} from '@docusaurus/utils';
 import localizedDocLinks from '../src/plugins/localized-doc-links.js';
@@ -54,7 +55,7 @@ function nodesOfType(tree, type) {
 async function parse(filePath) {
   const fileContent = await readFile(filePath, 'utf8');
   const {content, frontMatter} = await parseMarkdownFile({filePath, fileContent, parseFrontMatter: DEFAULT_PARSE_FRONT_MATTER, removeContentTitle: false});
-  return {tree: unified().use(remarkParse).parse(content), frontMatter, fileContent};
+  return {tree: unified().use(remarkParse).use(remarkGfm).parse(content), frontMatter, fileContent};
 }
 
 function headingIds(tree) {
@@ -72,11 +73,17 @@ function immutableFrontMatter(frontMatter) {
 
 function imageDestination(url, document) {
   if (/^(?:[a-z]+:|\/)/i.test(url)) return url;
-  if (url.startsWith('@site/')) return path.resolve(siteDir, url.slice(6));
-  return path.resolve(path.dirname(document), url);
+  if (url.startsWith('@site/')) return path.resolve(siteDir, decodeURIComponent(url.slice(6)));
+  return path.resolve(path.dirname(document), decodeURIComponent(url));
 }
 
 const translatedFiles = (await filesIn(localeDir)).filter(file => file.startsWith(`${translatedDir}${path.sep}`) && /\.mdx?$/.test(file));
+
+test('every version 3.0.0 document has a Chinese translation', async () => {
+  const sourceFiles = (await filesIn(sourceDir)).filter(file => /\.mdx?$/.test(file));
+  assert.deepEqual(translatedFiles.map(file => path.relative(translatedDir, file)).sort(),
+    sourceFiles.map(file => path.relative(sourceDir, file)).sort());
+});
 
 test('Chinese UI messages are present independently of document coverage', async () => {
   const catalog = JSON.parse(await readFile(path.join(localeDir, 'code.json'), 'utf8'));
@@ -91,12 +98,27 @@ for (const translatedFile of translatedFiles) {
   test(`translation structure: ${relativePath}`, async () => {
     const source = await parse(sourceFile);
     const translated = await parse(translatedFile);
-    assert.match(translated.fileContent, /Licensed to the Apache Software Foundation/);
-    assert.match(translated.fileContent, /\p{Script=Han}/u);
+    assert.ok(/Licensed to the Apache Software Foundation/.test(translated.fileContent), 'Missing ASF license header');
+    assert.ok(/\p{Script=Han}/u.test(translated.fileContent), 'No Chinese translation present');
+    assert.equal(typeof translated.frontMatter.title, 'string', 'Missing explicit document title for sidebar and metadata');
+    assert.ok(/\p{Script=Han}/u.test(translated.frontMatter.title), 'Document title is not translated');
+    const unchangedProse = nodesOfType(source.tree, 'text').filter(node => {
+      const words = node.value.match(/\b[A-Za-z]{2,}\b/g) || [];
+      return node.value.length >= 60 && words.length >= 10 &&
+        /\s/.test(node.value) &&
+        !/^(?:mvn|curl|sudo|ambari-server|GET|POST|PUT|DELETE)\s/.test(node.value.trim()) &&
+        !node.value.includes('Licensed to the Apache Software Foundation') &&
+        translated.fileContent.includes(node.value);
+    });
+    assert.ok(unchangedProse.length === 0,
+      `Untranslated English prose at source body lines: ${unchangedProse.map(node => node.position.start.line).join(', ')}`);
     assert.deepEqual(immutableFrontMatter(translated.frontMatter), immutableFrontMatter(source.frontMatter), 'Document metadata changed');
     for (const type of ['code', 'inlineCode']) {
       // Report only the location on failure, never command or credential contents.
-      const signature = tree => nodesOfType(tree, type).map(({value, lang, meta}) => ({value, lang, meta}));
+      const signature = tree => {
+        const values = nodesOfType(tree, type).map(({value, lang, meta}) => ({value, lang, meta}));
+        return type === 'inlineCode' ? values.sort((a, b) => a.value.localeCompare(b.value)) : values;
+      };
       assert.ok(JSON.stringify(signature(translated.tree)) === JSON.stringify(signature(source.tree)), `${type} content changed`);
     }
     for (const type of ['link', 'definition']) {

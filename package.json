@@ -66,6 +66,7 @@
     "mdast-util-to-string": "^4.0.0",
     "js-yaml": "^4.1.0",
     "remark-parse": "^11.0.0",
+    "remark-gfm": "^4.0.1",
     "standard-version": "^9.5.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",

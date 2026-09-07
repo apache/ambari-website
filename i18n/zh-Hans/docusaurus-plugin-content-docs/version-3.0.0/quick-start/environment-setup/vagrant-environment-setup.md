@@ -1,3 +1,7 @@
+---
+title: Apache Ambari 的 Vagrant 环境设置
+---
+
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with

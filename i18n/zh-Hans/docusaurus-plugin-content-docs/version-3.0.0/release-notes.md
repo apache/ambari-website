@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+title: Apache Ambari 3.0.0 发行说明
 ---
 
 <!--
