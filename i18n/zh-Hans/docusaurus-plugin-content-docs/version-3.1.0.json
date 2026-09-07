@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "3.1.0（预览）",
+    "description": "The label for the upcoming 3.1.0 documentation"
+  },
+  "sidebar.ambariSidebar.category.Monitoring": {
+    "message": "监控系统",
+    "description": "The label for category 'Monitoring' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Platform And Packaging": {
+    "message": "运行环境与打包",
+    "description": "The label for category 'Platform And Packaging' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Quick Start": {
+    "message": "快速入门",
+    "description": "The label for category 'Quick Start' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Environment Setup": {
+    "message": "环境准备",
+    "description": "The label for category 'Environment Setup' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Design": {
+    "message": "Ambari 设计",
+    "description": "The label for category 'Ambari Design' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Blueprints": {
+    "message": "蓝图",
+    "description": "The label for category 'Blueprints' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Kerberos": {
+    "message": "Kerberos 安全",
+    "description": "The label for category 'Kerberos' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Stacks And Services": {
+    "message": "Stack 与服务",
+    "description": "The label for category 'Stacks And Services' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Views": {
+    "message": "视图",
+    "description": "The label for category 'Views' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Development": {
+    "message": "Ambari 开发",
+    "description": "The label for category 'Ambari Development' in sidebar 'ambariSidebar'"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "ambariSidebar": [
+    "introduction",
+    "release-notes",
+    "faq",
+    "upgrade-guide",
+    {
+      "type": "category",
+      "label": "Quick Start",
+      "collapsed": false,
+      "items": [
+        "quick-start/quick-start-guide",
+        "quick-start/download",
+        {
+          "type": "category",
+          "label": "Environment Setup",
+          "collapsed": false,
+          "items": [
+            "quick-start/environment-setup/bare-metal-kvm-setup",
+            "quick-start/environment-setup/docker-environment-setup",
+            "quick-start/environment-setup/vagrant-environment-setup"
+          ]
+        },
+        "quick-start/installation-guide",
+        "quick-start/mailing-list"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Monitoring",
+      "collapsed": false,
+      "items": [
+        "monitoring/architecture-comparison",
+        "monitoring/architecture",
+        "monitoring/deployment",
+        "monitoring/queries-and-dashboards",
+        "monitoring/service-integration",
+        "monitoring/migration"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Ambari Design",
+      "collapsed": false,
+      "link": {
+        "type": "doc",
+        "id": "ambari-design/index"
+      },
+      "items": [
+        "ambari-design/ambari-architecture",
+        "ambari-design/technology-stack",
+        "ambari-design/alerts",
+        {
+          "type": "category",
+          "label": "Blueprints",
+          "collapsed": false,
+          "link": {
+            "type": "doc",
+            "id": "ambari-design/blueprints/index"
+          },
+          "items": [
+            "ambari-design/blueprints/blueprint-ha",
+            "ambari-design/blueprints/blueprint-ranger"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Kerberos",
+          "collapsed": false,
+          "link": {
+            "type": "doc",
+            "id": "ambari-design/kerberos/index"
+          },
+          "items": [
+            "ambari-design/kerberos/kerberos_descriptor",
+            "ambari-design/kerberos/kerberos_service",
+            "ambari-design/kerberos/enabling_kerberos"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Stacks And Services",
+          "collapsed": false,
+          "link": {
+            "type": "doc",
+            "id": "ambari-design/stack-and-services/index"
+          },
+          "items": [
+            "ambari-design/stack-and-services/overview",
+            "ambari-design/stack-and-services/custom-services",
+            "ambari-design/stack-and-services/defining-a-custom-stack-and-services",
+            "ambari-design/stack-and-services/how-to-define-stacks-and-services",
+            "ambari-design/stack-and-services/writing-metainfo",
+            "ambari-design/stack-and-services/extensions",
+            "ambari-design/stack-and-services/management-packs",
+            "ambari-design/stack-and-services/stack-inheritance",
+            "ambari-design/stack-and-services/stack-properties",
+            "ambari-design/stack-and-services/hooks",
+            "ambari-design/stack-and-services/version-functions-conf-select-and-stack-select",
+            "ambari-design/stack-and-services/faq"
+          ]
+        },
+        "ambari-design/enhanced-configs/index",
+        "ambari-design/quick-links",
+        {
+          "type": "category",
+          "label": "Views",
+          "collapsed": false,
+          "link": {
+            "type": "doc",
+            "id": "ambari-design/views/index"
+          },
+          "items": [
+            "ambari-design/views/view-api",
+            "ambari-design/views/view-definition",
+            "ambari-design/views/framework-services"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Platform And Packaging",
+      "collapsed": false,
+      "items": [
+        "platform/java-dependencies",
+        "platform/python-runtime",
+        "platform/rpm-packaging"
+      ]
+    },
+    "frontend/react-ui",
+    {
+      "type": "category",
+      "label": "Ambari Development",
+      "collapsed": false,
+      "link": {
+        "type": "doc",
+        "id": "ambari-dev/index"
+      },
+      "items": [
+        "ambari-dev/building-from-source",
+        "ambari-dev/running-tests",
+        "ambari-dev/unit-test-reports",
+        "ambari-dev/ambari-code-layout",
+        "ambari-dev/coding-guidelines-for-ambari",
+        "ambari-dev/developer-tools",
+        "ambari-dev/development-in-docker",
+        "ambari-dev/feature-flags",
+        "ambari-dev/admin-view-ambari-admin-development",
+        "ambari-dev/bigtop-guide",
+        "ambari-dev/how-to-contribute",
+        "ambari-dev/how-to-commit",
+        "ambari-dev/code-review-guidelines",
+        "ambari-dev/apache-ambari-jira",
+        "ambari-dev/development-process-for-new-major-features",
+        "ambari-dev/releasing-ambari",
+        "ambari-dev/verifying-release-candidate"
+      ]
+    },
+    "ambari-plugin-contribution/index",
+    "release-baseline"
+  ]
+}

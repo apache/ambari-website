@@ -63,12 +63,25 @@ The Chinese translation includes the homepage, navigation, team page, and all
 75 documents from version 3.0.0, including installation, development, release,
 Stack/service definitions, Blueprints, Kerberos, metrics, Views, and plugins.
 
-`Next`, 2.7.9, and 2.7.8 documents keep the English
+Versions 2.7.9 and 2.7.8 keep the English
 content with a visible fallback notice and a link to the English page. There
 is no duplicate copy of the English documentation in the translation tree.
 Translation preserves the source's technical content, including historical
 instructions and illustrative code; it is not a technical modernization of
 those guides.
+
+The separate 3.1.0 preview contains 71 paired English/Chinese guides based on
+the 3.1 implementation. It retains current installation, development,
+Blueprint, Kerberos, Stack/service, View, configuration, and alert topics
+alongside monitoring, runtime/package changes, React, and upgrade planning.
+The old unversioned `docs/` tree is not published as `Next`; obsolete AMS,
+Ganglia, SCOM, and Ember widget tutorials are not carried into 3.1.
+Old `/docs/next/` links redirect to the corresponding 3.1 guides, retaining
+the language prefix. Retired AMS links lead to the new monitoring guides,
+not the historical AMS tutorials. Versioned 3.0 and 2.7 documentation is unchanged.
+3.0.0 remains the default stable version. The 3.1 preview is available at
+`/docs/3.1.0/` and `/zh-Hans/docs/3.1.0/` and is marked
+unreleased and `noindex` until release publication.
 
 Translation files live under `i18n/zh-Hans/`:
 
@@ -76,6 +89,7 @@ Translation files live under `i18n/zh-Hans/`:
 - `docusaurus-theme-classic/navbar.json` contains navigation messages.
 - `docusaurus-plugin-content-docs/*.json` contains version/sidebar messages.
 - `docusaurus-plugin-content-docs/version-3.0.0/` contains translated documents.
+- `docusaurus-plugin-content-docs/version-3.1.0/` contains translated preview documents.
 
 Use `Translate` or `translate()` with stable IDs for React text. Run
 `yarn write-translations --locale zh-Hans` to extract new messages, then review
@@ -93,6 +107,7 @@ Each Chinese document has an explicit translated `title` in its front matter.
 This prevents license comments before the H1 from causing Docusaurus to use
 the filename as its sidebar label or page title. After translating headings,
 run `node scripts/sync-translation-anchors.mjs` to synchronize their IDs.
+For the preview, use `node scripts/sync-translation-anchors.mjs --version 3.1.0`.
 
 ## Verification
 
