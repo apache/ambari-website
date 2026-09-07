@@ -27,7 +27,7 @@ limitations under the License.
 
 根据需要声明 `commandScript`、`customCommands`、`requiredServices`、`configuration-dependencies`、`osSpecifics` 和生成的 `configFiles`。配置依赖告知 Ambari 组件所需的配置类型，以及哪些变更可能要求重启。软件包脚本和模板必须生成服务使用的文件。
 
-服务可以定义 `alerts.json`、`quicklinks/quicklinks.json`、`themes` 和 service advisor。服务 `metrics.json` 描述 Ambari 控制平面保留的服务指标。当前 BIGTOP 服务还使用 `telemetry.json` 和 telemetry profile 支持 Prometheus/VictoriaMetrics 监控路径；这些是独立契约。
+服务可以定义 `alerts.json`、`quicklinks/quicklinks.json`、`themes` 和 Service Advisor。服务级 `metrics.json` 描述 Ambari 控制平面保留的管理指标。当前 BIGTOP 服务还使用 `telemetry.json` 和遥测配置文件支持 Prometheus/VictoriaMetrics 监控链路；两者是用途不同、不能互相替代的契约。
 
 ## 堆栈定义 {#stack-definition}
 
@@ -35,4 +35,4 @@ limitations under the License.
 
 ## 验证 {#validation}
 
-在目标堆栈上执行描述符验证、软件包和配置渲染、服务检查、自定义操作、advisor 验证和升级测试。检查每个引用的脚本、软件包、配置类型、仓库和 telemetry profile 是否存在。明确目标操作系统和架构；源码 profile 本身不等于生产认证。
+在目标 Stack 上执行描述符验证、软件包与配置渲染、服务检查、自定义操作、Advisor 验证和升级测试。逐项确认引用的脚本、软件包、配置类型、仓库和遥测配置文件确实存在。目标操作系统和处理器架构必须明确；源码中存在某套构建配置，并不等于该平台已经获得生产认证。

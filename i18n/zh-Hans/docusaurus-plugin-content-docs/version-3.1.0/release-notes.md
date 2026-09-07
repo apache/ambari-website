@@ -67,7 +67,7 @@ Ambari 不再将代码仓库内长期维护的古老第三方 Python 源码副�
 
 Python 依赖打包采用哈希锁定的构件，明确选择平台和 ABI，检查元数据及许可证，并生成软件物料清单（SBOM）。构建前清理依赖暂存目录，避免将旧库残留带入新 RPM。CPython 3.10 和 ARM64 使用独立构建目标；存在构建配置不代表所有操作系统与架构组合均已通过生产验证。
 
-监控部分为 VictoriaMetrics 提供独立的软件包。保留的 `ambari-metrics` 模块名称不表示旧 AMS 仍是监控后端，Ambari RPM 版本与 VictoriaMetrics 组件版本也相互独立。离线 Python wheelhouse 只覆盖 Python 构件；完全离线构建还需要准备 Maven、npm 和组件下载的缓存或镜像。
+监控部分为 VictoriaMetrics 提供独立的软件包。保留的 `ambari-metrics` 模块名称不表示旧 AMS 仍是监控后端，Ambari RPM 版本与 VictoriaMetrics 组件版本也相互独立。离线 Python Wheel 仓库仅包含 Python 制品；如需完全离线构建，还必须分别准备 Maven、npm 和监控组件下载所需的缓存或镜像。
 
 构建命令与产物检查见 [RPM 打包](./platform/rpm-packaging.md)，完整构建环境见[从源码构建](./ambari-dev/building-from-source.md)。
 

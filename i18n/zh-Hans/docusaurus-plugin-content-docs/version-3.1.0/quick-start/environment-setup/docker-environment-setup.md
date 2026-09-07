@@ -1,5 +1,5 @@
 ---
-title: Docker 环境设置
+title: Docker 环境准备
 sidebar_position: 3
 ---
 
@@ -20,13 +20,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Docker 环境设置 {#docker-environment}
-Docker 可为 3.1.0 候选版本提供开发环境，但不提供官方 Ambari 3.1.0 镜像。使用批准的基础镜像，并安装审查过的 RPM 仓库或候选 RPM。
+# Docker 环境准备 {#docker-environment}
+
+Docker 可以为 Ambari 3.1.0 候选版本提供可重复创建的开发和验证环境，但项目并未在此提供官方 Ambari 3.1.0 镜像。应选择组织信任且与候选操作系统一致的基础镜像，并在其中配置经过审查的 RPM 仓库或安装候选 RPM。
+
 ## 主机要求 {#host-requirements}
-准备足够 CPU、内存和磁盘运行 Server 与 Agent，使用用户管理的 bridge 网络和稳定服务名，并持久化数据库和仓库目录。
-镜像应提供 Ambari JDK 17；Stack 服务可独立使用另一 JDK。提供 Python 3.9.2+ 和 `cp39` ABI；Rocky 8 需要 AppStream `python39` 与 wrapper。
-## Compose 封装 {#compose-envelope}
-创建本地 `docker-compose.yml`，使用你的批准镜像：
+
+使用宿主机团队支持的 Docker Engine 和 Compose 版本，并为一台 Server 及所需 Agent 分配足够的 CPU、内存、磁盘和嵌套服务能力。容器应连接到用户管理的桥接网络，并通过稳定的服务名互相访问，不要将可能变化的容器 IP 地址写入配置。元数据库和软件包仓库目录必须持久化。
+
+基础镜像必须为 Ambari 提供 JDK 17，Stack 服务可以按各自兼容性要求使用另一套 JDK。镜像还应提供 Linux Python 3.9.2 或更高版本，并与软件包的 CPython `cp39` ABI 保持一致；Rocky Linux 8 镜像需要 AppStream `python39` 和 Ambari 的 Python 运行时封装脚本。
+
+## Compose 环境 {#compose-envelope}
+
+基于批准的基础镜像创建本地 `docker-compose.yml`。以下内容仅说明环境结构，必须将镜像名和挂载路径替换为经过审查的实际值：
+
 ```yaml
 services:
   ambari-server:
@@ -44,10 +51,14 @@ mkdir -p ambari-repo state/server state/agent
 docker compose up -d
 docker compose ps
 ```
-在容器中安装同一审查制品，运行 `sudo ambari-server setup`，配置独立 Java home 和预置 CA。验证 DNS、TLS、时间、端口、heartbeat 及重启后的持久性，不要通过关闭全部安全控制解决连接问题。
-源码仓库提供 Rocky 8 构建封装：
+
+在容器中安装同一候选集合中的 Server 和 Agent 软件包。运行 `sudo ambari-server setup` 配置数据库连接和彼此独立的 Java Home，并提前配置 CA 信任。随后验证容器 DNS、TLS 身份、时间同步、必要端口、Agent 心跳，以及容器重启后的数据持久性。不要通过关闭所有安全控制来解决网络连接问题。
+
+如需从实际源码树构建，仓库提供了包含 Rocky Linux 8、JDK 17 和 Python 3.9 的构建环境封装：
+
 ```shell
 ./start-build-env.sh bash
 ./start-build-env.sh mvn -B -DskipTests package
 ```
-这些是构建命令，不是现成集群镜像。参阅[下载](../download.md)。
+
+这些命令只用于进入构建环境或执行 Maven 构建，不会生成可直接运行的集群镜像。软件包来源和检查方法见[下载](../download.md)。

@@ -32,18 +32,20 @@ limitations under the License.
 ## Ask A Useful Question {#ask-a-useful-question}
 
 Use `user@ambari.apache.org` for installation and operation questions. Include
-the candidate revision, OS and architecture, Ambari/Stack JDK choices, Python
-version and ABI, relevant logs, and the exact command that failed. Redact
-passwords, tokens, certificates, private keys, and internal hostnames.
+the candidate revision, operating system and architecture, separate Ambari and
+Stack JDK choices, Python version and ABI, relevant logs, and the exact command
+that failed. Before sending, remove passwords, access tokens, certificates,
+private keys, internal hostnames, and other environment-specific secrets.
 
 Use `dev@ambari.apache.org` for patches, API or behavior design, and source
-build questions. Use `issues@ambari.apache.org` for a reproducible defect after
-checking existing JIRA issues. Put code-review requests and review feedback on
-`reviews@ambari.apache.org`; commit traffic is delivered to
+build questions. After checking existing JIRA issues, send reproducible defects
+to `issues@ambari.apache.org`. Put code-review requests and review feedback on
+`reviews@ambari.apache.org`; commit traffic is delivered automatically to
 `commits@ambari.apache.org`.
 
-Search the archives first, use a precise subject, and link to the relevant JIRA
-or review. These lists document community discussion; they do not replace the
-candidate's release qualification, security policy, or environment testing.
-List traffic is not an incident-response channel; use the project's documented
-security reporting process for sensitive vulnerabilities.
+Search the archives first, use a subject that identifies the problem, and link
+to the relevant JIRA or code review. These lists provide a traceable record of
+community discussion; they do not replace release qualification, security
+policy, or environment testing. Public list traffic is not an incident-response
+channel. Follow the project's documented private reporting process for
+unreleased security vulnerabilities.

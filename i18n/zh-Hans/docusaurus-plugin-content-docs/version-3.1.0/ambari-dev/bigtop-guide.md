@@ -23,11 +23,11 @@ limitations under the License.
 
 Ambari 3.1 软件包需要明确选择兼容的 Bigtop reference。Ambari 3.1 不是 Bigtop 发布版本，不得称为 Bigtop 3.1。
 
-## 选择 Stack reference {#select-the-stack-reference}
+## 选择 Stack 基线 {#select-the-stack-reference}
 
-检查服务定义和发布问题中的受支持 Bigtop Stack reference。Bigtop 3.4 继承 3.3 和 3.2 系列；选择并记录准确的兼容 ref 或 tag。
+根据服务定义和发布问题确认受支持的 Bigtop Stack 基线。Bigtop 3.4 会继承 3.3 和 3.2 系列的内容，因此必须选择并记录准确的兼容引用或标签，不能只写一个宽泛的版本范围。
 
-验证源代码根目录、RPM profile、所需 JDK、Python 解释器、软件包管理器和平台支持。未核对当前依赖前，不要复制 HDP 或 CentOS 6 配方。
+验证源码根目录、RPM 构建配置、所需 JDK、Python 解释器、软件包管理器和平台支持范围。未核对当前依赖和服务定义前，不要复制旧 HDP 或 CentOS 6 配方。
 
 ## 构建和验证 {#build-and-validate}
 

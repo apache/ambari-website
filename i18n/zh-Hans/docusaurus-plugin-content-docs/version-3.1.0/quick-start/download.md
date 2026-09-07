@@ -25,9 +25,9 @@ Ambari 3.1.0 文档当前描述的是经过审查的候选版本和源码构建�
 
 ## 选择制品 {#choose-an-artifact}
 
-Server、Agent 以及可选 Metrics 包必须来自同一制品集合。不要混用不同候选版本的包，也不要在安装之间复制私有 Python 库。RPM 架构必须与主机、Python wheel 和 VictoriaMetrics provider 制品保持一致。
+Server、Agent 以及可选的 Metrics 软件包必须来自同一候选制品集合。不要混用不同候选版本的软件包，也不要在两次安装之间复制私有 Python 库。RPM 架构必须与目标主机、Python Wheel 和 VictoriaMetrics 后端制品保持一致。
 
-默认 Linux 打包目标是 x86_64、CPython `cp39` 和 `manylinux2014_x86_64`。单独的 `aarch64` 构建选择 `manylinux2014_aarch64`；CPython 3.10 构建使用独立 profile。这些是构建目标，并不表示所有平台都已认证。
+默认 Linux 打包目标为 x86_64、CPython `cp39` 和 `manylinux2014_x86_64`。独立的 `aarch64` 构建选择 `manylinux2014_aarch64`，CPython 3.10 构建则使用另一套构建配置。这些配置只声明构建目标，不表示对应平台组合已经通过生产认证。
 
 ## 从源码构建 {#build-from-source}
 
@@ -37,14 +37,14 @@ Server、Agent 以及可选 Metrics 包必须来自同一制品集合。不要�
 mvn -B -am -pl ambari-agent,ambari-server clean package rpm:rpm -Dbuild.os_arch=x86_64
 ```
 
-如需受控的 Python 依赖构建，提供包含全部锁定制品的 wheelhouse：
+如需在受控环境中构建 Python 依赖，应准备包含全部锁定制品的离线 Wheel 仓库：
 
 ```shell
 mvn -B -am -pl ambari-agent,ambari-server clean package rpm:rpm \
   -Dbuild.os_arch=x86_64 -Dpython.wheelhouse=/srv/build/wheelhouse
 ```
 
-wheelhouse 会启用 `PIP_NO_INDEX=true`；Maven、Node 和 npm 仍需要各自的缓存或镜像。生成 RPM 后先检查，不要直接分发：
+指定离线 Wheel 仓库后会启用 `PIP_NO_INDEX=true`；Maven、Node 和 npm 仍需要各自的缓存或镜像。RPM 生成后应先检查内容，不要直接分发：
 
 ```shell
 export AGENT_RPM=/path/to/ambari-agent.rpm
@@ -53,11 +53,11 @@ rpm -qp --requires "$AGENT_RPM"
 rpm -qpl "$AGENT_RPM"
 ```
 
-确认架构、Python ABI wrapper、私有库、license/NOTICE 文件和 SBOM 均符合预期。目标节点不要使用 `pip install`。
+确认架构、Python ABI 运行时封装脚本、私有库、LICENSE/NOTICE 文件和 SBOM 均符合预期。不要在目标节点上运行 `pip install` 来补装或替换依赖。
 
 ## 可选 Metrics 包 {#optional-metrics-package}
 
-可选的 `ambari-metrics` RPM 打包经过审查的 VictoriaMetrics provider，替代旧 AMS/Ganglia 集成；旧的 AMS 或 Ganglia 安装说明不适用于此候选版本。单独构建：
+可选的 `ambari-metrics` RPM 包含经过审查的 VictoriaMetrics 监控后端，用于替代旧 AMS/Ganglia 集成；旧版 AMS 或 Ganglia 安装说明不适用于此候选版本。该模块可单独构建：
 
 ```shell
 mvn -B -Pmetrics-rpm -pl ambari-metrics -am package rpm:rpm \
@@ -65,11 +65,11 @@ mvn -B -Pmetrics-rpm -pl ambari-metrics -am package rpm:rpm \
   -Dbuild.os_arch=x86_64
 ```
 
-将 provider 版本、源码修订、校验和、元数据和 NOTICE 作为一个审查集合检查。命令只是操作流程，不代表本环境已完成构建或认证。
+应将监控后端版本、源码修订、校验和、元数据和 NOTICE 作为一个不可拆分的审查集合。上述命令只描述操作流程，不表示当前环境已经完成构建或认证。
 
 ## 安装前 {#before-installation}
 
-记录候选版本标识、源码修订、目标 OS 和架构、Ambari JDK、Stack JDK、Python 可执行文件、数据库方案及回滚备份。Rocky Linux 8 使用 AppStream `python39`；系统通用 `python3` 可能指向其他小版本。wrapper 与原生扩展必须使用相同 ABI。
+记录候选版本标识、源码修订、目标操作系统和架构、Ambari JDK、Stack JDK、Python 可执行文件、数据库方案以及回滚备份。Rocky Linux 8 使用 AppStream `python39`；系统通用的 `python3` 可能指向其他次版本。运行时封装脚本与原生扩展必须使用同一个 ABI。
 
 下载清单中不要发布密码、私钥、注册密钥或默认凭据。请通过经过审查的部署流程配置信任锚点和凭据。
 

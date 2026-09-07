@@ -27,7 +27,7 @@ limitations under the License.
 | 存储 | AMS Collector 和基于 HBase 的时序存储 | VictoriaMetrics 单节点或分布式存储 |
 | 目标配置 | 旧版监控服务配置 | Server 编译的分配和 HTTP 服务发现 |
 | 查询 | AMS 专用的指标和属性接口 | 通过 Ambari 访问兼容 Prometheus 的查询 API |
-| 仪表盘模型 | 监控 widget 和 widget 布局 | 原生 React 仪表盘、面板和数据源 |
+| 仪表盘模型 | 监控小组件及其布局 | 原生 React 仪表盘、面板和数据源 |
 | 自定义服务接入 | 旧版时序指标定义 | 遥测描述符和适配具体版本的 JMX 配置 |
 | 管理信号 | 直接 JMX 值与历史监控定义混合 | 独立保留高可用状态等管理操作所需的少量直接 JMX 属性 |
 

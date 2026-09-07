@@ -21,9 +21,10 @@ limitations under the License.
 
 # Vagrant Environment Setup {#vagrant-environment}
 
-Vagrant is an environment envelope for testing a reviewed Ambari 3.1.0
-candidate. Ambari does not publish an assumed official 3.1.0 box here. Use a
-trusted, locally available box approved for the selected Linux candidate OS.
+Vagrant can provide a repeatable environment for testing a reviewed Ambari
+3.1.0 candidate. Ambari does not publish or designate an official 3.1.0 Box in
+this guide. Use a trusted, locally verified Box approved for the Linux
+distribution selected for the candidate.
 
 ## Host And Box Requirements {#host-and-box-requirements}
 

@@ -32,7 +32,7 @@ limitations under the License.
 | `endpoint.http` / `endpoint.https` | 配置属性、可选 HA 属性前缀和默认端口 |
 | `auth.principal` / `auth.keytab` | Kerberos 的生效配置引用，不嵌入密钥 |
 
-Server 选择组件主机作为目标并提取配置的端口。描述符/配置文件验证会拒绝不支持的格式和不安全路由。Stack 服务继承机制同样适用于 telemetry 元数据。
+Ambari Server 选择组件所在主机作为目标，并从生效配置中解析端口。描述符和配置文件验证会拒绝不受支持的数据格式及不安全路由。Stack 的服务继承机制同样适用于遥测元数据。
 
 ## 原生与 JMX {#native-versus-jmx}
 

@@ -31,7 +31,7 @@ Java 基线由 [AMBARI-26642](https://github.com/apache/ambari/commit/39112e4aea
 
 ## JDK 选择 {#jdk-selection}
 
-Ambari 与堆栈服务可以使用不同的 JDK。[AMBARI-26641](https://github.com/apache/ambari/commit/821de739a11b34b06a45fab6dc8aaa6f703783e8) 为 Ambari Server/Agent helper 添加 `--ambari-java-home`，并为堆栈服务添加 `--stack-java-home`，保持两者的 Java 选择独立。Ambari helper 要求 JDK 17 或更高版本；堆栈服务使用独立选择的堆栈 JDK。旧版 `--java-home` 仍作为已弃用别名保留。
+Ambari 与 Stack 服务可以使用不同的 JDK。[AMBARI-26641](https://github.com/apache/ambari/commit/821de739a11b34b06a45fab6dc8aaa6f703783e8) 为 Ambari Server 和 Agent 辅助程序添加 `--ambari-java-home`，并为 Stack 服务添加 `--stack-java-home`，使两类 Java 运行时可以独立选择。Ambari 辅助程序要求 JDK 17 或更高版本，Stack 服务则使用单独指定且与服务兼容的 JDK。旧版 `--java-home` 仍作为已弃用别名保留。
 
 ## 验证 {#verification}
 

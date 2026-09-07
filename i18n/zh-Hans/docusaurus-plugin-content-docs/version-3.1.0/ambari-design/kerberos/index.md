@@ -27,7 +27,7 @@ Apache Ambari 3.1 通过 React 安装程序和服务配置工作流支持安全 
 
 *凭据只在受保护步骤输入；描述符定义身份和 keytab 路径，不包含密码或 keytab 内容。*
 
-## 选择工作流 {#choose-a-workflow}
+## 选择操作流程 {#choose-a-workflow}
 
 - 安装或保护集群时使用[启用 Kerberos](./enabling_kerberos.md)。向导会验证所选 KDC 或 Active Directory 模式，收集必要输入，并记录进度以便重试。
 - 使用 [Kerberos 描述符](./kerberos_descriptor.md)在 Stack 或服务定义中描述身份、principal、keytab、服务、组件和生成的配置属性。
@@ -39,7 +39,7 @@ Apache Ambari 3.1 通过 React 安装程序和服务配置工作流支持安全 
 
 ## 安全边界 {#security-boundaries}
 
-KDC 管理凭据通过受保护的向导流程输入，并仅用于需要它的请求。凭据必须通过安装所使用的部署配置或秘密存储提供，绝不能提交到 Stack 定义或复制到描述符示例中。Keytab 内容和密码不是 telemetry、标签、URL 或普通配置文本。
+KDC 管理凭据通过受保护的向导流程输入，并且只用于需要该凭据的请求。凭据必须由安装环境的部署配置或秘密存储提供，绝不能提交到 Stack 定义，也不能复制到描述符示例中。Keytab 内容和密码不得出现在遥测数据、标签、URL 或普通配置文本中。
 
 ## 恢复和运维 {#recovery-and-operations}
 

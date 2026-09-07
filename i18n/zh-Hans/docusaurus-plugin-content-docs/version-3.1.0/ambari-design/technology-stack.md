@@ -38,7 +38,7 @@ limitations under the License.
 
 Maven 和 Node/npm 属于构建环境工具，不是所有受管集群节点的通用前置依赖。应部署经过审核的制品，不能将前端开发服务器或可变的系统 Python 环境当作产品部署。
 
-默认 RPM 目标使用 CPython 3.9 wheel。架构及其他 ABI profile 会选择独立制品，详见 [RPM 打包](../platform/rpm-packaging.md)和[源码构建](../ambari-dev/building-from-source.md)。
+默认 RPM 目标使用 CPython 3.9 Wheel。针对其他处理器架构和 Python ABI 的构建配置会选择独立制品，详见 [RPM 打包](../platform/rpm-packaging.md)和[源码构建](../ambari-dev/building-from-source.md)。
 
 ## 受管服务 {#managed-services}
 

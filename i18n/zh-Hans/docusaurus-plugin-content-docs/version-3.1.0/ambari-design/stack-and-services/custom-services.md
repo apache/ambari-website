@@ -29,7 +29,7 @@ limitations under the License.
 
 ## 配置和操作 {#configuration-and-actions}
 
-使用 `configuration-dependencies` 声明服务或组件所需的配置类型。使用 `quicklinks/quicklinks.json` 定义服务链接，使用 `themes` 定义受支持的服务展示元数据。服务 advisor 可以验证部署并推荐配置。`telemetry.json` 描述遥测提供程序输入；`metrics.json` 仍是 Ambari 控制平面服务指标契约。
+使用 `configuration-dependencies` 声明服务或组件依赖的配置类型，使用 `quicklinks/quicklinks.json` 定义服务链接，并使用 `themes` 定义受支持的服务展示元数据。Service Advisor 可以验证组件部署并提出配置建议。`telemetry.json` 描述遥测后端的采集输入；`metrics.json` 仍然是 Ambari 控制平面使用的服务指标契约。
 
 ## 继承 {#inheritance}
 

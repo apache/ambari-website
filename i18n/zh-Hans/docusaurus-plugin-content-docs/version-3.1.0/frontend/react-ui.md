@@ -69,7 +69,7 @@ Stack 管理包括版本列表、仓库信息、升级和降级启动、预检�
 
 Views 从已认证的 React shell 列出，并在服务器提供的同源 iframe 上下文中打开。View-only 用户获得精简 shell，并可直接导航到 Views。Ambari Admin 是位于 `ambari-admin/src/main/resources/ui/ambari-admin` 的独立 React 模块；其打包的 React `latest` 输出与主 UI 一起构建。
 
-服务 Theme 提供 stack 定义的布局、配置 widget、属性、条件、建议以及只读/权限处理。Theme 解析和代表性消费者已经存在；完整的自定义 stack 和往返组合仍需验收。
+服务 Theme 提供由 Stack 定义的页面布局、配置控件、属性、条件、建议，以及只读状态和权限处理。当前实现已经具备 Theme 解析和具有代表性的使用方；自定义 Stack、复杂条件组合和保存后重新加载的一致性仍需结合真实环境验收。
 
 ## 原生 Monitoring {#native-monitoring}
 
@@ -77,7 +77,7 @@ React 在 `/main/monitoring` 提供原生 Prometheus 兼容监控区域，包括
 
 监控路由使用 `CLUSTER.VIEW_METRICS` 保护集群查询、仪表板、探索器和数据源；使用 `HOST.VIEW_METRICS` 保护抓取目标；使用 `SERVICE.VIEW_METRICS` 保护服务 Metrics 选项卡；数据源和仪表板修改另有独立的变更保护。
 
-旧的独立 Dashboard Heatmaps 路由会重定向到 `/main/dashboard/metrics`。这是有意的替换边界：React 不提供 AMS 或 Ganglia 兼容路径，旧 Heatmaps 或 AMS/Ganglia 行为不应被视为尚未完成的 React 工作。
+旧版独立 Heatmaps 页面会重定向到 `/main/dashboard/metrics`。这是明确的替换边界：React 不提供 AMS 或 Ganglia 兼容路径，因此旧 Heatmaps 页面及 AMS/Ganglia 行为不属于尚待补齐的 React 功能。
 
 ## 构建和部署 {#build-and-deployment}
 

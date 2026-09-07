@@ -21,14 +21,14 @@ limitations under the License.
 
 # Version Functions, conf-select, and stack-select {#version-functions-conf-select-and-stack-select}
 
-Version functions help choose compatible service definitions and configuration. `conf-select` selects configuration for the selected service version, while `stack-select` selects the active service version exposed by the Stack.
+Version functions choose compatible service definitions and configuration from the installed Stack, selected service version, and current operation context. `conf-select` points service configuration at the selected version, while `stack-select` selects the active service version exposed by the Stack. Both operate on managed service content, so their ordering and repeatability must remain consistent with service upgrade and rollback workflows.
 
-These mechanisms select service content; they do not select Ambari Server or Agent RPMs. Ambari Metrics RPMs are also outside service-version selection and must follow their own package and compatibility rules.
+These mechanisms do not select or replace Ambari Server or Agent RPMs, and they do not change those packages' runtime dependencies. Ambari Metrics RPMs are also outside service-version selection and follow their own package, target-architecture, and monitoring-backend compatibility rules. When diagnosing a version problem, first distinguish the Ambari package version, Stack version, and individual service version.
 
 ## Selection rules {#selection-rules}
 
-Resolve the Stack and service versions from current metadata and the deployment context. Keep the selected service version explicit, validate dependencies, and reject unsupported combinations rather than silently falling back.
+Resolve Stack and service versions from the currently loaded metadata, installed packages, and deployment context. Record the result explicitly, then verify that dependencies, configuration directories, and package contents match it. Missing or unsupported combinations must produce a diagnosable error and stop the operation rather than silently falling back to an older version or an arbitrary available directory.
 
 ## Testing {#testing}
 
-Test normal selection, inheritance, missing versions, incompatible versions, upgrade, rollback, and repeated execution. Record the active profile, source references, generated configuration, and recovery evidence.
+Test normal selection, parent inheritance, missing and incompatible versions, upgrade, rollback, and repeated execution. Inspect configuration links or selection records, the service command environment, and the version actually running. Record the active build configuration, source references, input versions, generated configuration, and recovery evidence instead of relying only on the command exit code.

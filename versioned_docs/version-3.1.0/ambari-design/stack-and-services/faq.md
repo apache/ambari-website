@@ -23,16 +23,16 @@ limitations under the License.
 
 ## How does inheritance work? {#how-does-inheritance-work}
 
-A child Stack may inherit service definitions and properties from a parent Stack. The child should override only values required for its platform or release, leaving common behavior in the parent.
+A child Stack may inherit service definitions, scripts, configuration, and properties from a parent Stack. Ambari loads the inherited content first and then applies explicit child overrides to form the final service model used by deployment plans. Override parent content only when platform, component-version, or compatibility requirements actually differ; keep common behavior in the parent so copied definitions do not drift across versions.
 
 ## Which version is selected? {#which-version-is-selected}
 
-Stack selection identifies service definitions and compatible configuration. It is separate from selecting Ambari Server and Agent RPM versions. Ambari Metrics RPMs are not selected by service-version selection.
+Stack selection identifies available service definitions, component versions, and compatible configuration. It is independent of selecting Ambari Server and Agent RPM versions, and a service-version change does not install or upgrade Ambari Metrics RPMs. A deployment or upgrade plan should record the Ambari, Stack, service, Metrics package, and monitoring-backend versions separately and validate that the candidate supports the combination.
 
 ## What should a new Stack document? {#what-should-a-new-stack-document}
 
-Document services, components, dependencies, configuration, lifecycle commands, alerts, and supported platforms. Keep identifiers stable and record migration and recovery behavior for changes.
+At minimum, document services and components, cardinality, dependencies, configuration types and defaults, packages, lifecycle commands, custom actions, alerts, quick links, telemetry integration, and supported platforms. Keep public identifiers stable. For changes that can affect existing clusters, also document configuration migration, version selection, failure recovery, and rollback behavior.
 
 ## How should changes be tested? {#how-should-changes-be-tested}
 
-Test inheritance, service version resolution, install, start, stop, restart, upgrade, failure, and recovery. Validate both the Stack metadata and the generated deployment plan.
+Test inheritance resolution, service-version selection, initial installation, start, stop, restart, upgrade, repeated execution, partial host failure, and recovery. In addition to loading the Stack metadata, inspect generated host-component assignments, packages, configuration, command arguments, request state, and service-check results. Preserve evidence for every platform claimed as supported.

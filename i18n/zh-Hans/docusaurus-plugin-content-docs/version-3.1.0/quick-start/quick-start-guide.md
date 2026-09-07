@@ -47,7 +47,7 @@ mvn -B -am -pl ambari-agent,ambari-server clean package rpm:rpm \
   -Dbuild.os_arch=x86_64
 ```
 
-离线 Python wheelhouse 可通过 `-Dpython.wheelhouse=/srv/build/wheelhouse` 提供，且必须包含所有锁定制品。Maven 和前端依赖需要单独的缓存或镜像。架构规则和制品检查见[下载](./download.md)。
+离线 Python Wheel 仓库可通过 `-Dpython.wheelhouse=/srv/build/wheelhouse` 指定，其中必须包含依赖锁文件要求的全部制品。Maven 和前端依赖仍需使用各自的缓存或镜像。架构选择规则和制品检查方法见[下载](./download.md)。
 
 ## 3. 安装并配置 {#install-and-configure}
 
@@ -72,20 +72,20 @@ sudo ambari-server setup \
 
 ## 4. 启动并注册 {#start-and-enroll}
 
-通过批准的 bootstrap 流程预置 Server CA 和注册信任材料。Agent 必须验证 Server 身份，CA 缺失或错误时拒绝连接；不支持 `DEV` 回退。
+通过批准的引导注册流程预置 Server CA 和注册信任材料。Agent 必须验证 Server 身份，CA 缺失或校验失败时应拒绝连接；生产流程不支持回退到 `DEV` 模式。
 
 ```shell
 sudo ambari-server start
 sudo ambari-agent start
 ```
 
-打开 React Ambari 界面，确认 Agent heartbeat 和主机注册，再执行一次受控服务检查。修正主机或信任配置后，从当前 Server 状态重试。
+打开 Ambari React 界面，确认 Agent 心跳和主机注册状态正常，再执行一次范围明确的服务检查。发生失败时，先修正主机或信任配置并重新读取 Server 当前状态，然后再重试。
 
 ## 5. 连接监控 {#connect-monitoring}
 
-监控需要安装经过审查的 `ambari-metrics` 包及匹配的 VictoriaMetrics/VMAGENT 部署。Agent 暴露主机 `/metrics` 和稳定的组件路由。VMAGENT 负责发现、抓取并 remote-write 到 VictoriaMetrics；Ambari 受保护的 proxy 向 React Dashboard 提供 Prometheus 兼容查询。验证 exporter 健康、目标发现、存储、datasource 连接和角色授权。
+监控功能需要安装经过审查的 `ambari-metrics` 软件包，并部署相匹配的 VictoriaMetrics 和 VMAGENT。Agent 暴露主机级 `/metrics` 端点及稳定的组件路由；VMAGENT 负责发现和抓取目标，并通过远程写入将样本发送至 VictoriaMetrics；受保护的 Ambari 查询代理向 React 仪表盘提供兼容 Prometheus 的查询接口。应分别验证指标导出端点、目标发现、远程写入与存储、数据源连接和角色授权。
 
-该流程替代旧 AMS/Ganglia 指南，不会自动导入 AMS 历史数据或转换旧 Dashboard 布局。
+该流程替代旧版 AMS/Ganglia 指南，不会自动导入 AMS 历史数据，也不会转换旧版仪表盘布局。
 
 ## 6. 记录结果 {#record-results}
 

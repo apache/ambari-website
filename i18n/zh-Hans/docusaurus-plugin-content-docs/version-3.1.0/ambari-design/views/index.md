@@ -43,6 +43,6 @@ View-only 用户会获得精简的 Views shell。独立的 Ambari Admin React �
 
 * [View API](./view-api.md)介绍通过 Ambari REST API 发现 View、查看版本、创建实例以及管理权限和特权。
 * [View Definition](./view-definition.md)介绍当前 `view.xml` 契约和软件包元数据。
-* [Framework Services](./framework-services.md)介绍 `ViewContext`、实例数据、资源提供程序和生命周期事件。
+* [框架服务](./framework-services.md)介绍 `ViewContext`、实例数据、资源提供程序和生命周期事件。
 
 REST 契约由 `ambari-server/src/main/java/org/apache/ambari/server/api/services/views` 下的服务器类实现。主要 View 扩展接口位于 `ambari-views/src/main/java/org/apache/ambari/view` 下。
