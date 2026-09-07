@@ -1,7 +1,22 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements. See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 name: Build and Deploy
 
 permissions:
-  contents: write
+  contents: read
 
 on:
   pull_request:
@@ -10,25 +25,83 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: website-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  build-website-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      # Build main document: Apache Ambari documentation
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 18.12.1
+          node-version: 22
 
-      - name: Build Main Document
-        run: yarn && yarn update-avatar && yarn build && git checkout .
+      - name: Enable Yarn
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Check translations, deployment and types
+        run: |
+          yarn test:i18n
+          yarn test:deployment
+          yarn typecheck
+
+      - name: Build all languages
+        run: |
+          yarn update-avatar
+          yarn build
+
+      - name: Test language switching
+        run: |
+          yarn playwright install --with-deps chromium
+          yarn test:e2e
+
+      - name: Prepare ASF publication metadata
+        run: cp .asf.yaml build/.asf.yaml
+
+      - name: Upload tested website
+        uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: build/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    needs: build
+    if: >-
+      github.repository == 'apache/ambari-website' &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download tested website
+        uses: actions/download-artifact@v4
+        with:
+          name: website
+          path: build
+
+      - name: Verify publication metadata
+        run: |
+          test -f build/.asf.yaml
+          test -f build/index.html
+          test -f build/zh-Hans/index.html
 
       - name: Deploy
-        if: ${{ github.event_name == 'push' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -37,21 +110,3 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: 'Automated deployment:'
-
-      - name: Update .asf.yaml
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "dev@ambari.apache.org"
-          git fetch --all
-          git checkout asf-site
-          echo 'staging:'           > .asf.yaml
-          echo '  profile: ~'       >> .asf.yaml
-          echo '  whoami: asf-site' >> .asf.yaml
-          echo "" >> .asf.yaml
-          echo 'publish:'           >> .asf.yaml
-          echo '  whoami: asf-site' >> .asf.yaml
-          git add .asf.yaml
-          git commit -m '.asf.yaml'
-          git push origin asf-site
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

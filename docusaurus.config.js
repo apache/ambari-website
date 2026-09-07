@@ -1,27 +1,33 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-// For Docusaurus 3.7.0 with prism-react-renderer v2
+// For Docusaurus 3 with prism-react-renderer v2
 import { themes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Apache Ambari',
   tagline: 'The Apache Ambari project is aimed at making Hadoop management simpler by developing software for provisioning, managing, and monitoring Apache Hadoop clusters. Ambari provides an intuitive, easy-to-use Hadoop management web UI backed by its RESTful APIs.',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://ambari.apache.org',
   baseUrl: '/',
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   favicon: 'img/favicon.ico',
   organizationName: 'apache', 
-  projectName: 'ambari', 
+  projectName: 'ambari-website',
+  deploymentBranch: 'asf-site',
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'zh-Hans'],
+    localeConfigs: {
+      en: { label: 'English', htmlLang: 'en' },
+      'zh-Hans': { label: '\u7b80\u4f53\u4e2d\u6587', htmlLang: 'zh-Hans' },
+    },
   },
 
   presets: [
@@ -31,12 +37,12 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          beforeDefaultRemarkPlugins: [require('./src/plugins/localized-doc-links')],
           // Enable breadcrumbs for better navigation
           breadcrumbs: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/vivostar/vivostar.github.io/tree/master/',
+            'https://github.com/apache/ambari-website/tree/main/',
+          editLocalizedFiles: true,
           lastVersion: '3.0.0',
           versions: {
             current: {
@@ -59,10 +65,8 @@ const config = {
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/vivostar/vivostar.github.io/tree/master/',
+            'https://github.com/apache/ambari-website/tree/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -161,6 +165,10 @@ const config = {
           },
           {
             type: 'docsVersionDropdown',
+            position: 'right',
+          },
+          {
+            type: 'localeDropdown',
             position: 'right',
           },
           {

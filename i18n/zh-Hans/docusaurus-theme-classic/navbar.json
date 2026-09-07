@@ -1,0 +1,90 @@
+{
+  "title": {
+    "message": "Apache Ambari",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Apache Ambari Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Docs": {
+    "message": "文档",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Wiki": {
+    "message": "Wiki",
+    "description": "Navbar item with label Wiki"
+  },
+  "item.label.Releases": {
+    "message": "发布版本",
+    "description": "Navbar item with label Releases"
+  },
+  "item.label.Project Information": {
+    "message": "项目信息",
+    "description": "Navbar item with label Project Information"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Apache": {
+    "message": "Apache",
+    "description": "Navbar item with label Apache"
+  },
+  "item.label.3.0.0": {
+    "message": "3.0.0",
+    "description": "Navbar item with label 3.0.0"
+  },
+  "item.label.2.7.9": {
+    "message": "2.7.9",
+    "description": "Navbar item with label 2.7.9"
+  },
+  "item.label.2.7.8": {
+    "message": "2.7.8",
+    "description": "Navbar item with label 2.7.8"
+  },
+  "item.label.Project Team": {
+    "message": "项目团队",
+    "description": "Navbar item with label Project Team"
+  },
+  "item.label.JIRA": {
+    "message": "JIRA",
+    "description": "Navbar item with label JIRA"
+  },
+  "item.label.User Group": {
+    "message": "用户组",
+    "description": "Navbar item with label User Group"
+  },
+  "item.label.License": {
+    "message": "许可证",
+    "description": "Navbar item with label License"
+  },
+  "item.label.Apache Software Foundation": {
+    "message": "Apache 软件基金会",
+    "description": "Navbar item with label Apache Software Foundation"
+  },
+  "item.label.ApacheCon Events": {
+    "message": "ApacheCon 活动",
+    "description": "Navbar item with label ApacheCon Events"
+  },
+  "item.label.Privacy Policy": {
+    "message": "隐私政策",
+    "description": "Navbar item with label Privacy Policy"
+  },
+  "item.label.Security": {
+    "message": "安全",
+    "description": "Navbar item with label Security"
+  },
+  "item.label.Trademarks": {
+    "message": "商标",
+    "description": "Navbar item with label Trademarks"
+  },
+  "item.label.Sponsorship": {
+    "message": "赞助",
+    "description": "Navbar item with label Sponsorship"
+  },
+  "item.label.Thanks our Sponsors": {
+    "message": "感谢赞助商",
+    "description": "Navbar item with label Thanks our Sponsors"
+  }
+}

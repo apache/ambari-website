@@ -28,4 +28,6 @@ notifications:
   pullrequests: notifications@ambari.apache.org
 staging:
   profile: ~
-  whoami:  asf-site
+  whoami: asf-site
+publish:
+  whoami: asf-site

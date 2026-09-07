@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "2.7.8",
+    "description": "The label for version 2.7.8"
+  },
+  "sidebar.ambariSidebar.category.Quick Start": {
+    "message": "快速入门",
+    "description": "The label for category 'Quick Start' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Design": {
+    "message": "Ambari 设计",
+    "description": "The label for category 'Ambari Design' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Automated Kerberizaton": {
+    "message": "自动 Kerberos 配置",
+    "description": "The label for category 'Automated Kerberizaton' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Blueprints": {
+    "message": "蓝图",
+    "description": "The label for category 'Blueprints' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Metrics": {
+    "message": "指标",
+    "description": "The label for category 'Metrics' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Stacks and Services": {
+    "message": "Stack 和服务",
+    "description": "The label for category 'Stacks and Services' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Views": {
+    "message": "视图",
+    "description": "The label for category 'Views' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Development": {
+    "message": "Ambari 开发",
+    "description": "The label for category 'Ambari Development' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Plugin Contributions": {
+    "message": "Ambari 插件贡献",
+    "description": "The label for category 'Ambari Plugin Contributions' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari SCOM Management Pack": {
+    "message": "Ambari SCOM 管理包",
+    "description": "The label for category 'Ambari SCOM Management Pack' in sidebar 'ambariSidebar'"
+  }
+}

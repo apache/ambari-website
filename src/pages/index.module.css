@@ -16,6 +16,22 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .heroBanner {
+    padding: 1.5rem 1rem;
+  }
+
+  .heroBanner :global(.hero__title) {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+
+  .heroBanner :global(.hero__subtitle) {
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+}
+
 .buttons {
   display: flex;
   align-items: center;

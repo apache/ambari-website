@@ -20,42 +20,43 @@
 
 import React from 'react';
 import clsx from 'clsx';
+import Translate from '@docusaurus/Translate';
 import styles from './styles.module.css';
 
 type FeatureItem = {
-  title: string;
+  title: React.ReactNode;
   Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+  description: React.ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Provision a Hadoop Cluster',
+    title: <Translate id="homepage.features.provision.title">Provision a Hadoop Cluster</Translate>,
     Svg: require('@site/static/img/hadoop-logo.svg').default,
     description: (
-      <>
+      <Translate id="homepage.features.provision.description">
         Ambari provides a step-by-step wizard for installing Hadoop services across 
         any number of hosts.
-      </>
+      </Translate>
     ),
   },
   {
-    title: 'Manage a Hadoop Cluster',
+    title: <Translate id="homepage.features.manage.title">Manage a Hadoop Cluster</Translate>,
     Svg: require('@site/static/img/hammer-and-wrench.svg').default,
     description: (
-      <>
+      <Translate id="homepage.features.manage.description">
         Ambari provides central management for starting, stopping, and reconfiguring 
         Hadoop services across the entire cluster.
-      </>
+      </Translate>
     ),
   },
   {
-    title: 'Monitor a Hadoop Cluster',
+    title: <Translate id="homepage.features.monitor.title">Monitor a Hadoop Cluster</Translate>,
     Svg: require('@site/static/img/monitor.svg').default,
     description: (
-      <>
+      <Translate id="homepage.features.monitor.description">
         Ambari provides a dashboard for monitoring health and status of the Hadoop cluster.
-      </>
+      </Translate>
     ),
   },
 ];
@@ -74,7 +75,7 @@ function Feature({title, Svg, description}: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+export default function HomepageFeatures(): React.JSX.Element {
   return (
     <section className={styles.features}>
       <div className="container">
