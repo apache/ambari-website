@@ -32,6 +32,11 @@ test('ASF publication and deployment target the same output branch', () => {
   assert.equal(deployAction.with.publish_branch, asf.publish.whoami);
   assert.equal(asf.github.homepage, 'https://ambari.apache.org/');
   assert.equal(asf.publish.hostname, undefined, 'ASF infers the apache.org hostname');
+  assert.deepEqual(asf.notifications, {
+    commits: 'commits@ambari.apache.org',
+    issues: 'issues@ambari.apache.org',
+    pullrequests: 'reviews@ambari.apache.org',
+  });
 });
 
 test('PR and fork builds have no write credentials and cannot publish', () => {
