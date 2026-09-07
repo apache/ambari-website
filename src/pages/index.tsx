@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Translate, {translate} from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
@@ -36,6 +37,8 @@ function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   
   const [flag, setFlag] = useState(1);
+  const githubIcon = useBaseUrl('/img/github' + flag + '.svg');
+  const slackIcon = useBaseUrl('/img/slack.svg');
 
   function changeFlag(val) {
     setFlag(val == 1 ? 2 : 1)
@@ -46,7 +49,11 @@ function HomepageHeader() {
       <div className="container">
        <Confetti />
         <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className="hero__subtitle">
+          <Translate id="homepage.tagline">
+            The Apache Ambari project is aimed at making Hadoop management simpler by developing software for provisioning, managing, and monitoring Apache Hadoop clusters. Ambari provides an intuitive, easy-to-use Hadoop management web UI backed by its RESTful APIs.
+          </Translate>
+        </p>
         
         {isMobileScreen?
         (
@@ -55,7 +62,7 @@ function HomepageHeader() {
           <Link
             className="button button--primary button--lg margin-bottom--sm"
             to="/docs/3.0.0/introduction">
-            GET STARTED
+            <Translate id="homepage.getStarted">Get Started</Translate>
           </Link>
         </div>
         <div className={styles.buttons}>
@@ -63,7 +70,7 @@ function HomepageHeader() {
             className="button button--secondary button--outline button--lg margin-top--sm"
             to="https://github.com/apache/ambari"
             >
-              <img className={styles.button_icon} src={useBaseUrl('/img/github' + flag + '.svg')} alt="github"/>
+              <img className={styles.button_icon} src={githubIcon} alt="github"/>
               <span>GITHUB</span>
           </Link>
         </div>
@@ -71,7 +78,7 @@ function HomepageHeader() {
          <Link
             className="button button--secondary button--outline button--lg margin-top--sm"
             to="https://the-asf.slack.com/archives/C014FSPE668">
-              <img className={styles.button_icon} src='/img/slack.svg' alt="slack"/>
+              <img className={styles.button_icon} src={slackIcon} alt="slack"/>
               <span>SLACK</span>            
           </Link>
         </div>
@@ -83,20 +90,20 @@ function HomepageHeader() {
          <Link
             className="button button--primary button--lg margin-right--sm"
             to="/docs/3.0.0/introduction">
-            GET STARTED
+            <Translate id="homepage.getStarted">Get Started</Translate>
           </Link>
           <Link
             className="button button--secondary button--outline button--lg margin-left--sm"
             to="https://github.com/apache/ambari"
             onMouseOver={() => changeFlag(1)} onMouseOut={() => changeFlag(2)}
             >
-              <img className={styles.button_icon} src={useBaseUrl('/img/github' + flag + '.svg')} alt="github"/>
+              <img className={styles.button_icon} src={githubIcon} alt="github"/>
               <span>GITHUB</span>
           </Link>
           <Link
             className="button button--secondary button--outline button--lg margin-left--sm"
             to="https://the-asf.slack.com/archives/C014FSPE668">
-              <img className={styles.button_icon} src='/img/slack.svg' alt="slack"/>
+              <img className={styles.button_icon} src={slackIcon} alt="slack"/>
               <span>SLACK</span>            
           </Link>
         </div>
@@ -107,13 +114,16 @@ function HomepageHeader() {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description={translate({
+        id: 'homepage.description',
+        message: 'Apache Ambari provides tools to deploy, manage, and monitor Apache Hadoop clusters.',
+      })}>
       <HomepageHeader />
       <main>
         <HomepageFeatures />

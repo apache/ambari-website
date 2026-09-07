@@ -1,0 +1,665 @@
+---
+title: 定义自定义 Stack 和服务
+---
+
+<!---
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--->
+
+# 定义自定义 Stack 和服务 {#defining-a-custom-stack-and-services}
+
+## 背景 {#background}
+
+Stack 定义位于源代码树中的 [/ambari-server/src/main/resources/stacks](https://github.com/apache/ambari/tree/trunk/ambari-server/src/main/resources/stacks)。安装 Ambari Server 后，Stack 定义位于 `/var/lib/ambari-server/resources/stacks`
+
+## Stack 属性 {#stack-properties}
+
+Stack 必须包含或继承一个属性目录，其中包含两个文件：[stack_features.json](https://github.com/apache/ambari/blob/trunk/ambari-server/src/main/resources/stacks/HDP/2.0.6/properties/stack_features.json) 和 [stack_tools.json](https://github.com/apache/ambari/blob/trunk/ambari-server/src/main/resources/stacks/HDP/2.0.6/properties/stack_tools.json)。属性目录必须位于 Stack 版本根级别，不能包含在其他 Stack 版本中。此[目录](https://github.com/apache/ambari/tree/trunk/ambari-server/src/main/resources/stacks/HDP/2.0.6/properties)是 Ambari 2.4 中新增的。
+
+stack_features.json 包含 Ambari 中所含功能的列表，并允许 Stack 指定哪些 Stack 版本包含这些功能。功能列表由特定的 Ambari 版本决定。特定 Ambari 版本的参考列表应位于该 Ambari 版本分支中的 [HDP/2.0.6/properties/stack_features.json](https://github.com/apache/ambari/blob/branch-2.4/ambari-server/src/main/resources/stacks/HDP/2.0.6/properties/stack_features.json)。每项功能都有名称和描述，Stack 可以提供支持该功能的最低和最高版本。
+
+```json
+{
+
+"stack_features": [
+
+{
+
+"name": "snappy",
+
+"description": "Snappy compressor/decompressor support",
+
+"min_version": "2.0.0.0",
+
+"max_version": "2.2.0.0"
+
+},
+
+...
+
+}
+```
+
+stack_tools.json 包含 stack_selector 和 conf_selector 工具的名称及安装位置。
+
+```json
+{
+
+"stack_selector": ["hdp-select", "/usr/bin/hdp-select", "hdp-select"],
+
+"conf_selector": ["conf-select", "/usr/bin/conf-select", "conf-select"]
+
+}
+```
+
+有关更多信息，请参阅 [Stack 属性](./stack-properties.md) Wiki 页面。
+
+## 结构 {#structure}
+
+Stack 定义的结构如下：
+
+```
+|_ stacks
+   |_
+      |_
+         metainfo.xml
+         |_ hooks
+         |_ repos
+            repoinfo.xml
+         |_ services
+            |_
+               metainfo.xml
+               metrics.json
+               |_ configuration
+                  {configuration files}
+               |_ package
+                  {files, scripts, templates}
+```
+
+## 定义服务和组件 {#defining-a-service-and-components}
+
+**metainfo.xml**
+
+服务中的 `metainfo.xml` 文件描述服务、服务组件以及用于执行命令的管理脚本。服务组件可以属于 **MASTER**、**SLAVE** 或 **CLIENT** 类别。
+
+对于每个组件，都要指定`<commandScript>`来执行命令。组件必须支持一组定义好的默认命令。
+
+组件类别 | 默认生命周期命令
+-------------------|--------------------------
+MASTER  | install, start, stop, configure, status
+SLAVE   | install, start, stop, configure, status
+CLIENT  | install, configure, status
+
+Ambari 支持使用 **PYTHON** 编写的命令脚本。该类型用于确定如何执行命令脚本。如果组件需要支持默认生命周期命令之外的命令，也可以创建**自定义命令**。
+
+例如，YARN 服务在[`metainfo.xml`](https://github.com/apache/ambari/blob/trunk/ambari-server/src/main/resources/stacks/HDP/2.0.6/services/YARN/metainfo.xml):
+
+```xml
+
+<component>
+  <name>RESOURCEMANAGER</name>
+  <category>MASTER</category>
+  <commandScript>
+    <script>scripts/resourcemanager.py</script>
+    <scriptType>PYTHON</scriptType>
+    <timeout>600</timeout>
+  </commandScript>
+  <customCommands>
+    <customCommand>
+      <name>DECOMMISSION</name>
+      <commandScript>
+        <script>scripts/resourcemanager.py</script>
+        <scriptType>PYTHON</scriptType>
+        <timeout>600</timeout>
+      </commandScript>
+    </customCommand>
+  </customCommands>
+</component>
+```
+
+ResourceManager 是 MASTER 组件，其命令脚本为 `<a href="https://github.com/apache/ambari/blob/trunk/ambari-server/src/main/resources/stacks/HDP/2.0.6/services/YARN/package/scripts/resourcemanager.py">scripts/resourcemanager.py</a>`, ，它位于 `services/YARN/package` 目录中。该命令脚本是 **PYTHON**，并以 Python 方法实现默认生命周期命令。以下是默认 **INSTALL** 命令的 **install** 方法：
+
+```python
+class Resourcemanager(Script):
+  def install(self, env):
+    self.install_packages(env)
+    self.configure(env)
+```
+
+还可以看到定义了 **DECOMMISSION** 自定义命令，这意味着该 Python 命令脚本中也有 **decommission** 方法：
+
+```python
+def decommission(self, env):
+    import params
+
+    ...
+
+    Execute(yarn_refresh_cmd,
+            user=yarn_user
+    )
+    pass
+```
+
+## 使用 Stack 继承 {#using-stack-inheritance}
+
+Stack 可以 _扩展_ 其他 Stack，以共享命令脚本和配置。这可以通过以下方式减少不同 Stack 之间的代码重复：
+
+* 为子 Stack 定义仓库
+* 在子 Stack 中添加新服务（不在父 Stack 中）
+* 覆盖父服务的命令脚本
+* 覆盖父服务的配置
+
+例如，**HDP 2.1 Stack _扩展_ HDP 2.0.6 Stack**，因此该定义中仅包含适用于 **HDP 2.1 Stack** 的更改。此扩展在 HDP 2.1 Stack 的 [metainfo.xml](https://github.com/apache/ambari/blob/trunk/ambari-server/src/main/resources/stacks/HDP/2.1/metainfo.xml) 中定义：
+
+```xml
+<metainfo>
+  <versions>
+    <active>true</active>
+  </versions>
+  <extends>2.0.6</extends>
+</metainfo>
+```
+
+## 示例：实现自定义服务 {#example-implementing-a-custom-service}
+
+在本示例中，我们将创建名为 “SAMPLESRV” 的自定义服务，并将其添加到现有 Stack 定义中。该服务包含 MASTER、SLAVE 和 CLIENT 组件。
+
+### 创建并添加服务 {#create-and-add-the-service}
+
+1. 在 Ambari Server 上，转到 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services` 目录。本例中，我们将转到 HDP 2.0 Stack 定义。
+
+```bash
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services
+```
+2. 创建目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/<strong>SAMPLESRV</strong>`，用于存放 **SAMPLESRV** 的服务定义。
+
+```bash
+mkdir /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/SAMPLESRV
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/SAMPLESRV
+```
+3. 转到新创建的 `SAMPLESRV` 目录，创建描述新服务的 `metainfo.xml` 文件。例如：
+
+```xml
+<?xml version="1.0"?>
+<metainfo>
+    <schemaVersion>2.0</schemaVersion>
+    <services>
+        <service>
+            <name>SAMPLESRV</name>
+            <displayName>New Sample Service</displayName>
+            <comment>A New Sample Service</comment>
+            <version>1.0.0</version>
+            <components>
+                <component>
+                    <name>SAMPLESRV_MASTER</name>
+                    <displayName>Sample Srv Master</displayName>
+                    <category>MASTER</category>
+                    <cardinality>1</cardinality>
+                    <commandScript>
+                        <script>scripts/master.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                </component>
+                <component>
+                    <name>SAMPLESRV_SLAVE</name>
+                    <displayName>Sample Srv Slave</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>1+</cardinality>
+                    <commandScript>
+                        <script>scripts/slave.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                </component>
+                <component>
+                    <name>SAMPLESRV_CLIENT</name>
+                    <displayName>Sample Srv Client</displayName>
+                    <category>CLIENT</category>
+                    <cardinality>1+</cardinality>
+                    <commandScript>
+                        <script>scripts/sample_client.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                </component>
+            </components>
+            <osSpecifics>
+                <osSpecific>
+                    <osFamily>any</osFamily>  <!-- note: use osType rather than osFamily for Ambari 1.5.0 and 1.5.1 -->
+                </osSpecific>
+            </osSpecifics>
+        </service>
+    </services>
+</metainfo>
+```
+4. 在上面的配置中，服务名称为“**SAMPLESRV**”，其中包含：
+
+  - 一个 **MASTER** 组件“**SAMPLESRV_MASTER**”
+  - 一个 **SLAVE** 组件“**SAMPLESRV_SLAVE**”
+  - 一个 **CLIENT** 组件“**SAMPLESRV_CLIENT**”
+5. 接下来创建命令脚本。创建服务元信息中指定的命令脚本目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/SAMPLESRV/package/scripts`。
+
+```bash
+mkdir -p /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/SAMPLESRV/package/scripts
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/SAMPLESRV/package/scripts
+```
+6. 转到脚本目录并创建 `.py` 命令脚本文件。例如 `master.py` 文件：
+
+```python
+import sys
+from resource_management import *
+class Master(Script):
+  def install(self, env):
+    print 'Install the Sample Srv Master';
+  def stop(self, env):
+    print 'Stop the Sample Srv Master';
+  def start(self, env):
+    print 'Start the Sample Srv Master';
+
+  def status(self, env):
+    print 'Status of the Sample Srv Master';
+  def configure(self, env):
+    print 'Configure the Sample Srv Master';
+if __name__ == "__main__":
+  Master().execute()
+```
+
+例如 `slave` `.py` 文件：
+
+```python
+import sys
+from resource_management import *
+class Slave(Script):
+  def install(self, env):
+    print 'Install the Sample Srv Slave';
+  def stop(self, env):
+    print 'Stop the Sample Srv Slave';
+  def start(self, env):
+    print 'Start the Sample Srv Slave';
+  def status(self, env):
+    print 'Status of the Sample Srv Slave';
+  def configure(self, env):
+    print 'Configure the Sample Srv Slave';
+if __name__ == "__main__":
+  Slave().execute()
+```
+
+例如 `sample_client` `.py` 文件：
+
+```python
+import sys
+from resource_management import *
+class SampleClient(Script):
+  def install(self, env):
+    print 'Install the Sample Srv Client';
+  def configure(self, env):
+    print 'Configure the Sample Srv Client';
+if __name__ == "__main__":
+  SampleClient().execute()
+```
+7. 现在，重启 Ambari Server，使新的服务定义分发到集群中的所有代理。
+
+```bash
+ambari-server restart
+```
+
+### 安装服务（通过 Ambari Web“添加服务”） {#install-the-service-via-ambari-web-add-services}
+
+通过 Ambari Web 添加自定义服务是 Ambari 1.7.0 的新功能。
+
+1. 在 Ambari Web 中转到“服务”，然后点击**Actions**按钮。它位于左侧的服务导航区域。
+
+2. “添加服务”向导启动。您将看到包含“My Sample Service”的选项（这是服务 `metainfo.xml` 文件中定义的 `<displayname></displayname>`）。
+
+3. 选择“My Sample Service”，然后点击“下一步”。
+
+4. 分配“Sample Srv Master”，然后点击“下一步”。
+
+5. 选择要安装“Sample Srv Client”的主机，然后点击“下一步”。
+
+6. 完成后，“My Sample Service”将显示在服务导航区域中。
+
+7. 如果要将“Sample Srv Client”添加到主机，可转到“主机”，导航到特定主机，然后点击“+ 添加”。
+
+## 示例：实现自定义客户端服务 {#example-implementing-a-custom-client-only-service}
+
+在本示例中，我们将创建名为“TESTSRV”的自定义服务，将其添加到现有 Stack 定义，并使用 Ambari API 安装/配置该服务。此服务是 CLIENT，因此包含两个命令：install 和 configure。
+
+### 创建并添加服务 {#create-and-add-the-service-1}
+
+1. 在 Ambari Server 上，转到 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services` 目录。本例中，我们将转到 HDP 2.0 Stack 定义。
+
+```bash
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services
+```
+2. 创建目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/<strong>TESTSRV</strong>`，用于存放 **TESTSRV** 的服务定义。
+
+```bash
+mkdir /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTSRV
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTSRV
+```
+3. 转到新创建的 `TESTSRV` 目录，创建描述新服务的 `metainfo.xml` 文件。例如：
+
+```xml
+<?xml version="1.0"?>
+<metainfo>
+    <schemaVersion>2.0</schemaVersion>
+    <services>
+        <service>
+            <name>TESTSRV</name>
+            <displayName>New Test Service</displayName>
+            <comment>A New Test Service</comment>
+            <version>0.1.0</version>
+            <components>
+                <component>
+                    <name>TEST_CLIENT</name>
+                    <displayName>New Test Client</displayName>
+                    <category>CLIENT</category>
+                    <cardinality>1+</cardinality>
+                    <commandScript>
+                        <script>scripts/test_client.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                    <customCommands>
+                      <customCommand>
+                        <name>SOMETHINGCUSTOM</name>
+                        <commandScript>
+                          <script>scripts/test_client.py</script>
+                          <scriptType>PYTHON</scriptType>
+                          <timeout>600</timeout>
+                        </commandScript>
+                      </customCommand>
+                    </customCommands>
+                </component>
+            </components>
+            <osSpecifics>
+                <osSpecific>
+                    <osFamily>any</osFamily>  <!-- note: use osType rather than osFamily for Ambari 1.5.0 and 1.5.1 -->
+                </osSpecific>
+            </osSpecifics>
+        </service>
+    </services>
+</metainfo>
+```
+4. 在上面的配置中，服务名称为“**TESTSRV**”，包含一个组件“**TEST_CLIENT**”，其组件类别为“**CLIENT**”。该客户端通过命令脚本 `scripts/test_client.py` 管理。接下来创建该命令脚本。
+
+5. 创建服务元信息中指定的命令脚本目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTSRV/package/scripts`。
+
+```bash
+mkdir -p /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTSRV/package/scripts
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTSRV/package/scripts
+```
+6. 转到脚本目录并创建 `test_client.py` 文件。例如：
+
+```python
+import sys
+from resource_management import *
+
+class TestClient(Script):
+  def install(self, env):
+    print 'Install the client';
+  def configure(self, env):
+    print 'Configure the client';
+  def somethingcustom(self, env):
+    print 'Something custom';
+
+if __name__ == "__main__":
+  TestClient().execute()
+```
+7. 现在，重启 Ambari Server，使新的服务定义分发到集群中的所有代理。
+
+```
+ambari-server restart
+```
+
+### 在 repoinfo.xml 中添加仓库详情 {#adding-repository-details-in-repoinfoxml}
+
+添加自定义服务时，可能需要为 Stack 添加其他仓库详情，尤其是服务二进制文件位于独立仓库中时。其他
+
+```xml
+<reposinfo>
+  <os family="redhat6">
+    <repo>
+      <baseurl>http://cust.service.lab.com/Services/centos6/1.1/myservices</baseurl>
+      <repoid>CUSTOM-1.1</repoid>
+      <reponame>CUSTOM</reponame>
+    </repo>
+    <repo>
+      <baseurl>http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.0.6.1</baseurl>
+      <repoid>HDP-2.0.6</repoid>
+      <reponame>HDP</reponame>
+    </repo>
+    <repo>
+      <baseurl>http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.17/repos/centos6</baseurl>
+      <repoid>HDP-UTILS-1.1.0.17</repoid>
+      <reponame>HDP-UTILS</reponame>
+    </repo>
+  </os>
+</reposinfo>
+```
+
+### 安装服务（通过 Ambari REST API） {#install-the-service-via-the-ambari-rest-api}
+
+1. 将服务添加到集群。
+
+
+```
+POST
+/api/v1/clusters/MyCluster/services
+
+{
+"ServiceInfo": {
+  "service_name":"TESTSRV"
+  }
+}
+```
+2. 将组件添加到服务。本例中，将 TEST_CLIENT 添加到 TESTSRV。
+
+```
+POST
+/api/v1/clusters/MyCluster/services/TESTSRV/components/TEST_CLIENT
+```
+3. 在所有目标主机上安装组件。例如，要在 `<a href="http://c6402.ambari.apache.org">c6402.ambari.apache.org</a>` 和 `<a href="http://c6403.ambari.apache.org">c6403.ambari.apache.org</a>` 上安装，首先使用 POST 在主机上创建 host_component 资源。
+
+```
+POST
+/api/v1/clusters/MyCluster/hosts/c6402.ambari.apache.org/host_components/TEST_CLIENT
+
+POST
+/api/v1/clusters/MyCluster/hosts/c6403.ambari.apache.org/host_components/TEST_CLIENT
+```
+4. 现在让 Ambari 在所有主机上安装组件。此单个命令会指示 Ambari 安装与服务相关的所有组件，并在每台主机上调用命令脚本中的 `install()` 方法。
+
+
+```
+PUT
+/api/v1/clusters/MyCluster/services/TESTSRV
+
+{
+  "RequestInfo": {
+    "context": "Install Test Srv Client"
+  },
+  "Body": {
+    "ServiceInfo": {
+      "state": "INSTALLED"
+    }
+  }
+}
+```
+5. 或者，可以不同时安装所有组件，而是显式安装每个主机组件。本例中，我们将显式在 `<a href="http://c6402.ambari.apache.org">c6402.ambari.apache.org</a>` 上安装 TEST_CLIENT：
+
+```
+PUT
+/api/v1/clusters/MyCluster/hosts/c6402.ambari.apache.org/host_components/TEST_CLIENT
+
+{
+  "RequestInfo": {
+    "context":"Install Test Srv Client"
+  },
+  "Body": {
+    "HostRoles": {
+      "state":"INSTALLED"
+    }
+  }
+}
+```
+6. 使用以下方式在主机上配置客户端。这最终会调用命令脚本中的 `configure()` 方法。
+
+```
+POST
+/api/v1/clusters/MyCluster/requests
+
+{
+  "RequestInfo" : {
+    "command" : "CONFIGURE",
+    "context" : "Config Test Srv Client"
+  },
+  "Requests/resource_filters": [{
+    "service_name" : "TESTSRV",
+    "component_name" : "TEST_CLIENT",
+    "hosts" : "c6403.ambari.apache.org"
+  }]
+}
+```
+7. 如需查看组件安装在哪些主机上。
+
+```
+GET
+/api/v1/clusters/MyCluster/components/TEST_CLIENT
+```
+
+### 安装服务（通过 Ambari Web“添加服务”） {#install-the-service-via-ambari-web-add-services-1}
+
+:::caution
+通过 Ambari Web 添加自定义服务是 Ambari 1.7.0 的新功能。
+:::
+
+1. 在 Ambari Web 中转到“服务”，然后点击**Actions**按钮。它位于左侧的服务导航区域。
+
+2. “添加服务”向导启动。您将看到包含“My Test Service”的选项（这是服务 `metainfo.xml` 文件中定义的 `<displayname></displayname>`）。
+
+3. 选择“My Test Service”，然后点击“下一步”。
+
+4. 选择要安装“New Test Client”的主机，然后点击“下一步”。
+
+5. 完成后，“My Test Service”将显示在服务导航区域中。
+
+6. 如果要将“New Test Client”添加到主机，可转到“主机”，导航到特定主机，然后点击“+ 添加”。
+
+
+## 示例：实现自定义客户端服务（带配置） {#example-implementing-a-custom-client-only-service-with-configs}
+
+在本示例中，我们将创建名为“TESTCONFIGSRV”的自定义服务，并将其添加到现有 Stack 定义。此服务是 CLIENT，因此包含两个命令：install 和 configure。该服务还包含配置类型“test-config”。
+
+### 创建服务并将其添加到 Stack {#create-and-add-the-service-to-the-stack}
+
+1. 在 Ambari Server 上，转到 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services` 目录。本例中，我们将转到 HDP 2.0 Stack 定义。
+
+```bash
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services
+```
+2. 创建目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/<strong>TESTCONFIGSRV</strong>`，用于存放 TESTCONFIGSRV 的服务定义。
+
+```bash
+mkdir /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV
+```
+3. 转到新创建的 `TESTCONFIGSRV` 目录，创建描述新服务的 `metainfo.xml` 文件。例如：
+
+```xml
+<?xml version="1.0"?>
+<metainfo>
+    <schemaVersion>2.0</schemaVersion>
+    <services>
+        <service>
+            <name>TESTCONFIGSRV</name>
+            <displayName>New Test Config Service</displayName>
+            <comment>A New Test Config Service</comment>
+            <version>0.1.0</version>
+            <components>
+                <component>
+                    <name>TESTCONFIG_CLIENT</name>
+                    <displayName>New Test Config Client</displayName>
+                    <category>CLIENT</category>
+                    <cardinality>1+</cardinality>
+                    <commandScript>
+                        <script>scripts/test_client.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                </component>
+            </components>
+            <osSpecifics>
+                <osSpecific>
+                    <osFamily>any</osFamily>  <!-- note: use osType rather than osFamily for Ambari 1.5.0 and 1.5.1 -->
+                </osSpecific>
+            </osSpecifics>
+        </service>
+    </services>
+</metainfo>
+```
+4. 在上面的配置中，服务名称为“**TESTCONFIGSRV**”，包含一个组件“**TESTCONFIG_CLIENT**”，其组件类别为“**CLIENT**”。该客户端通过命令脚本 `scripts/test_client.py` 管理。接下来创建该命令脚本。
+
+5. 创建服务元信息 `<commandscript></commandscript>` 中指定的命令脚本目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV/package/scripts`。
+
+```bash
+mkdir -p /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV/package/scripts
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV/package/scripts
+```
+6. 转到脚本目录并创建 `test_client.py` 文件。例如：
+
+```python
+import sys
+from resource_management import *
+
+class TestClient(Script):
+  def install(self, env):
+    print 'Install the config client';
+  def configure(self, env):
+    print 'Configure the config client';
+
+if __name__ == "__main__":
+  TestClient().execute()
+```
+7. 现在为此服务定义配置类型。为配置字典文件创建目录 `/var/lib/ambari-server/resources/stacks/HDP/2.0.6/servicesTESTCONFIGSRV/configuration`。
+
+```bash
+mkdir -p /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV/configuration
+cd /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/TESTCONFIGSRV/configuration
+```
+8. 转到配置目录并创建 `test-config.xml` 文件。例如：
+
+```xml
+
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+ 
+<configuration>
+  <property>
+    <name>some.test.property</name>
+    <value>this.is.the.default.value</value>
+    <description>This is a kool description.</description>
+ </property>
+</configuration>
+
+```
+9. 现在，重启 Ambari Server，使新的服务定义分发到集群中的所有代理。
+
+```
+ambari-server restart
+```

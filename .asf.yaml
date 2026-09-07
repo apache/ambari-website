@@ -24,8 +24,10 @@ github:
     rebase: false
 notifications:
   commits: commits@ambari.apache.org
-  issues: notifications@ambari.apache.org
-  pullrequests: notifications@ambari.apache.org
+  issues: issues@ambari.apache.org
+  pullrequests: reviews@ambari.apache.org
 staging:
   profile: ~
-  whoami:  asf-site
+  whoami: asf-site
+publish:
+  whoami: asf-site

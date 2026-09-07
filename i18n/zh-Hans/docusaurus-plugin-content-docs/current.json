@@ -1,0 +1,86 @@
+{
+  "version.label": {
+    "message": "下一版本",
+    "description": "The label for version current"
+  },
+  "sidebar.ambariSidebar.category.Quick Start": {
+    "message": "快速入门",
+    "description": "The label for category 'Quick Start' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Environment Setup": {
+    "message": "环境准备",
+    "description": "The label for category 'Environment Setup' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Design": {
+    "message": "Ambari 设计",
+    "description": "The label for category 'Ambari Design' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Automated Kerberizaton": {
+    "message": "自动 Kerberos 配置",
+    "description": "The label for category 'Automated Kerberizaton' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Blueprints": {
+    "message": "蓝图",
+    "description": "The label for category 'Blueprints' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Metrics": {
+    "message": "指标",
+    "description": "The label for category 'Metrics' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Stacks and Services": {
+    "message": "Stack 和服务",
+    "description": "The label for category 'Stacks and Services' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Views": {
+    "message": "视图",
+    "description": "The label for category 'Views' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Development": {
+    "message": "Ambari 开发",
+    "description": "The label for category 'Ambari Development' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari Plugin Contributions": {
+    "message": "Ambari 插件贡献",
+    "description": "The label for category 'Ambari Plugin Contributions' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Ambari SCOM Management Pack": {
+    "message": "Ambari SCOM 管理包",
+    "description": "The label for category 'Ambari SCOM Management Pack' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.category.Apache": {
+    "message": "Apache",
+    "description": "The label for category 'Apache' in sidebar 'ambariSidebar'"
+  },
+  "sidebar.ambariSidebar.link.Foundation": {
+    "message": "基金会",
+    "description": "The label for link 'Foundation' in sidebar 'ambariSidebar', linking to 'https://www.apache.org/'"
+  },
+  "sidebar.ambariSidebar.link.Events": {
+    "message": "活动",
+    "description": "The label for link 'Events' in sidebar 'ambariSidebar', linking to 'https://www.apachecon.com/'"
+  },
+  "sidebar.ambariSidebar.link.License": {
+    "message": "许可证",
+    "description": "The label for link 'License' in sidebar 'ambariSidebar', linking to 'https://www.apache.org/licenses/'"
+  },
+  "sidebar.ambariSidebar.link.Thanks": {
+    "message": "致谢",
+    "description": "The label for link 'Thanks' in sidebar 'ambariSidebar', linking to 'https://www.apache.org/foundation/thanks.html'"
+  },
+  "sidebar.ambariSidebar.link.Security": {
+    "message": "安全",
+    "description": "The label for link 'Security' in sidebar 'ambariSidebar', linking to 'https://www.apache.org/security/'"
+  },
+  "sidebar.ambariSidebar.link.Sponsorship": {
+    "message": "赞助",
+    "description": "The label for link 'Sponsorship' in sidebar 'ambariSidebar', linking to 'https://www.apache.org/foundation/sponsorship.html'"
+  },
+  "sidebar.ambariSidebar.link.Trademarks": {
+    "message": "商标",
+    "description": "The label for link 'Trademarks' in sidebar 'ambariSidebar', linking to 'https://www.apache.org/foundation/marks/'"
+  },
+  "sidebar.ambariSidebar.link.Privacy": {
+    "message": "隐私",
+    "description": "The label for link 'Privacy' in sidebar 'ambariSidebar', linking to 'https://privacy.apache.org/policies/privacy-policy-public.html'"
+  }
+}
