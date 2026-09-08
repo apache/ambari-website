@@ -33,6 +33,6 @@ limitations under the License.
 
 ## 通用服务和验证 {#common-services-and-validation}
 
-当前 BIGTOP 服务展示了从 `common-services` 复用定义的方式，包括 [BIGTOP AMBARI-METRICS](https://github.com/apache/ambari/blob/94c6389a96/ambari-server/src/main/resources/stacks/BIGTOP/3.2.0/services/AMBARI-METRICS/metainfo.xml)。验证最终的 `metainfo.xml`、脚本、配置文件、软件包路径、警报、`metrics.json`、`telemetry.json` 和服务检查。不要假设加载器不支持的跨堆栈 `extends` 语法，也不要假设加载器仅支持替换的文件会被继承。
+当前 BIGTOP 服务展示了如何复用 `common-services` 中的定义，例如 [BIGTOP AMBARI-METRICS](https://github.com/apache/ambari/blob/94c6389a96/ambari-server/src/main/resources/stacks/BIGTOP/3.2.0/services/AMBARI-METRICS/metainfo.xml)。应验证最终解析得到的 `metainfo.xml`、脚本、配置文件、软件包路径、告警、`metrics.json`、`telemetry.json` 和服务检查。不要使用加载器未明确支持的跨 Stack `extends` 语法，也不要假定只允许替换的文件会自动参与继承。
 
 合并实现是 `org.apache.ambari.server.api.util.StackExtensionHelper#mergeServices`；服务继承结果不明确时请检查该实现。

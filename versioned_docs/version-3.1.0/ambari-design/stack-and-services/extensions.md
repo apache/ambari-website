@@ -21,16 +21,16 @@ limitations under the License.
 
 # Extensions {#extensions}
 
-An extension is a versioned collection of custom services that can be linked to a supported stack version. Once linked, its services are available to the cluster without copying them into the stack definition. Extension metadata and links are processed by the Ambari Server extension helpers.
+An extension is an independently versioned collection of custom services that can be linked to an explicitly supported Stack version. Once linked, its services are available to a cluster without being copied into the Stack directory. Ambari Server reads the extension metadata, validates compatibility, and manages the link; an extension does not bypass normal validation of Stack service definitions, package sources, or lifecycle commands.
 
 ## Version Compatibility {#version-compatibility}
 
-An extension version declares its supported stack prerequisites in `metainfo.xml`. The stack name and minimum version must match the installed stack. Ambari validates these prerequisites before creating a link; an unsupported extension must not be made available to the cluster.
+An extension version declares its supported Stack prerequisites in `metainfo.xml`, including the Stack name and minimum compatible version. Ambari compares these requirements with the installed Stack before creating a link. A name mismatch, an older version, or invalid metadata must reject the link. An unsupported extension must not appear as a selectable cluster service and must not be forced into place by copying directories manually.
 
 ## Extension Links {#extension-links}
 
-An extension link connects one extension version to one installed stack version. The link state can be queried, created, updated, and deleted through the Server REST resources. After changing links, the server reloads stack, extension, and service state so the in-memory model matches the staged resources.
+An extension link associates one specific extension version with one installed Stack version. Administrators can query, create, update, and delete link state through the Server REST resources. Use explicit versions so an existing cluster does not switch service definitions without review. After changing a link, reload Stack, extension, and service state so the in-memory model, resource directory, and persisted relationship agree.
 
 ## Installation and Validation {#installation-and-validation}
 
-The Server expands an extension archive, reads its required metadata, validates prerequisites, stages it under the configured resources area, and runs the applicable checks and hooks. Validate the extension descriptor, service definitions, package scripts, configuration, and service checks before linking it. Use the current [BIGTOP service definitions](https://github.com/apache/ambari/tree/94c6389a96/ambari-server/src/main/resources/stacks/BIGTOP/3.2.0/services) as source references; do not assume a cross-stack `extends` form that the loader does not document.
+The Server expands an extension archive, reads required metadata, validates prerequisites, stages the content under the configured resources area, and runs applicable checks and hooks. Before linking, inspect the extension descriptor, service definitions, package and command scripts, configuration dependencies, alerts, and service checks, then exercise a controlled installation and failure recovery on the target platform. Use the current [BIGTOP service definitions](https://github.com/apache/ambari/tree/94c6389a96/ambari-server/src/main/resources/stacks/BIGTOP/3.2.0/services) as source references; do not assume a cross-Stack `extends` form that the loader does not document.

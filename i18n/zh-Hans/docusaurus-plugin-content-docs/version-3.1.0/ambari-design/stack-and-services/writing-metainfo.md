@@ -41,4 +41,4 @@ limitations under the License.
 
 ## 示例 {#example}
 
-描述符应专注于服务元数据和可执行契约。提供程序专用遥测放在 `telemetry.json` 中；保留 `metrics.json` 作为 Ambari 控制平面指标契约。具体描述符可参考当前的 [BIGTOP HDFS metainfo.xml](https://github.com/apache/ambari/blob/94c6389a96/ambari-server/src/main/resources/stacks/BIGTOP/3.2.0/services/HDFS/metainfo.xml)。
+描述符应专注于服务元数据和可执行契约。监控后端专用的遥测配置应放在 `telemetry.json` 中，同时保留 `metrics.json` 作为 Ambari 控制平面的指标契约。具体写法可参考当前的 [BIGTOP HDFS metainfo.xml](https://github.com/apache/ambari/blob/94c6389a96/ambari-server/src/main/resources/stacks/BIGTOP/3.2.0/services/HDFS/metainfo.xml)。

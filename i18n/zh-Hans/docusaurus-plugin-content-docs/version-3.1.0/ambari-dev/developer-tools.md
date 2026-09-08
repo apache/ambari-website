@@ -42,7 +42,7 @@ Ambari 开发使用标准 Git、Maven、Java、Python 和 Node.js 工具。请�
 
 ## Java 和 Maven {#java-and-maven}
 
-使用 JDK 17，以及项目选择的 Maven wrapper 或 Maven 版本。根 POM 管理依赖和插件版本。IDE 应导入 Maven 项目，而不是维护独立的依赖模型。
+使用 JDK 17，以及项目指定的 Maven Wrapper 或 Maven 版本。根 POM 统一管理依赖和插件版本。IDE 应直接导入 Maven 项目，不要另外维护一套依赖模型。
 
 迭代时运行针对模块或测试的窄范围检查，然后在审查前运行适用的广泛验证。不要将生成的 target 和下载的依赖提交到仓库。
 

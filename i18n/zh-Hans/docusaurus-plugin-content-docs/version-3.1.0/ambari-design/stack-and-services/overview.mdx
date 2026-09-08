@@ -37,6 +37,6 @@ BIGTOP 堆栈使用可以从 `common-services` 继承的堆栈级服务。子描
 
 保留的 `metrics.json` 只定义管理工作流所需的少量直接 JMX 值。Prometheus/VictoriaMetrics 使用独立的 `telemetry.json` 描述时序指标采集。请保持二者相互独立：管理值不是历史监控样本。
 
-## 当前提供程序 {#current-provider}
+## 当前监控后端 {#current-provider}
 
 当前指标提供程序是 VictoriaMetrics，其单节点和分布式组件由 BIGTOP 服务定义表示。提供程序打包和运行时部署记录在 [RPM 打包](../../platform/rpm-packaging.md)中。本概览有意排除已退出的 AMS/Ganglia 和 Ember 专用流程。

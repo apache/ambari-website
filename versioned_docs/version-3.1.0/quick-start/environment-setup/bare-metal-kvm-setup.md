@@ -22,22 +22,25 @@ limitations under the License.
 
 # Bare Metal and KVM Environment Setup {#bare-metal-kvm}
 
-Use this guide to prepare existing servers or KVM guests for a reviewed 3.1.0
-candidate. It is an environment envelope, not a sizing or production
-certification statement.
+Use this guide to prepare existing physical servers or KVM guests for a
+reviewed Ambari 3.1.0 candidate. It defines a reproducible baseline environment;
+it is not capacity-planning guidance or certification of any operating-system,
+virtualization, or hardware combination for production.
 
 ## Requirements {#requirements}
 
-Provide one management host and at least one Agent host running a supported
-Linux candidate OS family. Keep the same RPM architecture on every host; the
-default target is x86_64. Provide administrative access, persistent disks,
-stable hostnames, and network routes for Ambari Server, Agents, the metadata
-database, and Stack services.
+Provide one management host and at least one managed host running Ambari Agent
+on a Linux distribution supported by the candidate. Keep the same RPM
+architecture on every host; the default build target is x86_64. The environment
+also needs administrative access, persistent disks, stable hostnames, and the
+network routes required among Ambari Server, Agents, the metadata database, and
+Stack services.
 
-Install JDK 17 for Ambari Server and Agent helpers. Select Stack JDK separately
-for Hadoop services. Linux Python must be 3.9.2 or newer; the default package
-uses CPython `cp39` ABI. Rocky Linux 8 uses AppStream `python39`, and the
-installed wrapper must match packaged native extensions.
+Install JDK 17 for Ambari Server and Agent helpers, and select and record the
+Stack JDK separately for Hadoop services. Linux Python must be 3.9.2 or newer;
+the default package uses the CPython `cp39` ABI. Rocky Linux 8 uses AppStream
+`python39`, and the installed runtime wrapper must use the same ABI as the
+packaged native extensions.
 
 ## Host And Time Configuration {#host-and-time}
 

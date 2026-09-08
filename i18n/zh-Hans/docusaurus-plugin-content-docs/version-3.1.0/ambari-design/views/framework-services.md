@@ -21,7 +21,7 @@ limitations under the License.
 
 # 框架服务 {#framework-services}
 
-View framework 通过 `ambari-views/src/main/java/org/apache/ambari/view` 下的 `ViewContext` 和相关接口暴露服务器端服务。
+View 框架通过 `ambari-views/src/main/java/org/apache/ambari/view` 下的 `ViewContext` 及相关接口向 View 实现暴露服务器端服务。
 
 ## ViewContext {#view-context}
 
@@ -49,7 +49,7 @@ String value = viewContext.getInstanceData("key");
 
 `getResourceProvider(type)` 返回 `view.xml` 中声明的资源提供程序。`ResourceProvider` 接口定义读取、创建、更新和删除操作，以及相应的资源/错误契约。提供程序是托管 View 应用使用的服务器端 endpoint。
 
-## Framework 事件 {#framework-events}
+## 框架事件 {#framework-events}
 
 `View` 的实现可以接收生命周期回调：
 

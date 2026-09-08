@@ -21,13 +21,13 @@ limitations under the License.
 
 # Quick Links {#quick-links}
 
-Quick links are service-owned entries exposed by Ambari for web consoles, status pages, and other service endpoints. They are declared in a service's `quicklinks/quicklinks.json` and inherited with the Stack service definition.
+Quick Links are service-owned navigation entries that Ambari exposes for web consoles, status pages, and other supported endpoints. They are declared in a service's `quicklinks/quicklinks.json` and loaded and inherited with the Stack service definition. A Quick Link only describes how to derive an entry from the current topology; it does not start a component, grant authorization, or prove that the target service is healthy.
 
 ## Definition And Resolution {#definition-and-resolution}
 
-Each entry identifies a label, target component, and URL template or port-backed endpoint. The service definition can associate a link with configuration properties so Ambari resolves the effective protocol, host, port, and path for the installed cluster. Links must not assume a fixed host name or an unconfigured port.
+Each entry identifies a display label, target component, and URL template or port-backed endpoint rule. The service definition can associate protocol, port, path, and high-availability information with configuration properties so Ambari derives the final URL from the installed cluster's effective configuration. A link must not assume a fixed host name, a fixed active role, or an unconfigured port, and it must never append credentials to the URL.
 
-Ambari evaluates the selected Stack and effective configuration when rendering links. HTTPS policies, component assignments, and configuration overrides therefore affect the final URL. A link can be hidden or unavailable when its component is not installed or its required configuration is absent.
+Ambari evaluates the selected Stack, component assignments, high-availability roles, and effective configuration when rendering links. HTTP or HTTPS policy, configuration-group overrides, host changes, and active-component failover can therefore change the final URL. A link should be hidden or unavailable when the target component is absent, no instance is usable, or required configuration is missing, rather than presenting a plausible but invalid address.
 
 ## Operational Use {#operational-use}
 
@@ -36,4 +36,4 @@ Ambari evaluates the selected Stack and effective configuration when rendering l
 3. Open the service page and inspect the resolved Quick Links menu.
 4. If a link is unavailable, check component state, effective configuration, host resolution, and the service's `quicklinks.json` definition.
 
-Quick Links are navigation metadata, not a monitoring scrape contract. The pinned [BIGTOP quick-link definitions](https://github.com/apache/ambari/tree/4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4/ambari-server/src/main/resources/stacks/BIGTOP) show the current service-owned entries.
+Quick Links are navigation metadata, not a monitoring scrape contract or the sole evidence of service health. The pinned [BIGTOP quick-link definitions](https://github.com/apache/ambari/tree/4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4/ambari-server/src/main/resources/stacks/BIGTOP) show the current service-owned entries. After adding or changing a link, verify normal deployment, high-availability failover, HTTPS, configuration overrides, and missing-component behavior separately.

@@ -27,9 +27,9 @@ limitations under the License.
 
 Stack 扩展声明服务和组件元数据、配置类型、依赖关系、命令和生命周期行为。名称和默认值应与目标 Stack 兼容，并使用配置依赖关系标识变更后需要重启的组件。
 
-## Telemetry 扩展 {#telemetry-extensions}
+## 遥测扩展 {#telemetry-extensions}
 
-当前监控集成使用服务 `telemetry.json` 描述符；对于 JMX，还使用类型化的 `telemetry-profiles` 文件。声明支持的端点格式、路径、HTTP/HTTPS 策略、身份验证引用、有界指标名称、类型、单位和序列限制。验证实际原生/JMX 输出、HA 角色、格式错误响应以及 Agent 保留最后有效分配的恢复行为。请参阅[集成服务 Telemetry](../monitoring/service-integration.md)。
+当前监控集成使用服务级 `telemetry.json` 描述符；使用 JMX 时，还需要提供类型化的 `telemetry-profiles` 配置文件。描述符应明确声明受支持的端点格式、访问路径、HTTP/HTTPS 策略、身份验证引用、有限的指标名称集合、数据类型、单位和时序数量上限。验证时应覆盖真实的原生端点或 JMX 输出、高可用角色、格式错误响应，以及 Agent 在新分配无效时保留最后一份有效配置的恢复行为。详见[服务遥测集成](../monitoring/service-integration.md)。
 
 ## Themes 和 Views {#themes-and-views}
 
@@ -41,7 +41,7 @@ Stack 扩展声明服务和组件元数据、配置类型、依赖关系、命�
 
 ## 已停止的教程 {#retired-tutorials}
 
-历史 SCOM 管理包材料和 Ember 监控小组件教程仅作为历史参考保留，不是 3.1 扩展路径。不要使用它们实现 React 仪表板、Prometheus telemetry 或当前 Stack 服务集成。
+历史 SCOM 管理包材料和 Ember 监控小组件教程仅作为历史参考保留，不属于 3.1 的扩展路径。不要以这些旧材料实现 React 仪表盘、Prometheus 遥测或当前 Stack 服务集成。
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';

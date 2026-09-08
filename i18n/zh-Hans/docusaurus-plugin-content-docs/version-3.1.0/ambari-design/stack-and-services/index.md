@@ -25,6 +25,6 @@ Ambari 将堆栈管理为按版本划分的服务集合。堆栈版本选择服�
 
 当前 BIGTOP 堆栈展示了这一模型：堆栈服务可以从 `common-services` 继承共享定义，而堆栈专用元数据会覆盖继承的定义。堆栈和服务描述符是 `metainfo.xml` 文件；其中的字段定义身份、组件、命令、配置依赖、软件包和支持的操作系统。
 
-指标按用途区分。服务的 `metrics.json` 描述 Ambari 为该服务收集的控制平面指标。当前 BIGTOP 监控设计另外使用 `telemetry.json` 配置遥测提供程序；它不会替代 Ambari 保留的控制平面 `metrics.json` 契约。本页不介绍已退出的 AMS/Ganglia 或 Ember 工作流。
+指标必须按用途区分。服务级 `metrics.json` 描述 Ambari 为管理操作收集的控制平面指标。当前 BIGTOP 监控设计另外使用 `telemetry.json` 配置遥测后端；它不会替代 Ambari 保留的控制平面 `metrics.json` 契约。本页不介绍已经退出的 AMS/Ganglia 或 Ember 工作流。
 
 请参阅[堆栈和服务概览](./overview.mdx)、[编写 metainfo.xml](./writing-metainfo.md)和[升级指南](../../upgrade-guide.md)。

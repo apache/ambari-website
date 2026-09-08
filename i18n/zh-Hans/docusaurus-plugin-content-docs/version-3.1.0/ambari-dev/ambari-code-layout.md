@@ -51,7 +51,7 @@ ambari/
 | `ambari-common`、`ambari-server-spi`、`ambari-utility` | 共享 API 和实现工具。 |
 | `ambari-web` | 主要 Ambari Web 应用。`latest` 包含 React/TypeScript/Vite UI；`classic` 是历史构件。 |
 | `ambari-admin` | 独立的 Ambari Admin Web 应用，其 React 构建位于 `src/main/resources/ui/ambari-admin`。 |
-| `ambari-views` | View framework 接口、服务器集成、示例和软件包契约。 |
+| `ambari-views` | View 框架接口、服务器集成、示例和软件包契约。 |
 | `contrib` | 可选集成和维护的第三方贡献。 |
 | `docs` | 项目、架构、API 和发布文档。 |
 
@@ -59,7 +59,7 @@ ambari/
 
 根 Maven 构建以 JDK 17 为目标。`ambari-project/pom.xml` 集中管理依赖版本、插件版本、测试设置和受支持的模块属性。模块 POM 继承这些选择；如果已有属性或 dependency-management 条目适用，请不要引入未管理的版本。
 
-服务器和共享 Java 模块使用标准 Maven 源码和测试布局。服务器 REST 资源、状态、控制器、DAO、实体、升级 catalog 和测试位于 `ambari-server/src/main` 与 `ambari-server/src/test` 下。
+服务器和共享 Java 模块使用标准 Maven 源码与测试布局。服务器 REST 资源、状态模型、控制器、DAO、实体、升级目录和测试分别位于 `ambari-server/src/main` 与 `ambari-server/src/test` 下。
 
 ## Agent 和 Python {#agent-and-python}
 

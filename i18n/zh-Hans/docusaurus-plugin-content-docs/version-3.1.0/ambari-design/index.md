@@ -37,7 +37,7 @@ Ambari 3.1 在保留集群部署和管理能力的同时，替换监控后端和
 
 [Stack 定义](./stack-and-services/index.md) 声明支持的服务、组件、软件包、命令、配置、依赖和升级行为。继承与公共服务复用可避免复制完整服务定义。
 
-[增强配置](./enhanced-configs/index.md) 通过服务 Theme 生成配置表单。这些表单控件不是已移除的监控 widget。[快速链接](./quick-links.md) 根据已安装拓扑和配置解析服务端点。
+[增强配置](./enhanced-configs/index.md)通过服务 Theme 生成配置表单。这些表单控件与已经移除的监控小组件并非同一功能。[快速链接](./quick-links.md)根据已安装拓扑和生效配置解析服务端点。
 
 ## 运维反馈与扩展 {#operational-feedback-and-extensions}
 
@@ -46,4 +46,3 @@ Ambari 3.1 在保留集群部署和管理能力的同时，替换监控后端和
 [Views](./views/index.md) 通过服务器管理的视图定义、实例、权限和嵌入式应用扩展 Ambari。选择集成边界前，请阅读[扩展概览](../ambari-plugin-contribution/index.md)。
 
 关于历史时序数据、仪表盘和 PromQL，请使用独立的[监控架构](../monitoring/architecture.md)和[服务遥测接入指南](../monitoring/service-integration.md)。
-

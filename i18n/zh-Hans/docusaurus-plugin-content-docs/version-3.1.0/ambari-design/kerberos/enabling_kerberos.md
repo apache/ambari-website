@@ -46,7 +46,7 @@ limitations under the License.
 
 ## 凭据和 Keytab {#credentials-and-keytabs}
 
-凭据的作用域限定为需要它的操作。界面不得在 URL、telemetry、标签、普通日志或描述符示例中暴露凭据。Keytab 内容通过受支持的 Server/Agent 路径分发；描述符只包含路径和配置属性等引用，不包含秘密字节。
+凭据的作用域仅限实际需要它的操作。界面不得在 URL、遥测数据、标签、普通日志或描述符示例中暴露凭据。Keytab 内容通过受支持的 Server 与 Agent 安全路径分发；描述符只能保存文件路径、配置属性等引用，不能包含密钥内容本身。
 
 ## 失败和恢复 {#failure-and-recovery}
 

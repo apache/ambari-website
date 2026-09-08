@@ -21,7 +21,7 @@ limitations under the License.
 
 # Python 运行时 {#python-runtime}
 
-Ambari 3.1.0 在 Linux 上要求 Python **3.9.2 或更高版本**。默认软件包目标是 CPython 3.9（`cp39`）和 `manylinux2014_x86_64` 平台。Rocky Linux 8 显式要求 AppStream `python39`；Rocky Linux 9 使用系统 Python 3.9。已安装的 wrapper 会验证解释器并选择匹配的 ABI。
+Ambari 3.1.0 在 Linux 上要求 Python **3.9.2 或更高版本**。默认软件包目标是 CPython 3.9（`cp39`）和 `manylinux2014_x86_64` 平台。Rocky Linux 8 明确使用 AppStream `python39`，Rocky Linux 9 使用系统 Python 3.9。软件包安装的运行时封装脚本会验证解释器，并选择与其匹配的 ABI。
 
 源代码级别的最低版本并不意味着 cp39 RPM 与任何更高的 Python 次版本兼容。应使用与软件包原生扩展匹配的解释器；CPython 3.10 需要自己的软件包目标。Ambari 自有 Python 代码仍由 Ambari 维护。删除操作针对复制的第三方 fork，而不是删除经过验证的上游 wheel 中提供的所有 Python 源文件。
 
@@ -35,10 +35,10 @@ simplejson 使用标准库 `json` 替代，mock 使用 `unittest.mock` 替代，
 
 Agent 和 Server 依赖在 Maven 构建期间安装到 Ambari 私有库。节点运行时不得执行 `pip install`。依赖要求经过 hash 锁定，主 lock 仅接受所选平台和 ABI 的二进制 wheel。`docopt==0.6.2` 是唯一例外：stomp.py 将其声明为硬依赖，因此从单独 hash 锁定的源代码分发包安装。
 
-构建会清理旧依赖目录，审计已安装的元数据和许可证，并生成 SBOM。默认平台是 Linux x86_64；`python-wheel-aarch64` 和 `python-wheel-cp310` profile 生成独立制品，不能据此证明所有平台都经过生产验证。离线构建使用提供的 wheelhouse，并设置 `PIP_NO_INDEX=true`。
+构建过程会先清理旧依赖目录，再审计已安装软件包的元数据和许可证，并生成 SBOM。默认平台为 Linux x86_64；`python-wheel-aarch64` 和 `python-wheel-cp310` 构建配置会生成彼此独立的制品，但这并不能证明所有平台组合均已通过生产验证。离线构建使用预先准备的 Wheel 仓库，并设置 `PIP_NO_INDEX=true`。
 
-运行时 wrapper、依赖目录和原生扩展必须使用同一个 Python ABI。不得重新引入已删除的 Python 2 扩展、Ambari simulator/test bundle 或未锁定的可选测试依赖。经过验证的上游发行包可以包含其 RECORD 元数据覆盖的自带文档、测试或示例。normalizer 会移除未使用的已声明 console/GUI 入口并更新 RECORD；这不授权任意裁剪上游发行包。有关打包和迁移约束，请参阅 [RPM 打包指南](./rpm-packaging.md) 和[升级指南](../upgrade-guide.md)。
+运行时封装脚本、依赖目录和原生扩展必须使用同一个 Python ABI。不得重新引入已经删除的 Python 2 扩展、Ambari 模拟器或测试工具包，也不得加入锁文件未声明的可选测试依赖。经过验证的上游发行包可以保留其 RECORD 元数据覆盖的文档、测试或示例。规范化工具会移除未使用但已声明的控制台或图形界面入口，并同步更新 RECORD；这不表示可以任意裁剪上游发行包。打包和迁移约束见 [RPM 打包指南](./rpm-packaging.md)与[升级指南](../upgrade-guide.md)。
 
 ## 源码证据 {#source-evidence}
 
-运行时和打包变更合并于 [AMBARI-26643](https://github.com/apache/ambari/commit/daf7576fb67edbde6b53fa52c9d23f918f23f817)。Python 下限、解释器选择、wheel 平台/ABI 默认值、RPM 要求以及离线 Maven 安装由当前 `pyproject.toml`、requirements lock、根 `pom.xml`、Agent `pom.xml` 和 Unix wrapper 脚本定义。
+运行时和打包变更合并于 [AMBARI-26643](https://github.com/apache/ambari/commit/daf7576fb67edbde6b53fa52c9d23f918f23f817)。Python 最低版本、解释器选择、Wheel 平台和 ABI 默认值、RPM 要求以及离线 Maven 安装行为，由当前 `pyproject.toml`、依赖锁文件、根 `pom.xml`、Agent `pom.xml` 和 Unix 运行时封装脚本共同定义。

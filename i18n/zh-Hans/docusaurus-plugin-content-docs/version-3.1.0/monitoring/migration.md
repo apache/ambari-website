@@ -25,15 +25,15 @@ limitations under the License.
 
 | 旧版集成 | 3.1.0 替代方案或操作 |
 | --- | --- |
-| AMS Collector/Monitor 和 timeline-metrics Sink | Agent telemetry 端点、VMAGENT 抓取以及 VictoriaMetrics 存储 |
+| AMS Collector/Monitor 和 timeline-metrics Sink | Agent 遥测端点、VMAGENT 抓取以及 VictoriaMetrics 存储 |
 | AMS 监控 `metrics.json` 定义 | `telemetry.json` 加类型化 JMX 配置文件 |
-| 旧版监控 Widget/WidgetLayout API | React Board/Dashboard/Datasource 工作流 |
+| 旧版监控 Widget/WidgetLayout API | React Board、Dashboard 和 Datasource 工作流 |
 | AMS/Ganglia 指标名称和自定义小组件查询 | 将所需信号映射到新的导出清单并重写查询 |
 | 旧版 Heatmaps 页面 | 原生监控仪表板；旧路由会重定向到 Metrics |
 | Categraf/Telegraf 仪表板模板 | 使用原生 Ambari 仪表板或调整查询；不会导出这些模板的别名 |
-| 自定义服务 telemetry | 实现[服务集成契约](./service-integration.md)，并验证实际输出 |
+| 自定义服务遥测 | 实现[服务集成契约](./service-integration.md)，并验证真实端点输出 |
 
-并非所有包含 metrics 或 widget 一词的内容都会被移除。直接 JMX 管理值、JMX 告警、Hadoop YARN Timeline Service 以及服务 Theme 表单控件仍是独立的受支持功能。
+并非名称中包含 metrics 或 widget 的所有功能都会被移除。直接 JMX 管理值、JMX 告警、Hadoop YARN Timeline Service 以及服务 Theme 表单控件仍属于彼此独立的受支持功能。
 
 ## 数据库升级不是历史数据转换 {#database-upgrade}
 
@@ -67,4 +67,4 @@ limitations under the License.
 
 ## 实现参考 {#implementation-references}
 
-迁移边界见固定版本的[telemetry 架构](https://github.com/apache/ambari/blob/4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4/docs/ambari-agent-prometheus-telemetry-architecture.md)。实际架构操作位于 [UpgradeCatalog310](https://github.com/apache/ambari/blob/4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4/ambari-server/src/main/java/org/apache/ambari/server/upgrade/UpgradeCatalog310.java)。
+迁移边界见固定版本的[遥测架构说明](https://github.com/apache/ambari/blob/4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4/docs/ambari-agent-prometheus-telemetry-architecture.md)。实际的数据库架构操作位于 [UpgradeCatalog310](https://github.com/apache/ambari/blob/4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4/ambari-server/src/main/java/org/apache/ambari/server/upgrade/UpgradeCatalog310.java)。

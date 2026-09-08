@@ -70,6 +70,6 @@ mvn -am verify -pl ambari-funtest -DskipFunctionalTests=false -DskipPythonTests 
 
 ## 报告和参数 {#reports-and-parameters}
 
-`-am` 构建依赖，`-pl` 选择项目，`-DskipPythonTests` 跳过 Python 执行，`-DskipSurefireTests` 跳过配置的 Java Surefire 测试，`-Drat.skip` 跳过 Apache RAT。功能测试和 UI 测试开关各有作用域。记录每一项跳过设置；不要替换为未声明的 `skipJavaTests` 属性或不存在的 integration profile。报告位置请参阅[单元测试报告](./unit-test-reports.md)。
+`-am` 构建依赖项目，`-pl` 选择项目，`-DskipPythonTests` 跳过 Python 测试，`-DskipSurefireTests` 跳过配置的 Java Surefire 测试，`-Drat.skip` 跳过 Apache RAT。功能测试和 UI 测试开关各有独立作用域。应记录每一项跳过设置；不要改用未声明的 `skipJavaTests` 属性或不存在的集成测试构建配置。报告位置见[单元测试报告](./unit-test-reports.md)。
 
 命令契约来自固定版本的 [Agent POM](https://github.com/apache/ambari/blob/94c6389a96b38bccef0b6a08269481a086b63ca1/ambari-agent/pom.xml)、[Server POM](https://github.com/apache/ambari/blob/94c6389a96b38bccef0b6a08269481a086b63ca1/ambari-server/pom.xml) 和 [功能测试 POM](https://github.com/apache/ambari/blob/94c6389a96b38bccef0b6a08269481a086b63ca1/ambari-funtest/pom.xml)。

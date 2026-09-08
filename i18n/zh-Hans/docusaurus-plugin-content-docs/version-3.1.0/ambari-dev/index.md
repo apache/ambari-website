@@ -33,7 +33,7 @@ Ambari 3.1 使用 JDK 17 和 Maven 3.9.x 构建。打包的 Agent 和 Server Pyt
 
 ## 构建边界 {#build-boundaries}
 
-常规 Maven 构建包含 Java 和 Python 打包，并可以调用 `ambari-web/latest` React 构建。迭代时可使用构建指南中的受支持属性跳过 Python 或 UI 工作。跳过某个 profile 不能证明被跳过的产品区域已通过验证。
+常规 Maven 构建包含 Java 与 Python 打包，并可以调用 `ambari-web/latest` 的 React 构建。迭代开发时，可以使用构建指南中明确支持的属性跳过 Python 或 UI 工作。某个构建配置未执行的产品区域不能视为已经通过验证。
 
 ## 测试边界 {#test-boundaries}
 

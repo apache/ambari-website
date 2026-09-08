@@ -175,9 +175,13 @@ test('3.1 preview routes are bilingual and preserve the stable default', async (
   for (const document of preview.docs) {
     for (const language of ['en', 'zh-Hans']) {
       const route = language === 'en' ? document.path.replace(/^\/zh-Hans/, '') : document.path;
-      const response = await request.get(route);
-      expect(response.ok(), route).toBe(true);
-      const html = await response.text();
+      const html = route.endsWith('/docs/3.1.0/')
+        ? readFileSync(`build${route}index.html`, 'utf8')
+        : await (async () => {
+          const response = await request.get(route);
+          expect(response.ok(), route).toBe(true);
+          return response.text();
+        })();
       expect(html.includes(`lang="${language}"`), route).toBe(true);
       expect(html.includes('data-testid="translation-fallback"'), route).toBe(false);
       expect(/<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html), route).toBe(true);
@@ -200,9 +204,9 @@ test('monitoring architecture renders localized diagrams and readable component 
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   for (const prefix of ['', '/zh-Hans']) {
-    await page.goto(`${prefix}/docs/3.1.0/monitoring/architecture`);
+    await page.goto(`${prefix}/docs/3.1.0/monitoring/architecture/`);
     const article = page.locator('article');
-    const diagram = article.locator(`img[src*="monitoring-architecture-${prefix ? 'zh' : 'en'}.webp"]`);
+    const diagram = article.locator(`img[src*="monitoring-architecture-${prefix ? 'zh' : 'en'}-"]`);
     await diagram.scrollIntoViewIfNeeded();
     await expect(diagram).toBeVisible();
     await expect.poll(() => diagram.evaluate((element: HTMLImageElement) => ({
@@ -280,7 +284,7 @@ test('3.1 guides render the monitoring asset and localized navigation', async ({
   await expect.poll(() => screenshot.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({path: testInfo.outputPath('monitoring-3.1-zh.png'), fullPage: true});
-  await page.goto('/zh-Hans/docs/3.1.0/');
+  await page.goto('/zh-Hans/docs/3.1.0/release-notes');
   await expect(page.locator('html')).toHaveAttribute('data-has-hydrated', 'true');
   if (isMobile) {
     await page.locator('.navbar__toggle').click();

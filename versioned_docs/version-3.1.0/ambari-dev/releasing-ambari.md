@@ -21,18 +21,18 @@ limitations under the License.
 
 # Releasing Apache Ambari 3.1.0 {#releasing-apache-ambari-310}
 
-This workflow releases an Apache Ambari 3.1.0 candidate. Replace `<version>`, `<rc>`, `<branch>`, and `<candidate-url>` with values from the actual release work; never invent URLs, checksums, or package names.
+This workflow prepares and publishes an Apache Ambari 3.1.0 release candidate. Every operation must use values from the release plan and vote announcement: replace `<version>`, `<rc>`, `<branch>`, and `<candidate-url>` with the corresponding release values. Never infer a release URL, checksum, or package name from a development version, and never overwrite a candidate that has entered a vote.
 
 ## Prepare the branch {#prepare-the-branch}
 
-Confirm the JIRA issue and release branch. Review source, notices, licenses, dependencies, generated files, and version properties. Build from a clean checkout using the current RPM profile and required JDK and Python versions.
+Confirm the release JIRA, release branch, candidate scope, and included commits, then freeze the change boundary. Review source headers, LICENSE, NOTICE, third-party dependencies, generated files, version properties, and release notes, and confirm that the source archive contains no local credentials or build output. Build from a clean checkout with the current RPM configuration and required JDK and Python versions, recording the complete environment.
 
-Run focused Server, Agent, React, and packaging tests, including failure and recovery paths. Record exact commands, tool versions, operating system, artifacts, and skipped checks.
+Run Server, Agent, React, Stack, and packaging tests appropriate to the candidate, including critical failure and recovery paths. Record complete commands, tool versions, operating system, processor architecture, generated artifacts, test reports, and skipped checks. Passing automated tests does not replace representative installation, upgrade, rollback, and service-operation validation.
 
 ## Stage and vote {#stage-and-vote}
 
-Generate checksums and detached PGP signatures with an Apache release-manager key. Keep source archives, signatures, checksums, logs, and provenance together in the candidate staging area.
+Generate the required checksums and detached PGP signatures for the final source archive with an Apache release-manager key, and verify the signing-key fingerprint. Keep the source archive, signatures, checksums, build logs, and provenance together in candidate staging. Files under one candidate identifier must remain immutable; any content change requires a new candidate.
 
-Announce the candidate on the Apache Ambari developer list with its candidate URL, tag, checksums, signatures, build evidence, and voting deadline. The release vote is separate from package tests and Bigtop Stack compatibility.
+Announce the candidate on the Apache Ambari developer list with its URL, source tag, checksums, signatures, release-manager key, build evidence, and an explicit voting deadline, and state what reviewers should verify. The vote determines whether the ASF source release is compliant and usable. Package tests, BIGTOP Stack compatibility, and platform qualification are separate evidence and do not replace the vote.
 
-After a successful vote, publish the approved artifacts. If the vote fails, record defects, create a new candidate, and repeat verification without replacing an existing candidate.
+After a successful vote, publish only the approved artifacts and update download pages, release notes, version metadata, and the announcement. If the vote fails, record the blocking defects, fix the source, create a new candidate identifier, and repeat all required verification. Do not replace files in an existing candidate or reuse obsolete signatures and checksums.

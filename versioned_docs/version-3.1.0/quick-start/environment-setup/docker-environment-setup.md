@@ -22,9 +22,10 @@ limitations under the License.
 
 # Docker Environment Setup {#docker-environment}
 
-Docker can provide a repeatable development envelope for a 3.1.0 candidate. It
-does not provide an official Ambari 3.1.0 image. Supply a trusted base image
-approved for your OS and install the reviewed RPM repository or candidate RPMs.
+Docker can provide a repeatable development and validation environment for an
+Ambari 3.1.0 candidate, but this guide does not provide an official Ambari
+3.1.0 image. Select a trusted base image approved for the candidate operating
+system, then configure the reviewed RPM repository or install candidate RPMs.
 
 ## Host Requirements {#host-requirements}
 
@@ -37,11 +38,11 @@ The image must provide JDK 17 for Ambari, while Stack services may use a
 separate JDK. Provide Linux Python 3.9.2+ and the package's CPython `cp39` ABI;
 Rocky 8 images need AppStream `python39` and the Ambari Python wrapper.
 
-## Compose Envelope {#compose-envelope}
+## Compose Environment {#compose-envelope}
 
-Create a local `docker-compose.yml` from your approved base image. The shape
-below is intentionally a template; replace the image and paths with reviewed
-values:
+Create a local `docker-compose.yml` from the approved base image. The following
+structure is only a template; replace its image name and mount paths with
+reviewed values from the target environment:
 
 ```yaml
 services:

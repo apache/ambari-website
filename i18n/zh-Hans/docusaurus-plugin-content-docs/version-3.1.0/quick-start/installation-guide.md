@@ -47,7 +47,7 @@ sudo dnf install /path/to/ambari-server-*.rpm
 sudo dnf install /path/to/ambari-agent-*.rpm
 ```
 
-RPM 会安装 Ambari 私有 Python 依赖和 ABI wrapper。不要覆盖旧的私有库目录，也不要用无关系统包替换打包的原生扩展。
+RPM 会安装 Ambari 私有 Python 依赖和对应 ABI 的运行时封装脚本。不要覆盖旧版私有库目录，也不要使用无关的系统软件包替换随 RPM 提供的原生扩展。
 
 ## 配置数据库 {#configure-the-database}
 
@@ -57,7 +57,7 @@ RPM 会安装 Ambari 私有 Python 依赖和 ABI wrapper。不要覆盖旧的私
 sudo ambari-server setup
 ```
 
-按提示输入数据库类型和连接信息。候选版本也支持分别配置 Java home：
+按提示输入数据库类型和连接信息。候选版本还支持分别配置 Ambari 与 Stack 的 Java Home：
 
 ```shell
 sudo ambari-server setup \
@@ -78,11 +78,11 @@ sudo ambari-server start
 sudo ambari-agent start
 ```
 
-在 React 界面确认主机注册、heartbeat 和一次受控命令，然后再安装 Stack。bootstrap 失败时检查 Server/Agent 日志，修正主机或信任配置，并在重新读取主机状态后重试；不要手动删除数据库记录。
+在 React 界面确认主机注册和 Agent 心跳正常，并成功执行一次受控命令，然后再安装 Stack。引导注册失败时，应检查 Server 和 Agent 日志，修正主机或信任配置，并在重新读取主机状态后重试；不要通过手动删除数据库记录来强制推进流程。
 
 ## 单独安装监控 {#install-monitoring-separately}
 
-需要监控时，安装经过审查的 `ambari-metrics` RPM，并按匹配的监控流程部署 VictoriaMetrics 和 VMAGENT。Agent 暴露 `/metrics` 和组件路由；VMAGENT 发现并抓取这些端点，再将样本 remote-write 到 VictoriaMetrics。React 通过 Ambari 受保护的 metrics proxy 查询，而不是访问旧 AMS 端点。依赖 Dashboard 前，验证 exporter 健康、目标发现、存储写入和 datasource 访问。
+需要监控时，安装经过审查的 `ambari-metrics` RPM，并按对应的监控流程部署 VictoriaMetrics 和 VMAGENT。Agent 暴露 `/metrics` 及组件路由；VMAGENT 发现并抓取这些端点，再通过远程写入将样本发送至 VictoriaMetrics。React 通过 Ambari 受保护的指标查询代理读取数据，而不是访问旧 AMS 端点。在依赖仪表盘进行运维判断之前，应分别验证指标导出端点、目标发现、存储写入和数据源访问。
 
 ## 验证安装 {#verify-installation}
 

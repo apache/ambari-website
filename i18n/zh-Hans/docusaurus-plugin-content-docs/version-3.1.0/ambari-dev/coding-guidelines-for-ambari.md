@@ -40,7 +40,7 @@ npm run lint
 npm run test
 ```
 
-使用现有的 `ambariApi`、React Router 路由对象、权限 hook、React Bootstrap 组件以及共享的加载/错误模式。保持 API DTO 类型明确，保留同源基础路径，取消过期的异步工作，并提供可重试的失败状态。不要向当前应用添加旧版 Brunch、Router 5、React 17 或未经审查的 UI framework。
+使用现有的 `ambariApi`、React Router 路由对象、权限 Hook、React Bootstrap 组件，以及共享的加载和错误处理模式。API DTO 应具有明确类型；请求必须保留同源基础路径、取消已经过期的异步工作，并向用户提供可重试的失败状态。不要向当前应用重新引入旧版 Brunch、Router 5、React 17 或未经审查的 UI 框架。
 
 独立的 Admin React 应用位于 `ambari-admin/src/main/resources/ui/ambari-admin`，并拥有自己的构建配置。View 应用仍是由服务器托管的软件包，不要复制到主要 React 源码树中。
 

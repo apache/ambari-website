@@ -28,7 +28,11 @@ limitations under the License.
 | JIRA 问题讨论 | [issues@ambari.apache.org](mailto:issues@ambari.apache.org) | [问题归档](https://lists.apache.org/list.html?issues@ambari.apache.org) |
 | 代码评审讨论 | [reviews@ambari.apache.org](mailto:reviews@ambari.apache.org) | [评审归档](https://lists.apache.org/list.html?reviews@ambari.apache.org) |
 | 提交通知 | [commits@ambari.apache.org](mailto:commits@ambari.apache.org) | [提交归档](https://lists.apache.org/list.html?commits@ambari.apache.org) |
+
 ## 提出有效问题 {#ask-a-useful-question}
-安装和运行问题发到 `user@ambari.apache.org`，包含候选修订、OS/架构、Ambari/Stack JDK、Python 版本和 ABI、相关日志及失败命令。清除密码、令牌、证书、私钥和内部主机名。
-补丁、API 或行为设计及源码构建问题发到 `dev@ambari.apache.org`；确认已有 JIRA 后，将可复现缺陷发到 `issues@ambari.apache.org`。代码评审发到 `reviews@ambari.apache.org`，提交流量发送到 `commits@ambari.apache.org`。
-发信前搜索归档，使用明确主题并链接 JIRA 或评审。邮件列表不能替代候选认证、安全策略或环境测试。
+
+安装和运行问题应发送到 `user@ambari.apache.org`。邮件中应说明候选版本修订、操作系统和架构、Ambari 与 Stack 各自使用的 JDK、Python 版本及 ABI，并附上相关日志和失败命令。发送前必须清除密码、访问令牌、证书、私钥以及内部主机名等敏感信息。
+
+补丁讨论、API 或行为设计以及源码构建问题应发送到 `dev@ambari.apache.org`。检查已有 JIRA 后，可将具备复现步骤的缺陷发送到 `issues@ambari.apache.org`。代码评审请求和评审意见使用 `reviews@ambari.apache.org`，提交记录则由 `commits@ambari.apache.org` 自动分发。
+
+发信前应先检索邮件归档，使用能够概括问题的主题，并附上相关 JIRA 或代码评审链接。邮件列表用于形成可追溯的社区讨论记录，不能替代候选版本的发布验证、安全策略或环境测试。涉及未公开安全漏洞时，不要使用普通邮件列表，应遵循项目规定的安全问题报告流程。

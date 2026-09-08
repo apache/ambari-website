@@ -21,7 +21,7 @@ limitations under the License.
 
 # View 定义 {#view-definition}
 
-View Definition File（`view.xml`）是 View framework 读取的软件包描述符。其 schema 维护在 `ambari-views/src/main/resources/view.xsd`。
+View 定义文件（`view.xml`）是 View 框架读取的软件包描述符，其 XML 架构维护在 `ambari-views/src/main/resources/view.xsd`。
 
 ## 必需的标识 {#required-identity}
 
@@ -41,9 +41,9 @@ View Definition File（`view.xml`）是 View framework 读取的软件包描述�
 
 使用 `<resource>` 暴露服务器资源。资源可以声明 `service-class`、`provider-class`、`resource-class`、`plural-name` 和 `id-property`。使用 `<instance>` 和 `<property>` 定义静态配置实例。
 
-## Framework 类 {#framework-classes}
+## 框架类 {#framework-classes}
 
-`<view-class>` 注册一个实现 `View` 的类，用于接收部署、创建、更新和销毁 framework 事件。`<validator-class>` 注册用于属性和实例验证的 `Validator`。这些类名必须能够从软件包 classpath 加载。
+`<view-class>` 注册实现 `View` 接口的类，用于接收部署、创建、更新和销毁等框架事件。`<validator-class>` 注册负责属性与实例校验的 `Validator`。这些类必须包含在软件包类路径中，并能由 View 类加载器正常加载。
 
 ## 软件包契约 {#package-contract}
 
@@ -57,4 +57,4 @@ view.jar
 |_ WEB-INF/lib/*.jar
 ```
 
-当版本部署以及实例创建、更新或销毁时，framework 会调用 View 生命周期回调。请保持回调幂等，不要假设部署或管理期间一定存在浏览器会话。
+当 View 版本部署，或实例被创建、更新和销毁时，框架会调用相应的生命周期回调。回调实现必须保持幂等，且不能假设部署或管理操作期间一定存在浏览器会话。

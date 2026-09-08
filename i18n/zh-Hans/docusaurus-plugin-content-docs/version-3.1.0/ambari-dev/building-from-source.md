@@ -53,7 +53,7 @@ mvn -B -T 2C -pl ambari-server -am clean install -DskipTests -DskipPythonTests -
 mvn -B clean package rpm:rpm -Dbuild.os_arch=x86_64
 ```
 
-Server 和 Agent RPM 会写入各模块的 `target/rpm` 目录下。发布构件前确认架构和版本。VictoriaMetrics provider 使用独立的 `metrics-rpm` profile，详见 [RPM 打包](../platform/rpm-packaging.md)。
+Server 和 Agent RPM 会写入各模块的 `target/rpm` 目录。发布制品前应核对其目标架构和版本。VictoriaMetrics 监控后端使用独立的 `metrics-rpm` Maven 构建配置，详见 [RPM 打包](../platform/rpm-packaging.md)。
 
 ## React 应用 {#react-applications}
 
@@ -61,8 +61,8 @@ Server 和 Agent RPM 会写入各模块的 `target/rpm` 目录下。发布构件
 
 ## Python 打包 {#python-packaging}
 
-Maven 打包期间，Agent 和 Server 依赖会安装到 Ambari 私有库。CPython 3.9（`cp39`）是 wheel 属性选择的默认目标，而不是名为 `python-wheel-cp39` 的 profile。离线时使用锁定依赖和提供的 wheelhouse；不要在生产节点运行 `pip install`。源代码 Python runner 与打包 ABI 是相关但不同的契约。
+Maven 打包期间，Agent 和 Server 依赖会安装到 Ambari 私有库。CPython 3.9（`cp39`）是 Wheel 属性选择的默认目标，并不存在名为 `python-wheel-cp39` 的 Maven 构建配置。离线构建必须使用锁定依赖和预先准备的 Wheel 仓库；不要在生产节点运行 `pip install`。源码使用的 Python 解释器与软件包声明的 ABI 相互关联，但不能视为同一项兼容性保证。
 
-## 聚焦 profile {#focused-profiles}
+## 专用构建配置 {#focused-profiles}
 
-使用受支持平台或 wheel ABI 的项目 profile，不要随意编辑依赖版本。离线构建必须提供批准的 wheelhouse，并使用仓库的 no-index 设置。将生成的 RPM、wheel 元数据和 SBOM 输出保留在 `target` 中供审查。
+应使用项目为受支持平台或 Wheel ABI 定义的 Maven 构建配置，不要临时修改依赖版本。离线构建必须提供经过批准的 Wheel 仓库，并使用仓库已有的禁止索引访问设置。生成的 RPM、Wheel 元数据和 SBOM 输出应保留在 `target` 目录中供审查。
