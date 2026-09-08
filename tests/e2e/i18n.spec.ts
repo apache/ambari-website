@@ -206,7 +206,7 @@ test('monitoring architecture renders localized diagrams and readable component 
   for (const prefix of ['', '/zh-Hans']) {
     await page.goto(`${prefix}/docs/3.1.0/monitoring/architecture/`);
     const article = page.locator('article');
-    const diagram = article.locator(`img[src*="monitoring-architecture-${prefix ? 'zh' : 'en'}.webp"]`);
+    const diagram = article.locator(`img[src*="monitoring-architecture-${prefix ? 'zh' : 'en'}-"]`);
     await diagram.scrollIntoViewIfNeeded();
     await expect(diagram).toBeVisible();
     await expect.poll(() => diagram.evaluate((element: HTMLImageElement) => ({
