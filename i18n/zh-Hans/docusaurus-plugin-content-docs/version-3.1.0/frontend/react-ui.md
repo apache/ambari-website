@@ -69,6 +69,8 @@ Stack 管理包括版本列表、仓库信息、升级和降级启动、预检�
 
 Views 从已认证的 React shell 列出，并在服务器提供的同源 iframe 上下文中打开。View-only 用户获得精简 shell，并可直接导航到 Views。Ambari Admin 是位于 `ambari-admin/src/main/resources/ui/ambari-admin` 的独立 React 模块；其打包的 React `latest` 输出与主 UI 一起构建。
 
+完整的 View 扩展流程，包括路径安全的 React 前端、JAX-RS 资源、权限、打包和部署，参阅 [React View 开发](../ambari-design/views/developing-react-views.md)。
+
 服务 Theme 提供由 Stack 定义的页面布局、配置控件、属性、条件、建议，以及只读状态和权限处理。当前实现已经具备 Theme 解析和具有代表性的使用方；自定义 Stack、复杂条件组合和保存后重新加载的一致性仍需结合真实环境验收。
 
 ## 原生 Monitoring {#native-monitoring}
@@ -82,6 +84,8 @@ React 在 `/main/monitoring` 提供原生 Prometheus 兼容监控区域，包括
 ## 构建和部署 {#build-and-deployment}
 
 Maven 的 `ambari-web` 模块使用配置的 Node/npm 工具链，从 `ambari-web/latest` 构建主要 React 应用并写入 `latest/dist`；Maven 会将该输出复制到服务器 Web UI 构件中。独立的 `ambari-admin` 模块从 `src/main/resources/ui/ambari-admin` 构建 Admin React 应用，并将输出打包到 `classes/latest`。
+
+源码目录、路由和 API 约定、测试命令、Server 制品构建，以及仅用于开发环境的静态文件替换流程，参阅[定制 React UI](./customizing-react-ui.md)。
 
 升级和管理流程参阅[升级指南](../upgrade-guide.md)。部署构件应使用目标 Ambari 安装相同的基础路径、代理上下文和身份验证模式进行检查。
 

@@ -69,6 +69,8 @@ Stack administration includes version lists, repository information, upgrade and
 
 Views are listed from the authenticated React shell and opened in their server-provided same-origin iframe context. View-only users receive a reduced shell and can navigate directly to Views. Ambari Admin is a separate React module under `ambari-admin/src/main/resources/ui/ambari-admin`; its packaged React `latest` output is built alongside the main UI.
 
+For a complete View extension workflow, including a path-safe React frontend, JAX-RS resources, permissions, packaging, and deployment, see [Developing React Views](../ambari-design/views/developing-react-views.md).
+
 Service Themes provide stack-defined layouts, configuration widgets, attributes, conditions, recommendations, and read-only/permission handling. Theme parsing and representative consumers exist, while exhaustive custom-stack and round-trip combinations remain acceptance work.
 
 ## Native Monitoring {#native-monitoring}
@@ -82,6 +84,8 @@ The former standalone dashboard Heatmaps route redirects to `/main/dashboard/met
 ## Build and Deployment {#build-and-deployment}
 
 The Maven `ambari-web` module builds the primary React application from `ambari-web/latest` with the configured Node/npm toolchain and writes `latest/dist`; the Maven package copies that output into the server Web UI artifact. The separate `ambari-admin` module builds its Admin React application from `src/main/resources/ui/ambari-admin` and packages its output under `classes/latest`.
+
+See [Customizing The React UI](./customizing-react-ui.md) for the source map, route and API conventions, test commands, Server artifact build, and a development-only static file replacement procedure.
 
 For upgrade and administration procedures, see the [Upgrade Guide](../upgrade-guide.md). A deployed build should be checked with the same base path, proxy context, and authentication mode used by the target Ambari installation.
 

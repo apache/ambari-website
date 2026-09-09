@@ -168,7 +168,7 @@ test('3.1 preview routes are bilingual and preserve the stable default', async (
   const data = JSON.parse(readFileSync('.docusaurus/globalData.json', 'utf8'));
   const versions = data['docusaurus-plugin-content-docs'].default.versions;
   const preview = versions.find(item => item.name === '3.1.0');
-  expect(preview.docs).toHaveLength(71);
+  expect(preview.docs).toHaveLength(73);
   expect(preview.isLast).toBe(false);
   expect(versions.find(item => item.name === '3.0.0').isLast).toBe(true);
   expect(versions.some(item => item.name === 'current')).toBe(false);

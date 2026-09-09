@@ -41,6 +41,7 @@ View-only 用户会获得精简的 Views shell。独立的 Ambari Admin React �
 
 ## 文档导航 {#documentation-map}
 
+* [React View 开发](./developing-react-views.md)介绍前端和 Server 结构、路径安全的 API 调用、权限、构建、部署和验证。
 * [View API](./view-api.md)介绍通过 Ambari REST API 发现 View、查看版本、创建实例以及管理权限和特权。
 * [View Definition](./view-definition.md)介绍当前 `view.xml` 契约和软件包元数据。
 * [框架服务](./framework-services.md)介绍 `ViewContext`、实例数据、资源提供程序和生命周期事件。

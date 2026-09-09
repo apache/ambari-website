@@ -111,6 +111,7 @@
             "id": "ambari-design/views/index"
           },
           "items": [
+            "ambari-design/views/developing-react-views",
             "ambari-design/views/view-api",
             "ambari-design/views/view-definition",
             "ambari-design/views/framework-services"
@@ -129,6 +130,7 @@
       ]
     },
     "frontend/react-ui",
+    "frontend/customizing-react-ui",
     {
       "type": "category",
       "label": "Ambari Development",
