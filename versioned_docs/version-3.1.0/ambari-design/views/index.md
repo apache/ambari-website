@@ -41,6 +41,7 @@ View-only users receive the reduced Views shell. The separate Ambari Admin React
 
 ## Documentation Map {#documentation-map}
 
+* [Developing React Views](./developing-react-views.md) covers frontend and Server structure, path-safe API calls, permissions, build, deployment, and validation.
 * [View API](./view-api.md) covers discovery, versions, instances, permissions, and privileges through the Ambari REST API.
 * [View Definition](./view-definition.md) covers the current `view.xml` contract and package metadata.
 * [Framework Services](./framework-services.md) covers `ViewContext`, instance data, resource providers, and lifecycle events.
