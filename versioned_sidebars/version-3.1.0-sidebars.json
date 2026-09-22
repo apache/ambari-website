@@ -27,6 +27,17 @@
     },
     {
       "type": "category",
+      "label": "Multi-cluster Management",
+      "collapsed": false,
+      "items": [
+        "multi-cluster/architecture",
+        "multi-cluster/getting-started",
+        "multi-cluster/managed-dependencies",
+        "multi-cluster/operations"
+      ]
+    },
+    {
+      "type": "category",
       "label": "Monitoring",
       "collapsed": false,
       "items": [

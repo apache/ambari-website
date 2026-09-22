@@ -3,6 +3,10 @@
     "message": "3.1.0（预览）",
     "description": "The label for the upcoming 3.1.0 documentation"
   },
+  "sidebar.ambariSidebar.category.Multi-cluster Management": {
+    "message": "多集群管理",
+    "description": "The label for category 'Multi-cluster Management' in sidebar 'ambariSidebar'"
+  },
   "sidebar.ambariSidebar.category.Monitoring": {
     "message": "监控系统",
     "description": "The label for category 'Monitoring' in sidebar 'ambariSidebar'"

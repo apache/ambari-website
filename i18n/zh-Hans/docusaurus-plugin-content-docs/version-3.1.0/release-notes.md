@@ -47,6 +47,12 @@ Ambari Web 默认进入 React 应用。当前实现承接了集群安装、主�
 
 默认入口和打包变更：[#4198](https://github.com/apache/ambari/pull/4198)。工作流覆盖范围及验收边界见 [React 用户指南](./frontend/react-ui.md)。
 
+### 隔离的多集群管理 {#multi-cluster-management}
+
+一台 Ambari Server 可以管理多个独立集群，提供主机独占归属、明确的集群 URL、作用域权限与可恢复安装草稿。全局集群和服务目录以及 Admin 主机目录使归属清晰可见。新的 HBase 部署还可以选择托管 HDFS 与 ZooKeeper 提供方，通过批准快照、私有命名空间和持久化就绪检查建立依赖。
+
+实现来源：[AMBARI-26656 / #4216](https://github.com/apache/ambari/pull/4216)。参阅[架构](./multi-cluster/architecture.md)、[使用指南](./multi-cluster/getting-started.md)、[HBase 兼容性限制](./multi-cluster/managed-dependencies.md)和[恢复手册](./multi-cluster/operations.md)。独立集群与共享提供方的证据具有不同验收边界，两者都不额外提供 Server 高可用。
+
 ### Java 基线升级，Ambari 与 Stack 独立选择 JDK {#java-baseline}
 
 源码构建要求 **JDK 17 和 Maven 3.9.x**，由 Maven 强制检查。共享依赖管理更新了 Spring/Spring Security、Jetty、Jersey、Guice、日志、持久化和 Jakarta API 等基础组件。自定义 Java 扩展及其传递依赖也需要核对兼容性，不能只替换 JDK 就认为迁移完成。

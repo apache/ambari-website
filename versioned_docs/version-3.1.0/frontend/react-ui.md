@@ -35,6 +35,12 @@ React is selected by default when no browser preference exists. An older browser
 
 The historical Ember application is referenced only for migration comparison; it is not a 3.1 operating path described by this guide.
 
+## Multi-cluster Navigation {#multi-cluster-navigation}
+
+Cluster operations use `/clusters/:clusterName/main/*` inside the React hash route. The global `/clusters` and `/services` directories show authorized clusters and deployments; selecting a row establishes its owning cluster in the URL. Separate tabs retain independent context. Unscoped legacy links resolve through an authorized cluster selection, not an arbitrary first cluster.
+
+See [Creating and Using Clusters](../multi-cluster/getting-started.md) for installation, saved-draft recovery, Admin management and concrete URLs. [Managed HBase Dependencies](../multi-cluster/managed-dependencies.md) explains provider selection and readiness; [Operations and Recovery](../multi-cluster/operations.md) covers exact request identity and retry.
+
 ## Workflow Coverage {#workflow-coverage}
 
 ### Installation and Hosts {#installation-and-hosts}

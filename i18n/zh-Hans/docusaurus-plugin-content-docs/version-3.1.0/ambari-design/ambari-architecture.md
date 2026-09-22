@@ -34,6 +34,8 @@ limitations under the License.
 
 ## 请求与数据路径 {#request-and-data-paths}
 
+同一控制平面可以管理多个归属独立的集群。主机归属、URL 与权限边界、持久化工作流身份以及可选 HBase 共享提供方，详见[多集群架构](../multi-cluster/architecture.md)。
+
 下图表示控制和请求路径，指标响应会返回采集器：
 
 ```text

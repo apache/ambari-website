@@ -47,6 +47,12 @@ Monitoring uses the new datasource and dashboard model. Legacy AMS/Ganglia widge
 
 Default entry and packaging: [#4198](https://github.com/apache/ambari/pull/4198). See the [React user guide](./frontend/react-ui.md) for workflow coverage and acceptance boundaries.
 
+### Isolated Multi-cluster Management {#multi-cluster-management}
+
+One Ambari Server can manage independent clusters with exclusive host ownership, explicit cluster URLs, scoped permissions and recoverable installation drafts. Global cluster/service directories and Admin inventory make ownership visible. New HBase deployments can optionally use managed HDFS and ZooKeeper providers through approved snapshots, private namespaces and persistent readiness checks.
+
+Implementation: [AMBARI-26656 / #4216](https://github.com/apache/ambari/pull/4216). See the [architecture](./multi-cluster/architecture.md), [usage guide](./multi-cluster/getting-started.md), [HBase compatibility limits](./multi-cluster/managed-dependencies.md) and [recovery runbook](./multi-cluster/operations.md). Independent-cluster and shared-provider evidence have different qualification boundaries; neither adds Server high availability.
+
 ### Java Baseline And Independent JDK Selection {#java-baseline}
 
 Source builds require **JDK 17 and Maven 3.9.x**, enforced by Maven. Shared dependency management updates the Spring/Spring Security, Jetty, Jersey, Guice, logging, persistence, and Jakarta API foundations. These changes also require reviewing custom Java extensions and their transitive dependencies; replacing the JDK alone is not a complete migration.

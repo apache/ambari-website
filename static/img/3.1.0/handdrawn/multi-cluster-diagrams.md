@@ -81,7 +81,7 @@ Output: multi-cluster-bindings-en.webp
 ```text
 Title: "HBase: Managed cross-cluster dependencies".
 At top one modest controller "Ambari Server" with "Approved snapshots + operation epochs". Teal control arrows go to both consumer and providers for preparation.
-Left outlined area "Consumer cluster A": sketched machines "HBase Master" and "RegionServers"; a paper client-settings icon "Private client config"; beneath it "Dedicated HBase identity". 
+Left outlined area "Consumer cluster A": sketched machines "HBase Master" and "RegionServers"; a paper client-settings icon "Private client config"; beneath it "Dedicated HBase identity".
 Right two separate provider enclosures: upper "Provider cluster B / HDFS" with "NameNode + DataNodes", lower "Provider cluster C / ZooKeeper" with "ZooKeeper ensemble". Put two distinct ochre dashed arrows FROM consumer HBase TO the correct provider: upper arrow "Storage binding", lower arrow "Coordination binding".
 In HDFS area draw two folder icons labelled "Private root" and "Private WAL". In ZooKeeper area draw tree icon labelled "Private znode". Bottom caption "Each binding owns a private namespace and UUID".
 Bottom narrow readiness strip: "Prepare provider -> Install clients -> Verify every daemon host -> READY -> Start HBase".
@@ -95,7 +95,7 @@ Output: multi-cluster-bindings-zh.webp
 ```text
 Title: "HBase：跨集群托管依赖".
 At top one modest controller "Ambari Server" with "已批准快照 + 操作 epoch". Teal control arrows go to both consumer and providers for preparation.
-Left outlined area "消费集群 A": sketched machines "HBase Master" and "RegionServers"; a paper client-settings icon "私有客户端配置"; beneath it "独立的 HBase 身份". 
+Left outlined area "消费集群 A": sketched machines "HBase Master" and "RegionServers"; a paper client-settings icon "私有客户端配置"; beneath it "独立的 HBase 身份".
 Right two separate provider enclosures: upper "提供集群 B / HDFS" with "NameNode + DataNodes", lower "提供集群 C / ZooKeeper" with "ZooKeeper 集群". Put two distinct ochre dashed arrows FROM consumer HBase TO the correct provider: upper arrow "存储绑定", lower arrow "协调绑定".
 In HDFS area draw two folder icons labelled "私有 root" and "私有 WAL". In ZooKeeper area draw tree icon labelled "私有 znode". Bottom caption "每个绑定拥有独立的命名空间与 UUID".
 Bottom narrow readiness strip: "准备提供方 -> 安装客户端 -> 校验全部守护进程主机 -> READY -> 启动 HBase".
@@ -141,4 +141,3 @@ Bottom recovery band: "FAILED / STALE / UNRESOLVED -> 读取状态 -> 按允许�
 Two footer notes: "缺失或过期的证据不能视为成功"; "INSTALL_ONLY 不等于 COMPLETE".
 Show refresh as a read, NOT as a new launch. Credential step applies only to secure mode, mark "凭据仅限安全模式" beside credentials. No code dump or fine print. All explanatory labels Simplified Chinese.
 ```
-

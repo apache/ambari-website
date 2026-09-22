@@ -26,6 +26,7 @@ limitations under the License.
 | Previous release source tag | `release-3.0.0`, `3acb048b3f6e209d6d1e5ac54efcbd30f1b25c57` |
 | Community trunk reviewed on 2026-09-07 | `94c6389a96b38bccef0b6a08269481a086b63ca1` |
 | Monitoring target baseline, PR #4182 | `4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4` |
+| Multi-cluster follow-up reviewed on 2026-09-22 | `fc07b5cb873dc154c48349085494e664baf6b9d1`, including AMBARI-26656 / PR #4216 |
 | Maven development version in the reviewed trunk | `3.1.0.0-SNAPSHOT` |
 
 For this documentation, PR #4182 is included in the intended 3.1.0 feature baseline. A release candidate must contain the selected community changes and monitoring implementation together; a reference SHA in this table is not an instruction to replace newer community work with an older feature branch.
@@ -65,6 +66,12 @@ The Python modernization record includes Linux x86_64 RPM and deployment validat
 The React parity baseline distinguishes implementation, static comparison, and runtime validation. Its older review snapshot is not a current test certificate and must not be converted into an unconditional statement that every role, SSO mode, custom Stack, and recovery path has passed. The [React guide](./frontend/react-ui.md) lists the implemented workflow surfaces and acceptance boundaries.
 
 Documentation build and browser checks validate this website's routes, translations, labels, and assets. They do not execute an Ambari cluster upgrade, Maven/RPM production build, or monitoring failure drill.
+
+## Multi-cluster Follow-up {#multi-cluster-follow-up}
+
+The [multi-cluster guides](./multi-cluster/architecture.md) use the newer pinned trunk revision above for cluster isolation, durable wizard recovery, Admin management and managed HBase dependencies. This is a focused source follow-up, not a rerun of the original whole-release review or a fresh RPM acceptance run.
+
+The guides distinguish final packaged independent-cluster evidence from the earlier managed-HBase deployment with overlays. They also document the remaining real-KDC, detach/data-retention, fault-injection and broker-revocation gates. The [operations guide](./multi-cluster/operations.md#upgrade-and-acceptance-work) lists the evidence still needed before publishing final support claims.
 
 ## Before Publishing A Release {#before-publishing-a-release}
 

@@ -168,7 +168,7 @@ test('3.1 preview routes are bilingual and preserve the stable default', async (
   const data = JSON.parse(readFileSync('.docusaurus/globalData.json', 'utf8'));
   const versions = data['docusaurus-plugin-content-docs'].default.versions;
   const preview = versions.find(item => item.name === '3.1.0');
-  expect(preview.docs).toHaveLength(73);
+  expect(preview.docs).toHaveLength(77);
   expect(preview.isLast).toBe(false);
   expect(versions.find(item => item.name === '3.0.0').isLast).toBe(true);
   expect(versions.some(item => item.name === 'current')).toBe(false);
@@ -294,6 +294,46 @@ test('3.1 guides render the monitoring asset and localized navigation', async ({
   const labels = await sidebar.locator('.menu__link').allTextContents();
   expect(labels.length).toBeGreaterThanOrEqual(60);
   for (const label of labels) expect(label).toMatch(/[\u3400-\u9fff]/);
+});
+
+test('multi-cluster guides render localized compact diagrams without overflow', async ({page, request}, testInfo) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  for (const prefix of ['', '/zh-Hans']) {
+    for (const docSlug of ['architecture', 'getting-started', 'managed-dependencies', 'operations']) {
+      await page.goto(`${prefix}/docs/3.1.0/multi-cluster/${docSlug}`);
+      await expect(page.locator('html')).toHaveAttribute('data-has-hydrated', 'true');
+      await expect(page.locator('article h1')).toBeVisible();
+      await expect(page.getByTestId('translation-fallback')).toHaveCount(0);
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      const diagrams = page.locator('article img');
+      await expect(diagrams).toHaveCount(docSlug === 'architecture' ? 1 : docSlug === 'managed-dependencies' ? 2 : 0);
+      for (const diagram of await diagrams.all()) {
+        await diagram.scrollIntoViewIfNeeded();
+        await expect.poll(() => diagram.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
+        const source = await diagram.getAttribute('src');
+        expect(source).toContain(`-${prefix ? 'zh' : 'en'}-`);
+        const dimensions = await diagram.evaluate((element: HTMLImageElement) => ({
+          width: element.naturalWidth, height: element.naturalHeight,
+          displayedWidth: element.getBoundingClientRect().width,
+          availableWidth: element.closest('article')!.clientWidth,
+        }));
+        expect(dimensions.width).toBe(1536);
+        expect(dimensions.height).toBe(1024);
+        expect(dimensions.displayedWidth).toBeLessThanOrEqual(dimensions.availableWidth);
+        const asset = await request.get(source!);
+        expect(asset.ok()).toBe(true);
+        expect(asset.headers()['content-type']).toContain('image/webp');
+        expect((await asset.body()).length).toBeLessThan(200 * 1024);
+      }
+      if (docSlug === 'architecture') {
+        await page.locator('article img').screenshot({
+          path: testInfo.outputPath(`multi-cluster-${prefix ? 'zh' : 'en'}.png`),
+        });
+      }
+    }
+  }
+  expect(errors).toEqual([]);
 });
 
 test('version menu preserves the selected language', async ({page, isMobile}) => {
