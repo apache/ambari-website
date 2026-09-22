@@ -34,6 +34,8 @@ limitations under the License.
 
 ## Request And Data Paths {#request-and-data-paths}
 
+The same control plane can manage several independently owned clusters. See [Multi-cluster Architecture](../multi-cluster/architecture.md) for host ownership, URL and permission boundaries, persistent workflow identity, and optional shared HBase providers.
+
 The following shows control and request paths; metric responses return to the scraper:
 
 ```text

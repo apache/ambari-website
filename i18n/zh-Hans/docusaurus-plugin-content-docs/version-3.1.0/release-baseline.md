@@ -26,6 +26,7 @@ limitations under the License.
 | 上一版本源代码标签 | `release-3.0.0`, `3acb048b3f6e209d6d1e5ac54efcbd30f1b25c57` |
 | 2026-09-07 审查的社区 trunk | `94c6389a96b38bccef0b6a08269481a086b63ca1` |
 | 监控目标基线，PR #4182 | `4e95d2e33493ac934d7d98a14a81d86c0f1bc0c4` |
+| 2026-09-22 多集群专题核查 | `fc07b5cb873dc154c48349085494e664baf6b9d1`，包含 AMBARI-26656 / PR #4216 |
 | 审查 trunk 中的 Maven 开发版本 | `3.1.0.0-SNAPSHOT` |
 
 对于本文档，PR #4182 包含在预期的 3.1.0 功能基线中。发布候选版本必须同时包含选定的社区更改和监控实现；表中的参考 SHA 不是要求用旧功能分支替换较新的社区工作。
@@ -65,6 +66,12 @@ Python 现代化记录包括 Linux x86_64 RPM 和部署验证，以及针对其�
 React 对等基线区分实现、静态比较和运行时验证。较早的审查快照不是当前测试证书，不得将其转换为“每个角色、SSO 模式、自定义 Stack 和恢复路径都已通过”的无条件声明。[React 指南](./frontend/react-ui.md)列出了已实现的工作流界面和验收边界。
 
 文档构建和浏览器检查会验证本网站的路由、翻译、标签和资源，但不会执行 Ambari 集群升级、Maven/RPM 生产构建或监控故障演练。
+
+## 多集群专题补充 {#multi-cluster-follow-up}
+
+[多集群指南](./multi-cluster/architecture.md)使用上表中较新的固定 trunk 版本，核查集群隔离、持久化向导恢复、Admin 管理与 HBase 托管依赖。这是聚焦源码补充，不是重新执行原有整版审查或新的 RPM 验收。
+
+指南区分最终独立集群包验收与早期带覆盖补丁的托管 HBase 部署证据，并说明真实 KDC、解绑与数据保留、故障注入及消息代理撤权等剩余门禁。[运维指南](./multi-cluster/operations.md#upgrade-and-acceptance-work)列出了发布最终支持声明前仍需补齐的证据。
 
 ## 发布版本前 {#before-publishing-a-release}
 

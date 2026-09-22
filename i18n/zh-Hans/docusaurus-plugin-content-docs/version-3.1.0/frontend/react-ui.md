@@ -35,6 +35,12 @@ Ambari 3.1 使用 `ambari-web/latest` 中的 React 应用作为主要 Web UI。�
 
 历史 Ember 应用仅用于迁移比较；本指南不将其作为 3.1 的运行路径介绍。
 
+## 多集群导航 {#multi-cluster-navigation}
+
+集群操作使用 React hash 路由中的 `/clusters/:clusterName/main/*`。全局 `/clusters` 与 `/services` 目录显示已授权集群和服务部署，选择一行后 URL 会明确所属集群。不同标签页保留独立上下文。旧的不带集群链接通过授权集群选择来解析，不会任意选取第一个集群。
+
+安装、草稿恢复、Admin 管理与具体 URL 参阅[创建与使用集群](../multi-cluster/getting-started.md)。[HBase 托管依赖](../multi-cluster/managed-dependencies.md)说明提供方选择与就绪条件，[运维与恢复](../multi-cluster/operations.md)说明精确请求身份与重试。
+
 ## 工作流覆盖范围 {#workflow-coverage}
 
 ### 安装和主机 {#installation-and-hosts}
