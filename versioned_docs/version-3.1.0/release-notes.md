@@ -77,6 +77,14 @@ Monitoring is packaged separately for the VictoriaMetrics provider. The retained
 
 See [RPM packaging](./platform/rpm-packaging.md) for build commands and artifact inspection, and [building from source](./ambari-dev/building-from-source.md) for the complete build environment.
 
+## Runtime Store And Console Preview {#runtime-store-and-console-preview}
+
+A separately documented AMBARI-26663 development follow-up adds complete-store import, per-service/provider selection, scoped definition maintenance, complete configuration documents, and recoverable package operations. Importing a bundle registers definitions; the normal wizard still performs installation.
+
+The main console also adds light/dark/system appearance, prominent global navigation with return to the previous cluster page, grouped package versions, compact host alert links, and explicit monitoring legend controls. These features require the [matching development snapshot](./release-baseline.md#runtime-mpack-follow-up).
+
+See [Management Pack Store](./management-packs/overview.md), [Complete Configuration Files](./management-packs/content-configuration.md), and [Workspace Navigation and Appearance](./frontend/workspace-and-appearance.md) for procedures and limits. This entry does not announce a hosted marketplace, an ASF binary store release, automatic software upgrades, or HA support for the reference packs.
+
 ## Community Improvements {#selected-community-changes}
 
 ### Cluster Operations And Configuration {#cluster-operations}

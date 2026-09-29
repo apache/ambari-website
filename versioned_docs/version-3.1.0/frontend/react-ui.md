@@ -87,6 +87,12 @@ Monitoring routes use `CLUSTER.VIEW_METRICS` for cluster queries, dashboards, ex
 
 The former standalone dashboard Heatmaps route redirects to `/main/dashboard/metrics`. This is an intentional replacement boundary: React does not provide AMS or Ganglia compatibility paths, and the migration does not claim legacy Heatmaps or AMS/Ganglia behavior as unfinished React work.
 
+## Workspace Navigation And Appearance {#workspace-navigation-and-appearance}
+
+The AMBARI-26663 development follow-up adds grouped management-pack service selection, prominent global navigation, return to the previous cluster page, persistent light/dark/system appearance, compact host alert links, and clearer monitoring interactions. These capabilities require the corresponding implementation rather than only the earlier React baseline.
+
+See [Workspace Navigation and Appearance](./workspace-and-appearance.md) for visible entry points and state boundaries, and the [store walkthrough](../management-packs/store-guide.md) for importing and deploying selected services.
+
 ## Build and Deployment {#build-and-deployment}
 
 The Maven `ambari-web` module builds the primary React application from `ambari-web/latest` with the configured Node/npm toolchain and writes `latest/dist`; the Maven package copies that output into the server Web UI artifact. The separate `ambari-admin` module builds its Admin React application from `src/main/resources/ui/ambari-admin` and packages its output under `classes/latest`.

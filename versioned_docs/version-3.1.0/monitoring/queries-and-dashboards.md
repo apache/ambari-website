@@ -85,6 +85,51 @@ The editor supports panel configuration, variables, cloning, JSON import/export,
 
 Ambari binds the reserved `cluster` variable to the current application cluster and computes `__rate_interval` as the larger of four query steps or 120 seconds. These reserved variables are not user-editable dashboard filters. Counters use `rate` or `increase`; gauges are queried directly.
 
+## Workspace Interactions {#workspace-interactions}
+
+The following interactions describe the [runtime mpack/console development follow-up](../management-packs/overview.md). Confirm that your installed Web build includes it; the older pinned monitoring evidence above does not by itself establish these newer controls.
+
+### Refresh And Time Range {#refresh-and-time-range}
+
+Relative-time dashboards default to a 30-second refresh interval. The preference is stored per user and cluster, including an explicit pause. A paused view offers **Resume live updates**. Absolute historical ranges and layout editing do not automatically advance.
+
+Queries preserve seconds rather than rounding the end time down to the minute. Time-series axes use the selected query boundaries, including when only one sample is available. After installing collection, allow initial samples to arrive; rate-based CPU or throughput queries need enough observations to calculate a rate.
+
+### Read And Control The Legend {#legend-controls}
+
+A disk-throughput legend entry represents a host, device, and read/write direction. It does not represent every metric from that host.
+
+| Action | Effect |
+| --- | --- |
+| Click a series name | Toggle only that curve's visibility |
+| Select **Only** | Display only the chosen curve |
+| Select **Show all** | Restore all returned curves |
+| Scroll the legend | Browse the remaining entries without shrinking the plot to fit every label |
+
+![Aligned disk-throughput legend with explicit visibility and isolate controls](@site/static/img/3.1.0/mpack-store/legend-controls.jpg)
+
+Hidden entries have a crossed-out label and hidden-state icon. The counter shows displayed versus returned series; an all-hidden state has an explicit message. Colors and visibility follow the metric labels and query-target identity across refresh or reordering. In an isolated view, newly arriving series remain hidden. If the selected series leaves the result, use **Show all** to inspect the others.
+
+These controls affect presentation only. Collection and storage continue. Starting a different query resets that chart's visibility context.
+
+### Move From A Chart To Explorer {#chart-to-explorer}
+
+Open the panel menu and choose **View query**. Explorer receives the resolved query, datasource, cluster route, and time range. Review them and run the query explicitly.
+
+Explorer distinguishes not-yet-run, loading, successful results, no matching series, and query failure. Cancel stops the in-flight request, and a late response from a superseded context must not replace the current result. Editing inputs marks existing results as belonging to the previous query until another query completes.
+
+Use the chart/data view controls to inspect results. Recent query history is scoped by user and persistent cluster identity. A browser storage failure does not prevent querying. Keyboard users can run with Ctrl/Command + Enter.
+
+### Inspect Targets And Datasources {#inspect-targets-and-datasources}
+
+Targets supports filtering by host, component or endpoint, a needs-attention filter, and a detail drawer. From a target's details, **View query** carries its exact labels into Explorer.
+
+For the managed VictoriaMetrics datasource, the view combines Ambari service discovery with stored scrape success, sample timestamp, and duration observations. It does not ask the storage node to report a separate VMAGENT's targets. Missing, conflicting, foreign, or older-than-five-minute observations are not shown as healthy; without a reliable recent observation, the state is unknown. An explicit failed scrape differs from an unknown state.
+
+Other datasources retain their native target-metadata behavior. An unsupported metadata endpoint produces an explicit capability message; it must not be treated as an empty successful catalog.
+
+Datasource details show scope, endpoint and whether authentication is configured. **Enabled** is a configuration setting, not a connectivity-test result. Check the query path, discovery/collection, and service-specific metric coverage separately.
+
 ## API Examples {#api-examples}
 
 The query endpoint below is relative to Ambari's normal `/api/v1` base. Use a datasource ID from the datasource list, not a dashboard ID. Keep the query URL-encoded:

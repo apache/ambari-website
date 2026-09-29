@@ -77,6 +77,14 @@ Python 依赖打包采用哈希锁定的构件，明确选择平台和 ABI，检
 
 构建命令与产物检查见 [RPM 打包](./platform/rpm-packaging.md)，完整构建环境见[从源码构建](./ambari-dev/building-from-source.md)。
 
+## 运行时商店与控制台预览 {#runtime-store-and-console-preview}
+
+单独记录的 AMBARI-26663 开发后续版本增加了整体导入商店、按服务和提供方选择、限定定义维护范围、完整配置文档以及可恢复的管理包操作。导入 bundle 只登记定义，软件安装仍通过正常向导完成。
+
+主控制台还增加了浅色、暗色和跟随系统外观，带原集群页面返回能力的全局导航，聚合的包版本，紧凑主机告警链接，以及明确的监控图例控件。这些功能需要[匹配的开发快照](./release-baseline.md#runtime-mpack-follow-up)。
+
+操作步骤和边界见[管理包商店](./management-packs/overview.md)、[完整配置文件](./management-packs/content-configuration.md)及[工作区导航与外观](./frontend/workspace-and-appearance.md)。本条目不表示发布了在线市场、ASF 二进制商店、自动软件升级或参考服务包的 HA 支持。
+
 ## 社区改进 {#selected-community-changes}
 
 ### 集群操作与配置 {#cluster-operations}

@@ -41,6 +41,10 @@ Ambari 将 Stack 默认值、集群期望配置、匹配的配置组覆盖以及
 
 依赖更新仅限于已更改属性。recommendations 请求接收更改配置列表，并仅返回受影响的依赖项。无效元数据、不支持的小部件定义或超出声明约束的值必须在保存前修正。
 
+## 完整原生配置文档 {#complete-native-documents}
+
+运行时 mpack 后续版本使用 `content` 属性管理十项参考服务的完整原生文件，包括 PostgreSQL 和 Nginx。配置文件与基本设置的职责不同：应用文档与受管理的身份、路径、凭据和监听输入共同存在。迁移、配置组继承、校验与恢复边界见[编辑完整配置文件](../../management-packs/content-configuration.md)。
+
 ## 保存和重新加载 {#save-and-reload}
 
 Ambari 通过常规配置 API 保存最终配置。主题或 Stack 定义更改后必须重启 Ambari Server 才能重新加载元数据。3.1 保留主题；已移除的旧监控小部件模型与这些配置表单控件无关。

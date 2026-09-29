@@ -24,6 +24,7 @@ limitations under the License.
 
 | 领域 | 3.1.0 变更 | 指南 |
 | --- | --- | --- |
+| 管理包商店预览 | 在匹配的开发构建中整体导入商店、选择服务、编辑原生配置内容并恢复定义操作 | [Mpack 商店概览](./management-packs/overview.md) |
 | 监控 | 使用兼容 Prometheus 的采集、VMAGENT、VictoriaMetrics 和原生 React 监控替换 AMS | [架构比较](./monitoring/architecture-comparison.md) |
 | 用户界面 | 将 React 作为从 Ember 延续而来的运维和管理工作流的主要体验 | [React 用户界面](./frontend/react-ui.md) |
 | Java | 统一 JDK 17/Maven 3.9 基线、受管理的框架依赖以及独立的 Ambari/Stack JDK 选择 | [Java 依赖](./platform/java-dependencies.md) |

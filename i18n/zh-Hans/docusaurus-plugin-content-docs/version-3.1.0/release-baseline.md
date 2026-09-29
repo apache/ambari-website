@@ -73,6 +73,25 @@ React 对等基线区分实现、静态比较和运行时验证。较早的审�
 
 指南区分最终独立集群包验收与早期带覆盖补丁的托管 HBase 部署证据，并说明真实 KDC、解绑与数据保留、故障注入及消息代理撤权等剩余门禁。[运维指南](./multi-cluster/operations.md#upgrade-and-acceptance-work)列出了发布最终支持声明前仍需补齐的证据。
 
+## 运行时 Mpack 与控制台后续版本 {#runtime-mpack-follow-up}
+
+运行时商店指南增加了单独标识的开发后续版本，检查日期为 2026-09-29：
+
+| 输入 | 检查的快照 |
+| --- | --- |
+| Ambari 实现 | 分支 `AMBARI-26663`，提交 `3a71190847503b033036833d1d49ba0ce325ca41` |
+| 独立参考商店 | 提交 `c10a271`，准确的定义版本由 `release.json` 选择 |
+| 参考部署范围 | Rocky Linux 8/aarch64、systemd、基础非 HA 服务 |
+| 控制台验收范围 | 桌面环境，覆盖服务聚合选择、完整内容编辑、外观导航和监控交互 |
+
+这些实现快照是在开发检出中检查的，不代表新发布的 Apache 源码标签、可下载的 ASF 二进制发行版，也不能证明每个 3.1 构建都已经包含它们。应取得配套供应的构建和商店，并在使用流程前检查发布的清单与 API 能力。
+
+证据输入包括核心检出中的 `docs/mpack/http-api.md`、`docs/mpack/corrective-implementation.md` 和 `docs/frontend-refactor/react-current`，以及商店的 `release.json`、各服务 README、`docs/content-configuration.md` 和 `docs/content-configuration-acceptance.md`。较晚的完整配置验收记录替代了较早的定义版本示例和不可安装的 MinIO 草稿。
+
+该快照包含十项所选服务的基础运行检查及针对性的配置失败恢复检查，不等于通用高可用、多平台、所有角色、数据迁移或生产负载认证。网站构建和浏览器测试只验证文档行为。
+
+建议先阅读[商店概览](./management-packs/overview.md)、[服务矩阵](./management-packs/service-catalog.md)和[工作区指南](./frontend/workspace-and-appearance.md)。
+
 ## 发布版本前 {#before-publishing-a-release}
 
 选定发布候选版本后更新此基线。记录最终源代码标签、签名构件/校验和位置、软件包目标矩阵、支持的升级路径、测试结果和发布投票结果。完成这些工作后，才能将预览标记替换为已发布版本。
