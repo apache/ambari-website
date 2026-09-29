@@ -73,6 +73,25 @@ The [multi-cluster guides](./multi-cluster/architecture.md) use the newer pinned
 
 The guides distinguish final packaged independent-cluster evidence from the earlier managed-HBase deployment with overlays. They also document the remaining real-KDC, detach/data-retention, fault-injection and broker-revocation gates. The [operations guide](./multi-cluster/operations.md#upgrade-and-acceptance-work) lists the evidence still needed before publishing final support claims.
 
+## Runtime Mpack And Console Follow-up {#runtime-mpack-follow-up}
+
+The runtime-store guides add a separately identified development follow-up reviewed on 2026-09-29:
+
+| Input | Reviewed snapshot |
+| --- | --- |
+| Ambari implementation | Branch `AMBARI-26663`, commit `3a71190847503b033036833d1d49ba0ce325ca41` |
+| Independent reference store | Commit `c10a271`; exact definition versions selected by `release.json` |
+| Reference deployment scope | Rocky Linux 8/aarch64, systemd, basic non-HA services |
+| Console acceptance scope | Desktop; grouped service selection, content editors, appearance/navigation and monitoring interactions |
+
+The implementation snapshots were reviewed in development checkouts. They are not presented as newly published Apache source tags, downloadable ASF binary releases, or proof that every 3.1 build contains these changes. Obtain a build and store supplied together, and inspect the published manifest/API capabilities before using the workflow.
+
+Evidence inputs include the core checkout's `docs/mpack/http-api.md`, `docs/mpack/corrective-implementation.md` and `docs/frontend-refactor/react-current`, plus the store's `release.json`, service READMEs, `docs/content-configuration.md` and `docs/content-configuration-acceptance.md`. The later content-configuration acceptance supersedes earlier definition-version examples and the old non-installable MinIO draft.
+
+The snapshot has basic runtime checks for the ten selected services and targeted configuration failure/recovery checks. It does not establish general HA, multi-platform, all-role, data-migration, or production-load certification. Website build/browser tests establish documentation behavior only.
+
+Start with the [store overview](./management-packs/overview.md), [service matrix](./management-packs/service-catalog.md), and [workspace guide](./frontend/workspace-and-appearance.md).
+
 ## Before Publishing A Release {#before-publishing-a-release}
 
 Update this baseline after the release candidate is selected. Record final source tags, signed artifact/checksum locations, package target matrix, supported upgrade paths, test results, and the release vote outcome. Only then replace the preview designation with the released version.

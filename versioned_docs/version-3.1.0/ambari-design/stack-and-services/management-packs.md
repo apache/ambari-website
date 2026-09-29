@@ -21,6 +21,12 @@ limitations under the License.
 
 # Management Packs {#management-packs}
 
+:::info Runtime store or legacy installation
+For whole-store import, service selection, complete configuration files, and durable operation recovery, use the [runtime mpack store guides](../../management-packs/overview.md). They describe the AMBARI-26663 development follow-up.
+
+The command-line workflow below describes the older setup-time mechanism at its pinned source revision. Its staging/restart behavior must not be assumed for every runtime store operation. Use the manifest and tooling expected by the chosen mechanism; sharing the name `mpack.json` does not establish archive compatibility.
+:::
+
 An Ambari management pack is an archive of stack, service, extension, or view artifacts plus `mpack.json` metadata. The Server `setupMpacks.py` implementation expands the archive, reads its metadata, validates prerequisites, stages the pack, and creates the resources used by the stack loader.
 
 ## Metadata {#metadata}

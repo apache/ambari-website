@@ -38,6 +38,19 @@
     },
     {
       "type": "category",
+      "label": "Management Pack Store",
+      "collapsed": false,
+      "items": [
+        "management-packs/overview",
+        "management-packs/store-guide",
+        "management-packs/service-catalog",
+        "management-packs/content-configuration",
+        "management-packs/authoring-and-bundling",
+        "management-packs/operations-and-recovery"
+      ]
+    },
+    {
+      "type": "category",
       "label": "Monitoring",
       "collapsed": false,
       "items": [
@@ -141,6 +154,7 @@
       ]
     },
     "frontend/react-ui",
+    "frontend/workspace-and-appearance",
     "frontend/customizing-react-ui",
     {
       "type": "category",

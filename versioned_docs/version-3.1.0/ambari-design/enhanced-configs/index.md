@@ -41,6 +41,10 @@ The effective form combines Stack defaults, service configuration metadata, the 
 
 Dependency updates are scoped to changed properties. The recommendations request receives the changed configuration list and returns only affected dependencies. Invalid metadata, unsupported widget definitions, or values outside declared constraints must be corrected before saving.
 
+## Complete Native Documents {#complete-native-documents}
+
+The runtime mpack follow-up uses `content` properties to manage complete native files for ten reference services, including PostgreSQL and Nginx. Configuration Files and Basic Settings have different responsibilities: application documents coexist with managed identities, paths, credentials and listener inputs. See [Edit Complete Configuration Files](../../management-packs/content-configuration.md) for migration, configuration-group inheritance, validation and recovery boundaries.
+
 ## Save And Reload {#save-and-reload}
 
 Ambari saves the resulting configuration through its normal configuration APIs. Changes to a theme or Stack definition require restarting Ambari Server so the metadata is reloaded. Themes are retained in 3.1; the removed legacy monitoring widget model is unrelated to these configuration-form controls.

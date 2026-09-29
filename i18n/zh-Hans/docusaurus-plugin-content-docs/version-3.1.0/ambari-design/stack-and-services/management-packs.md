@@ -21,6 +21,12 @@ limitations under the License.
 
 # 管理包 {#management-packs}
 
+:::info 运行时商店与旧版安装
+整体导入商店、选择服务、管理完整配置以及恢复持久化操作，请阅读[运行时 mpack 商店指南](../../management-packs/overview.md)。该指南描述 AMBARI-26663 开发后续实现。
+
+下方命令行流程介绍固定源码修订中的旧式安装阶段机制，不能把它的暂存、重启行为推广到所有运行时商店操作。应使用所选机制要求的清单和工具，同样叫作 `mpack.json` 不代表归档相互兼容。
+:::
+
 Ambari 管理包是包含堆栈、服务、扩展或视图制品以及 `mpack.json` 元数据的归档。Server 的 `setupMpacks.py` 会展开归档、读取元数据、验证前置条件、暂存管理包，并创建堆栈加载器使用的资源。
 
 ## 元数据 {#metadata}

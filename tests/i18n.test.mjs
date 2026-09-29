@@ -119,6 +119,10 @@ test('3.1.0 retains current general documentation without obsolete tutorial rout
     'platform/java-dependencies', 'platform/python-runtime',
     'platform/rpm-packaging', 'frontend/react-ui',
     'frontend/customizing-react-ui',
+    'frontend/workspace-and-appearance',
+    'management-packs/overview', 'management-packs/store-guide',
+    'management-packs/service-catalog', 'management-packs/content-configuration',
+    'management-packs/authoring-and-bundling', 'management-packs/operations-and-recovery',
     'multi-cluster/architecture', 'multi-cluster/getting-started',
     'multi-cluster/managed-dependencies', 'multi-cluster/operations',
     'quick-start/installation-guide', 'quick-start/download',
@@ -130,7 +134,7 @@ test('3.1.0 retains current general documentation without obsolete tutorial rout
     'ambari-dev/running-tests', 'ambari-plugin-contribution/index',
   ];
   for (const id of required) assert.ok(ids.includes(id), `Missing supported documentation: ${id}`);
-  assert.equal(ids.length, 77);
+  assert.equal(ids.length, 84);
   assert.equal(new Set(ids).size, ids.length);
   assert.ok(!ids.some(id => id.startsWith('ambari-design/metrics/') || id.startsWith('ambari-plugin-contribution/scom/')));
   assert.ok(!ids.includes('ambari-plugin-contribution/step-by-step'));

@@ -87,6 +87,12 @@ React 在 `/main/monitoring` 提供原生 Prometheus 兼容监控区域，包括
 
 旧版独立 Heatmaps 页面会重定向到 `/main/dashboard/metrics`。这是明确的替换边界：React 不提供 AMS 或 Ganglia 兼容路径，因此旧 Heatmaps 页面及 AMS/Ganglia 行为不属于尚待补齐的 React 功能。
 
+## 工作区导航与外观 {#workspace-navigation-and-appearance}
+
+AMBARI-26663 开发后续版本增加了按服务聚合的管理包选择、醒目的全局导航、返回原集群页面、持久化的浅色/暗色/跟随系统外观、紧凑主机告警链接，以及更清晰的监控交互。这些能力需要对应实现，不能仅凭较早的 React 基线认定已经提供。
+
+可见入口和状态边界见[工作区导航与外观](./workspace-and-appearance.md)，导入并部署所选服务的步骤见[商店使用流程](../management-packs/store-guide.md)。
+
 ## 构建和部署 {#build-and-deployment}
 
 Maven 的 `ambari-web` 模块使用配置的 Node/npm 工具链，从 `ambari-web/latest` 构建主要 React 应用并写入 `latest/dist`；Maven 会将该输出复制到服务器 Web UI 构件中。独立的 `ambari-admin` 模块从 `src/main/resources/ui/ambari-admin` 构建 Admin React 应用，并将输出打包到 `classes/latest`。

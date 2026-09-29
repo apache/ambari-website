@@ -70,10 +70,13 @@ Translation preserves the source's technical content, including historical
 instructions and illustrative code; it is not a technical modernization of
 those guides.
 
-The separate 3.1.0 preview contains 71 paired English/Chinese guides based on
+The separate 3.1.0 preview contains 84 paired English/Chinese guides based on
 the 3.1 implementation. It retains current installation, development,
 Blueprint, Kerberos, Stack/service, View, configuration, and alert topics
 alongside monitoring, runtime/package changes, React, and upgrade planning.
+It also includes the explicitly identified AMBARI-26663 runtime mpack store
+follow-up: import/deployment, service prerequisites, complete configuration
+content, package authoring, recovery, console appearance, and navigation.
 The old unversioned `docs/` tree is not published as `Next`; obsolete AMS,
 Ganglia, SCOM, and Ember widget tutorials are not carried into 3.1.
 Old `/docs/next/` links redirect to the corresponding 3.1 guides, retaining
