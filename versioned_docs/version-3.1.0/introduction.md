@@ -24,7 +24,7 @@ limitations under the License.
 
 | Area | Change in 3.1.0 | Guide |
 | --- | --- | --- |
-| Management pack store preview | Import a complete store, select services, edit native configuration content, and recover definition operations in a matching development build | [Mpack store overview](./management-packs/overview.md) |
+| Service Store preview | Import a bundle, choose the services you need, and use Ambari to install them and edit their configuration | [Service Store](./management-packs/overview.md) |
 | Monitoring | Replace AMS with Prometheus-compatible collection, VMAGENT, VictoriaMetrics, and native React monitoring | [Architecture comparison](./monitoring/architecture-comparison.md) |
 | User interface | Make React the primary experience for the operational and administrative workflows carried forward from Ember | [React user interface](./frontend/react-ui.md) |
 | Java | Consolidate the JDK 17/Maven 3.9 baseline, managed framework dependencies, and separate Ambari/Stack JDK selection | [Java dependencies](./platform/java-dependencies.md) |

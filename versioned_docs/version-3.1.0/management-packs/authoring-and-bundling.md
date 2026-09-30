@@ -1,5 +1,5 @@
 ---
-title: Author And Bundle Management Packs
+title: Developer Guide - API And Service Integration
 ---
 
 <!--
@@ -19,9 +19,124 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Author And Bundle Management Packs {#author-and-bundle}
+# Developer Guide - API And Service Integration {#author-and-bundle}
 
-This guide targets maintainers of the [runtime store preview](./overview.md). Use tooling and schemas from the same implementation as the destination Server. The reference repository is maintained separately from Ambari core and can be distributed as source or a reviewed bundle.
+This article is for developers automating the [service store](./overview.md) or adding a service to it. For ordinary installation, use the console walkthrough. The first half describes HTTP calls; the second covers the packaging tool. See [how the store works](./implementation.md) for the design behind these calls.
+
+## API Basics {#api-basics}
+
+Adding your first service? Start with [the step-by-step tutorial](./add-service-tutorial.md), which includes complete downloadable scripts and a UI acceptance walkthrough.
+
+All paths below are relative to `/api/v1`. Use an authenticated Ambari administrator with `AMBARI.MANAGE_STACK_VERSIONS`. Supply the normal Ambari authentication and `X-Requested-By` header for writes; inject credentials through your client's secret mechanism.
+
+JSON responses use integer `schema_version: 1`; collection responses contain `items`. Check the capability endpoint first and use the schema from the same Server build. These are the development APIs identified in the [source baseline](../release-baseline.md#runtime-mpack-follow-up), not a promise that an older Ambari release supports them.
+
+## Available Endpoints {#api-endpoints}
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/mpack_capabilities` | Discover supported actions, target environments, and Agent requirements |
+| GET | `/mpack_capabilities/manifest_schema` | Obtain the package manifest schema |
+| POST | `/mpack_uploads` | Upload and inspect an archive; does not install it |
+| POST | `/mpack_plans` | Preview a package import, update, binding change, or removal |
+| GET | `/mpack_plans/{id}` | Read a saved plan |
+| GET | `/mpack_services` | List service choices, unavailable reasons, and destinations |
+| POST | `/mpack_service_plans` | Preview a selection of services for a destination |
+| POST | `/mpack_operations` | Submit a saved plan for execution |
+| GET | `/mpack_operations` | List operations |
+| GET | `/mpack_operations/{id}` | Read progress and structured results |
+| GET | `/mpack_operations/{id}/members` | Read the results for bundle members |
+| GET | `/mpack_operations/{id}/deployment` | Obtain the verified installation-wizard handoff |
+| POST | `/mpack_operations/{id}/recover` | Reconcile the result of interrupted work |
+| POST | `/mpack_operations/{id}/retry` | Retry a failed action when the Server allows it |
+| POST | `/mpack_operations/{id}/cancel` | Cancel when its effects make cancellation safe |
+| GET | `/mpacks` | List package releases |
+| GET | `/mpacks/{name}/versions/{version}` | Read one exact package release |
+| GET | `/mpacks/{name}/versions/{version}/usages` | Find what still uses a release |
+| GET | `/mpack_bindings` | Read which package definitions are currently connected to each environment |
+
+## Example Flow: Import, Select, Install {#api-walkthrough}
+
+**Upload.** Send the compressed bytes to the upload endpoint with `Content-Type: application/octet-stream`. The optional `X-Content-SHA256` header must match the archive. The default limits are 256 MiB compressed, 1 GiB expanded, and 100,000 entries.
+
+**Preview the import.** Collect every member's archive digest from the bundle inspection and submit this shape to the plan endpoint. Replace the sample digest with the real values, including all members:
+
+~~~json
+{
+  "schema_version": 1,
+  "action": "IMPORT",
+  "archive_digests": ["<member-archive-sha256>"],
+  "release_ids": [],
+  "bindings": [],
+  "activate": false,
+  "maintenance": false
+}
+~~~
+
+Plan requests use `Content-Type: application/json`. All mutation fields are required; unknown fields and duplicate JSON keys are rejected. Keep the returned plan's `id` and `digest`. Previewing does not execute the operation.
+
+**Submit the saved plan.** Persist a fresh `Idempotency-Key` with that plan before sending it to the operation endpoint:
+
+~~~json
+{
+  "schema_version": 1,
+  "plan_id": "<returned-plan-id>"
+}
+~~~
+
+HTTP 202 means accepted, not finished. Poll the operation returned in the response. A plan expires after one hour; changed catalog or environment inputs can also make it stale.
+
+If the submission response is lost, resend the same plan and key using the same account. That returns the original operation. Do not generate a new key merely because a request timed out.
+
+**Select services.** Once the import succeeds, read the service catalog and use the exact IDs it returns. Submit this shape to the service-plan endpoint:
+
+~~~json
+{
+  "schema_version": 1,
+  "service_ids": ["<catalog-service-id>"],
+  "cluster_id": null,
+  "maintenance": false
+}
+~~~
+
+Use `null` for a new cluster or the existing cluster's numeric ID. Review the returned destination and service selection, then submit this new plan with its own key and wait for completion.
+
+**Continue installation.** After `SUCCEEDED`, request the operation's deployment handoff. It rechecks the selected definitions and supplies the destination for Create Cluster or Add Services. Host assignments, configuration, and installation still happen through the ordinary Ambari deployment workflow.
+
+When consuming progress, verify `id`, `plan_id`, `plan_digest`, and `generation`, together with the effective result. A log line or a successful HTTP request is not enough to establish completed installation.
+
+## Errors And Recovery {#operation-recovery-api}
+
+Errors contain `error.code`, a diagnostic message, and structured details. Branch on the code, not on translated text.
+
+| Result | What the client should do |
+| --- | --- |
+| HTTP 403 / `FORBIDDEN` | Use an account with the required authorization |
+| HTTP 413 / `UPLOAD_LIMIT` | Check the archive and configured limits |
+| HTTP 409 / `STALE_PLAN` | After definite rejection, obtain a new preview |
+| HTTP 409 / `IDEMPOTENCY_CONFLICT` | Check that the saved key and request match; do not silently replace the key |
+| HTTP 409 / `RESOURCE_IN_USE` | Inspect usage references before removal |
+| HTTP 409 / `OPERATION_CONFLICT` | Resolve or wait for the conflicting operation |
+| HTTP 503 / `STORAGE_FAILURE` | Diagnose storage and establish the previous operation's state before resubmitting |
+
+Recovery checks recorded results. Retry is restricted to eligible failed, idempotent hooks with a confirmed no-effect result. Cancellation can be refused if effects were applied or remain uncertain. Unknown results must remain unresolved rather than being treated as success.
+
+The matching CLI also exposes these actions. First inspect the operation:
+
+~~~shell
+ambari-mpack --json operations show "$OPERATION_ID"
+ambari-mpack --json operations members "$OPERATION_ID"
+~~~
+
+Then choose the appropriate action below. These are alternatives, not commands to run one after another:
+
+~~~shell
+ambari-mpack --json operations recover "$OPERATION_ID"
+ambari-mpack --json operations retry "$OPERATION_ID"
+ambari-mpack --json operations cancel "$OPERATION_ID"
+~~~
+
+The implementation contract is in the matching Ambari checkout's `docs/mpack/http-api.md`. Endpoint handling is in `MpackLifecycleApiService`; state and validation are defined by `MpackLifecycleState`, `MpackLifecycleService`, and `MpackExceptionMapper`.
 
 ## Install The Matching Tool {#matching-tool}
 

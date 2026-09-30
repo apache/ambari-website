@@ -1,5 +1,5 @@
 ---
-title: Mpack Operations And Recovery
+title: Common Problems And Updates
 ---
 
 <!--
@@ -19,110 +19,76 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Mpack Operations And Recovery {#mpack-operations-recovery}
+# Common Problems And Updates {#mpack-operations-recovery}
 
-Use the package **Activity** page to follow definition changes, and Ambari's normal request/task views to follow host installation and service operations. These records have different identities and completion conditions.
+First check where the problem happened. A store action and a service installation are shown in different places.
 
-The guidance below applies to the [runtime preview](./overview.md), not to manually editing Server resource directories or database rows.
+## Where Should I Look? {#operation-phases}
 
-## Interpret Operation Phases {#operation-phases}
-
-| Phase | Meaning and next step |
+| What you were doing | Where to check |
 | --- | --- |
-| `ACCEPTED` | The durable submission exists; wait for processing |
-| `PREPARING` | Candidate resources and prerequisites are being prepared |
-| `WAITING_MAINTENANCE` | Inspect affected scope, blockers, and the required maintenance action |
-| `WAITING_RESTART` | A real Server restart is required; follow the operation's restart procedure |
-| `PUBLISHING` | The verified definition view is being published |
-| `SUCCEEDED` | Verify the operation identity and effective result before using a deployment handoff |
-| `FAILED` | Inspect the exact error and receipts; determine whether a new plan or eligible retry is appropriate |
-| `RECOVERY_REQUIRED` | Outcome is unresolved; reconcile existing receipts before deciding what to do |
-| `CANCELLING` | Cancellation is being reconciled; it is not complete yet |
-| `CANCELLED` | Cancellation completed under the Server's validated policy |
+| Importing a bundle or preparing selected services | **Activity** on the store page |
+| Installing or starting a service on a host | The cluster's installation or background task details |
+| Applying a configuration change | The service's configuration history and restart/reload task |
+| Checking whether the service works | Its service-check task |
 
-An HTTP 202 means accepted, not completed. Do not turn a timeout, missing response, log message, or unknown state into assumed success.
+“Import completed” means the services can be selected. It does not mean they are installed. Installation and startup must finish separately.
 
-## Preserve Identity After A Disconnect {#preserve-identity}
+## I Closed The Page Or Lost The Connection {#preserve-identity}
 
-Retain the exact `plan_id`, `plan_digest` and idempotency key before submitting. Once available, retain `operation_id` and `generation` as well. The browser keeps a pending submission checkpoint under the current account and offers reconciliation when acceptance is uncertain.
+Open the store again and check **Activity** for the action you started. If the page offers to check the previous submission, use that first.
 
-Replaying the same user/plan/key returns the original operation. Creating another key or plan after a lost response may create different work; first resolve the original acceptance. A definitively rejected stale plan can be previewed again.
+A network error does not necessarily mean the Server stopped. Avoid repeatedly clicking Submit or importing the same file while you are unsure of the result.
 
-Shared operation history and another account's local checkpoint are different things. Do not copy a different user's browser checkpoint or credentials to force recovery.
+For a host installation, return to the cluster's task list. Do not start another store import just because the installation page was closed.
 
-## Inspect Through The CLI {#inspect-cli}
+## The Page Says It Is Waiting {#recovery-actions}
 
-Use the matching CLI described in [authoring and bundling](./authoring-and-bundling.md#cli-import). Substitute the actual recorded operation ID:
+If it is waiting for other tasks, open the details and see which tasks are still running. Wait for them to finish or ask the cluster administrator to handle them.
 
-~~~shell
-ambari-mpack --json operations list
-ambari-mpack --json operations show "$OPERATION_ID"
-ambari-mpack --json operations members "$OPERATION_ID"
-~~~
+If maintenance is required, check the affected clusters before agreeing. If a Server restart is explicitly required, arrange it with the administrator and return to the original action afterward to check its result.
 
-Inspect the phase, error code, affected scope, member identities, and hook receipts. Diagnostic messages explain problems, but automation must use the structured fields and exact identifiers.
+Retry, cancel, and recovery are not interchangeable. Use the action offered for the current problem; some actions are unavailable once changes have already taken effect. Do not delete Server files to force an action to disappear.
 
-## Reconcile, Retry, And Cancel {#recovery-actions}
+## Can Other People Keep Using Ambari? {#scoped-maintenance}
 
-**Reconcile** asks the Server to establish what already happened. It does not blindly execute a hook again:
+Usually, yes. A package change restricts the services and settings it affects while the change is in progress. Unrelated ordinary writes and tasks can continue.
 
-~~~shell
-ambari-mpack --json operations recover "$OPERATION_ID"
-~~~
+Several clusters can share the same service setup. If an update affects them, the page lists that scope. It is not a separate private copy for every cluster.
 
-**Retry** is for eligible failed hooks with an authoritative no-effect observation and supported idempotent behavior:
+## Does Updating A Package Upgrade My Software? {#different-change-types}
 
-~~~shell
-ambari-mpack --json operations retry "$OPERATION_ID"
-~~~
+No. The service package contains instructions that tell Ambari how to install and manage a service.
 
-**Cancel** is subject to the retained effects and current operation state:
+| What you do | What it means |
+| --- | --- |
+| Import a newer bundle | Add package versions to the store |
+| Select and apply a newer package | Change the instructions Ambari uses to manage the service |
+| Edit and save a configuration | Save a configuration version; apply the required reload or restart afterward |
+| Upgrade the application itself | A separate service-specific procedure, including any database migration |
+| Remove a package | Subject to usage checks; not a request to delete host software or business data |
 
-~~~shell
-ambari-mpack --json operations cancel "$OPERATION_ID"
-~~~
+For example, importing a newer Kyuubi package does not automatically replace the Kyuubi software on your hosts.
 
-Choose the action appropriate to the observed state; these commands are alternatives, not a recovery script to run in sequence. Applied or uncertain effects can prevent cancellation or retry. Completed effects are not replayed. An interrupted cancellation resumes cancellation rather than restarting the original install/update.
+Before a package update, read its change notes and affected-cluster list. Preserve your current configuration and back up application data as appropriate. Do not assume that switching a package back will reverse a database migration.
 
-## Scoped Maintenance And Concurrency {#scoped-maintenance}
+## Common Questions {#troubleshooting}
 
-Long preparation, verification, and hook subprocess work is outside the exclusive publication lock. A coordinator protects the final view switch and persistence. Reservations block affected definition consumers and relevant service/configuration/topology mutations.
+| Problem | What to do next |
+| --- | --- |
+| I cannot find the store entry | Sign in as an Ambari administrator and confirm the build includes this feature. The current menu is **Management Packs** |
+| Import succeeded, but nothing is installed | Return to the catalog, select services and a destination, then finish the installation wizard |
+| A service card is disabled | Read its reason. Change the selected services or destination to a compatible combination |
+| The page says the previous preview is out of date | Once the previous submission is confirmed rejected, review the current selection and generate a new preview |
+| Installation fails on one host | Open that task. Check the software download, Java/Python version, database connection, disk space, and permissions it reports |
+| Saving configuration succeeded, but behavior did not change | Check whether the required restart or reload finished |
+| A package cannot be removed | Check which services or clusters still use it; do not bypass the check by deleting files |
+| A service is running, but charts have no data | Check the [monitoring setup and time range](../monitoring/queries-and-dashboards.md#workspace-interactions); installation alone does not add every service's metrics |
 
-Unrelated ordinary writes and tasks can continue. This does not mean all package publications run concurrently or that two conflicting changes can operate on the same definition. A shared Stack/version can affect multiple clusters.
+## What Should I Send When Asking For Help? {#report-evidence}
 
-Blocking tasks are identified by their cluster, request, task, and authoritative status. Existing tasks retain their compatible resource references. Active Stack upgrades or unsupported in-use component-model changes can reject the plan. Restarting Server is not a replacement for an unimplemented component migration.
+Include the service name, Ambari version, package version, what you clicked, and the full error message. For store problems, include the operation ID from its details. For installation or service problems, include the failed host and task ID.
 
-## Definitions, Software, Configuration, And Data {#different-change-types}
+For a configuration issue, include the relevant change and configuration version. Remove passwords, tokens, database secrets, and other credentials from text and screenshots.
 
-| Change | What it changes | Separate work that may still be needed |
-| --- | --- | --- |
-| Import a newer bundle | Register additional definition releases | Explicitly select/activate a version |
-| Update an active definition | Scripts, metadata and managed resource bindings | Host software upgrade or component migration |
-| Save configuration content | Create an Ambari configuration version | Reload/restart and native verification |
-| Retire/uninstall a definition | Remove eligible definition ownership/availability | Explicit service retirement and data policy |
-| Restore application data | Service-specific data state | A validated backup/restore procedure |
-
-Removal may fail because a package, binding, operation, service, or cluster still uses the resources. Old release records can remain for provenance. Do not delete Server directories or rows to bypass a reference check.
-
-The reference packs preserve persistent user data on stop and definition retirement. This is not a universal rollback engine. PostgreSQL's declared backup/restore operations have their own isolated-target and observation rules; do not generalize them to every service.
-
-## Troubleshooting By Symptom {#troubleshooting}
-
-| Symptom | Inspect first | Recovery direction |
-| --- | --- | --- |
-| No Management Packs entry | Current account and administrator authorization | Use an authorized account; a URL does not bypass Server permissions |
-| Import succeeds but no application appears on hosts | Service selection and deployment handoff | Continue through the new-cluster or Add Services wizard |
-| Service is unavailable | Catalog reason and compatible Stack context | Correct dependencies/target definitions and refresh the catalog |
-| Several services cannot be selected together | Exact Stack contexts and destination | Deploy compatible groups separately |
-| Submission response was lost | Saved plan/key and operation record | Reconcile the existing submission |
-| Plan rejected as `STALE_PLAN` | Catalog revision and changed prerequisites | Create a fresh preview after definite rejection |
-| `RESOURCE_IN_USE` on removal | Resource usage references | Resolve actual uses through supported lifecycle actions |
-| `WAITING_RESTART` persists | Real Server restart and subsequent operation observation | Complete the documented restart/reconciliation step |
-| Package succeeds but installation fails | Host request/task and native observations | Repair host prerequisites or configuration; do not re-import blindly |
-| All graphs show no data | Time range, refresh state, datasource and fresh target observations | Follow the [monitoring guide](../monitoring/queries-and-dashboards.md#workspace-interactions) |
-
-## Evidence To Include In A Report {#report-evidence}
-
-Include the Server/Agent build, package name/version/digest, exact plan and operation identities, affected clusters, observed phase/error code, relevant task IDs, software observations, and recovery actions already attempted. For configuration failures, include a redacted diff and configuration-version identity.
-
-Keep passwords, tokens, cookies, database connection secrets and private keys out of reports and screenshots. A package success record, a service task result, and a monitoring query result should each be identified separately.
+Developers automating recovery can find the exact commands and result fields in [API and service integration](./authoring-and-bundling.md#operation-recovery-api).

@@ -25,6 +25,36 @@ const fallbackCount = (document: string) => existsSync(path.resolve(
   'i18n/zh-Hans/docusaurus-plugin-content-docs/version-3.0.0', document,
 )) ? 0 : 1;
 
+test('service tutorial is reachable and supplies the complete example in both languages', async ({page}) => {
+  const archive = readFileSync('static/examples/service-store/hello-store-1.0.0.0.tar.gz');
+  for (const locale of [
+    {prefix: '', link: 'Add a service, step by step', title: 'Add A Service To The Store, Step By Step', download: 'complete example source archive'},
+    {prefix: '/zh-Hans', link: '一步步给商店添加新服务', title: '一步步给商店添加新服务', download: '完整示例源码包'},
+  ]) {
+    await page.goto(`${locale.prefix}/docs/3.1.0/management-packs/overview`);
+    await expect(page.locator('html')).toHaveAttribute('data-has-hydrated', 'true');
+    await page.locator('article').getByRole('link', {name: locale.link, exact: true}).click();
+    await expect(page.locator('article h1')).toHaveText(locale.title);
+    await expect(page.locator('article h2')).toHaveCount(14);
+    await expect(page.locator('article h2').first()).toHaveAttribute('id', 'use-ai');
+    const href = await page.locator('article').getByRole('link', {name: locale.download, exact: true}).getAttribute('href');
+    expect(href).toBe('/examples/service-store/hello-store-1.0.0.0.tar.gz');
+    const response = await page.request.get(href!);
+    expect(response.status()).toBe(200);
+    expect(await response.body()).toEqual(archive);
+    const sources = await page.locator('article a[href$=".py"], article a[href$=".xml"]').evaluateAll(
+      links => links.map(link => link.getAttribute('href')!),
+    );
+    expect(sources).toHaveLength(6);
+    const sourcePaths = ['metainfo.xml', ...['service.py', 'app.py', 'observer.py', 'health.py', 'service_check.py'].map(name => `package/scripts/${name}`)];
+    for (const [index, source] of sources.entries()) {
+      const result = await page.request.get(source);
+      expect(result.status()).toBe(200);
+      expect(await result.body()).toEqual(readFileSync(`static/examples/service-store/hello-store/extensions/HELLO_STORE/1.0/services/HELLO_STORE/${sourcePaths[index]}`));
+    }
+  }
+});
+
 async function switchLocale(page: Page, language: string, isMobile: boolean) {
   await expect(page.locator('html')).toHaveAttribute('data-has-hydrated', 'true');
   if (isMobile) {
@@ -168,7 +198,7 @@ test('3.1 preview routes are bilingual and preserve the stable default', async (
   const data = JSON.parse(readFileSync('.docusaurus/globalData.json', 'utf8'));
   const versions = data['docusaurus-plugin-content-docs'].default.versions;
   const preview = versions.find(item => item.name === '3.1.0');
-  expect(preview.docs).toHaveLength(84);
+  expect(preview.docs).toHaveLength(86);
   expect(preview.isLast).toBe(false);
   expect(versions.find(item => item.name === '3.0.0').isLast).toBe(true);
   expect(versions.some(item => item.name === 'current')).toBe(false);
