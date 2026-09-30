@@ -70,13 +70,15 @@ Translation preserves the source's technical content, including historical
 instructions and illustrative code; it is not a technical modernization of
 those guides.
 
-The separate 3.1.0 preview contains 84 paired English/Chinese guides based on
+The separate 3.1.0 preview contains 86 paired English/Chinese guides based on
 the 3.1 implementation. It retains current installation, development,
 Blueprint, Kerberos, Stack/service, View, configuration, and alert topics
 alongside monitoring, runtime/package changes, React, and upgrade planning.
-It also includes the explicitly identified AMBARI-26663 runtime mpack store
-follow-up: import/deployment, service prerequisites, complete configuration
-content, package authoring, recovery, console appearance, and navigation.
+It also includes the explicitly identified AMBARI-26663 Service Store
+follow-up: practical installation, service preparation, configuration editing,
+troubleshooting, a step-by-step service tutorial with downloadable example code,
+and two developer guides covering APIs, package authoring,
+and implementation. Console appearance and navigation are documented separately.
 The old unversioned `docs/` tree is not published as `Next`; obsolete AMS,
 Ganglia, SCOM, and Ember widget tutorials are not carried into 3.1.
 Old `/docs/next/` links redirect to the corresponding 3.1 guides, retaining
@@ -117,6 +119,7 @@ For the preview, use `node scripts/sync-translation-anchors.mjs --version 3.1.0`
 ```bash
 yarn test:i18n
 yarn test:deployment
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/examples -p 'test_*.py'
 yarn typecheck
 yarn build
 yarn playwright install chromium
@@ -133,6 +136,14 @@ to an installed Chrome executable. Screenshots and traces are in the ignored
 Static hosts may serve the default English 404 page even for a missing Chinese
 URL. Its home link and language menu provide recovery; language-specific HTTP
 error documents require host configuration.
+
+The service tutorial tests require Python 3.10 or later and use only its standard
+library. They check local HTTP behavior, observation validation, descriptor paths,
+and the downloadable archive's equality with its source. They do not install a
+service or validate systemd behavior on a cluster. After changing the example,
+use the matching Ambari CLI to build `static/examples/service-store/hello-store`
+into a fresh temporary output directory, then replace the published archive in
+`static/examples/service-store/` with that build. Run the tests before committing.
 
 ## Git And Publication
 

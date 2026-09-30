@@ -1,5 +1,5 @@
 ---
-title: Edit Complete Configuration Files
+title: Edit Configuration Files
 ---
 
 <!--
@@ -19,62 +19,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Edit Complete Configuration Files {#edit-complete-configuration-files}
+# Edit Configuration Files {#edit-complete-configuration-files}
 
-The reference service packs prefer complete native documents in `content` properties. This makes it possible to retain application options, comments, and new upstream settings without waiting for a separate form field for every setting. Read the [preview scope](./overview.md) before applying this workflow to an older installation.
+You can edit a service's configuration files in Ambari, including options that do not have a separate form field. For example, edit Nginx's configuration as a whole file, or add a Kyuubi setting without waiting for a new input box.
 
-## Configuration Files And Basic Settings {#files-and-basic-settings}
+## Where Do I Edit Them? {#files-and-basic-settings}
 
-Open the service's **Configs** page. **Configuration Files** is the default view for these packs. **Basic Settings** retains installation inputs, management identities, listener settings, credentials, and management-operation parameters. An empty Advanced tab is not shown merely to provide another tab.
+Open the service, then **Configs → Configuration Files**. Choose the file you want to change and edit its text. Use **Basic Settings** for items such as installation paths, connection details, and passwords.
 
-| Service | Documents exposed by the reference pack |
+![Editing Doris configuration files in Ambari](@site/static/img/3.1.0/mpack-store/configuration-files-dark.jpg)
+
+The editor is a multiline text field. It does not check every setting supported by every application.
+
+| Service | Examples of editable files |
 | --- | --- |
 | PostgreSQL | `postgresql.conf`, `pg_hba.conf`, `pg_ident.conf` |
 | Nginx | `nginx.conf` |
-| Kyuubi | `kyuubi-defaults.conf`, environment assignments, `log4j2.properties` |
-| Trino | `config.properties`, `node.properties`, `log.properties`, `jvm.config`, catalog documents |
-| Doris | `fe.conf` and `be.conf` |
+| Kyuubi | `kyuubi-defaults.conf`, environment settings, `log4j2.properties` |
+| Trino | `config.properties`, `node.properties`, `log.properties`, `jvm.config`, catalog files |
+| Doris | `fe.conf`, `be.conf` |
 | Elasticsearch | `elasticsearch.yml`, JVM options, `log4j2.properties` |
-| MinIO | `minio.env` assignments |
-| Airflow | `airflow.cfg` and `webserver_config.py` |
-| Celeborn | `celeborn-defaults.conf`, environment assignments, `log4j2.properties` |
-| DolphinScheduler | Role-specific `application.properties`, `common.properties`, Logback and JVM documents |
+| MinIO | `minio.env` |
+| Airflow | `airflow.cfg`, `webserver_config.py` |
+| Celeborn | `celeborn-defaults.conf`, environment settings, `log4j2.properties` |
+| DolphinScheduler | Each role's `application.properties`, `common.properties`, logging and JVM settings |
 
-![Complete Doris configuration documents in the dark console](@site/static/img/3.1.0/mpack-store/configuration-files-dark.jpg)
+## Change, Save, And Apply {#editing-workflow}
 
-The current content control is a multiline text editor. A dedicated IDE-style file tree, syntax-aware editor, or universal application validator is not implied by the presence of complete documents.
+1. Confirm that you are editing the right service and configuration group.
+2. Make your change in the file. Keep the existing template placeholders and required includes.
+3. Save, with a short note explaining why you changed it.
+4. Follow the restart prompt, or use the service's reload command if it supports one.
+5. Check the task result and run the service check.
 
-## Safe Editing Workflow {#editing-workflow}
+**Saved does not mean applied.** Ambari has saved a configuration version; the running service still needs to load it.
 
-1. Select the intended service, configuration group, and current version.
-2. Review **Basic Settings** and any managed paths/listeners before editing content.
-3. Edit the complete document, retaining required includes and template placeholders.
-4. Save a configuration version with a useful note.
-5. Apply the required restart, or a supported reload command.
-6. Check the task outcome and the application's effective configuration.
-7. Reopen the configuration version to confirm that the saved document is the expected one.
+When changing a configuration group, remember that a full-file override replaces the whole file for that group, not just one line.
 
-Saving an Ambari version and activating a process configuration are separate operations. A restart-required indicator is not a failed save, and a successful save alone does not prove the process loaded the file.
+## Keep The Supplied Placeholders {#managed-values-and-formats}
 
-## Managed Values And Native Formats {#managed-values-and-formats}
+Some values come from **Basic Settings**, such as ports, installation paths, and data directories. The file may contain placeholders for them. Keep those placeholders unless the service's instructions tell you otherwise; conflicting settings may prevent the service from starting.
 
-Application settings can coexist with management-controlled identity, listener, and path values. The pack can add those managed defaults separately. Conflicting user declarations fail validation rather than silently replacing the management contract.
+Use the application's normal file format. Environment files accept variable assignments; they are not a place to add arbitrary shell commands.
 
-Properties files retain comments, continuation lines, escapes, and application expressions. INI and YAML use their native structure. Environment documents accept literal `NAME=value` or `export NAME=value` assignments; they do not execute arbitrary shell programs.
+## What About An Existing Installation? {#existing-installations}
 
-The React saver and Blueprint content handling preserve trailing spaces and blank lines. A renderer adds a final newline when needed. Do not assume that arbitrary shell commands, unimplemented service modes, or topology changes become supported just because their text can be entered.
+If the service already has a saved full configuration file, updating the service package does not replace your edits with new defaults. New upstream options can be added to your existing file.
 
-## Existing Installations And Definition Updates {#existing-installations}
+For some older configurations, the page can prepare a file from the saved form values. Review it before saving. Password fields and configuration-group overrides need separate handling; they are not all converted automatically.
 
-For a supported scalar-to-content transition, Configs prepares a document from the currently saved values and declared file-format metadata. It remains a pending edit until saved. Existing saved content is not regenerated from package defaults, and historical versions remain intact.
+Older Nginx or PostgreSQL installations may have configuration changes made directly on the host. Ambari does not automatically read those files back into the editor. Compare them with the proposed configuration before saving and applying it.
 
-Automatic conversion is skipped for scalar configuration-group overrides and password-typed properties. Those cases retain the legacy runtime representation until defaults and groups are deliberately converted together. A full-file group override replaces a document; it does not inherit individual lines as scalar property overrides did.
+## Example: Add An Nginx Location {#nginx-example}
 
-Older PostgreSQL and Nginx definitions did not necessarily store the host's complete configuration files in Ambari. Their new content values are installation templates, not automatic discovery of customized host files. Seed the editor from the actual files before applying content management to such an instance. If the new content types are absent, the legacy runtime path remains available.
-
-## Nginx Example {#nginx-example}
-
-Within an existing server block, a small verification location can be added:
+Inside an existing server block, add:
 
 ~~~nginx
 location /docs-check {
@@ -82,30 +80,30 @@ location /docs-check {
 }
 ~~~
 
-Keep the rest of the full document, including the management health include under `conf.d`. Save the version and execute the declared component `RELOAD` command where available. The pack validates the candidate using `nginx -t` before replacing its main file. Reload verification checks the health response and the exact configuration digest served by the new workers.
+Keep the rest of the file, including the supplied health-check include under `conf.d`. Save, then run the component's `RELOAD` command if it is available. Open the service address with the new path and check the response.
 
-If validation fails, inspect the task error and correct the candidate. Do not repeatedly restart the service with the same invalid file.
+The package checks the candidate with `nginx -t` before replacing the main configuration. If it fails, open the task details and correct the file rather than restarting repeatedly.
 
-## PostgreSQL Example {#postgresql-example}
+## Example: Change PostgreSQL Memory Settings {#postgresql-example}
 
-Change an existing setting within the complete document:
+Find the existing setting and change it, rather than adding conflicting duplicates:
 
 ~~~properties
 work_mem = '8MB'
 ~~~
 
-After saving and applying the required restart, verify it through a native query:
+Save and apply the required restart. Then connect to PostgreSQL and verify:
 
 ~~~sql
 SHOW work_mem;
 ~~~
 
-Preserve the supplied path/port placeholders and local peer-management access. Editing a data-directory placeholder does not migrate database data. The pack uses `postgres -C`-style native configuration inspection through its server executable and checks the loaded paths, port, and native error views during activation.
+Keep the supplied path and port placeholders, as well as local management access rules. Changing a data-directory setting does not move the existing database.
 
-## Validation Failure And Recovery {#validation-and-recovery}
+## If A Change Fails {#validation-and-recovery}
 
-Nginx and PostgreSQL validate candidates before replacement and keep preceding file bytes for recovery. Their staging layout includes untouched resources so relative includes can resolve. Each file replacement is atomic, but a set of files is not a crash-atomic database transaction.
+Open the failed task and identify the file or setting it reports. Correct the configuration, save another version, and apply it again. If you need to go back, use the previous known-good configuration as the starting point and check the task result.
 
-Activation failure can restore the previous files; PostgreSQL stops a failed activation before restoration. An external concurrent edit produces an explicit reconciliation failure. Inspect the task and the retained `.ambari-before` files before attempting manual recovery.
+Nginx and PostgreSQL validate files before replacement and retain the previous files for recovery. This helps recover from a failed configuration change, but does not restore database data or undo a data migration.
 
-A configuration rollback does not roll back application data or database migrations. Separate data backup and migration procedures remain necessary. See [operations and recovery](./operations-and-recovery.md) for the distinction between package operations and service tasks.
+For installation failures or interrupted store actions, see [common problems and updates](./operations-and-recovery.md).

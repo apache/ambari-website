@@ -83,7 +83,7 @@ Python 依赖打包采用哈希锁定的构件，明确选择平台和 ABI，检
 
 主控制台还增加了浅色、暗色和跟随系统外观，带原集群页面返回能力的全局导航，聚合的包版本，紧凑主机告警链接，以及明确的监控图例控件。这些功能需要[匹配的开发快照](./release-baseline.md#runtime-mpack-follow-up)。
 
-操作步骤和边界见[管理包商店](./management-packs/overview.md)、[完整配置文件](./management-packs/content-configuration.md)及[工作区导航与外观](./frontend/workspace-and-appearance.md)。本条目不表示发布了在线市场、ASF 二进制商店、自动软件升级或参考服务包的 HA 支持。
+操作步骤和边界见[服务商店](./management-packs/overview.md)、[修改配置](./management-packs/content-configuration.md)及[工作区导航与外观](./frontend/workspace-and-appearance.md)。本条目不表示发布了在线市场、ASF 二进制商店、自动软件升级或参考服务包的 HA 支持。
 
 ## 社区改进 {#selected-community-changes}
 

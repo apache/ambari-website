@@ -38,15 +38,17 @@
     },
     {
       "type": "category",
-      "label": "Management Pack Store",
+      "label": "Service Store",
       "collapsed": false,
       "items": [
         "management-packs/overview",
         "management-packs/store-guide",
         "management-packs/service-catalog",
         "management-packs/content-configuration",
+        "management-packs/operations-and-recovery",
+        "management-packs/add-service-tutorial",
         "management-packs/authoring-and-bundling",
-        "management-packs/operations-and-recovery"
+        "management-packs/implementation"
       ]
     },
     {

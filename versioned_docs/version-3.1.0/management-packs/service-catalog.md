@@ -1,5 +1,5 @@
 ---
-title: Reference Service Catalog
+title: Choose A Service
 ---
 
 <!--
@@ -19,71 +19,72 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Reference Service Catalog {#reference-service-catalog}
+# Choose A Service {#reference-service-catalog}
 
-This matrix describes the separate reference store at `c10a271` for the [runtime mpack preview](./overview.md). The package versions come from `release.json`. They are definition versions, independent of the upstream software and of Ambari's own version.
+Choose a service based on what you want to run, then check its installation requirements below. The example store currently includes ten services.
 
-## Packages And Software {#packages-and-software}
+This is a [preview](./overview.md). The list describes the tested example packages, not every mode supported by the upstream software.
 
-| Package | Definition version | Software baseline | Environment |
-| --- | --- | --- | --- |
-| generic-base | `1.0.0.3` | Foundation definitions, no application | `GENERIC/1.0` |
-| nginx | `1.0.1.1` | OS repository package | `GENERIC/1.0` |
-| postgresql | `1.0.1.1` | OS repository package; reference deployment uses PostgreSQL 10 | `GENERIC/1.0` |
-| kyuubi | `1.0.1.0` | Apache Kyuubi 1.9.4 | `BIGTOP/3.3.0` |
-| airflow | `1.0.1.0` | Apache Airflow 3.3.2 | `GENERIC/1.0` |
-| celeborn | `1.0.1.0` | Apache Celeborn 0.7.0 | `BIGTOP/3.3.0` |
-| dolphinscheduler | `1.0.1.0` | Apache DolphinScheduler 3.1.9 | `BIGTOP/3.3.0` |
-| trino | `1.0.1.0` | Trino 483 | `BIGTOP/3.3.0` |
-| doris | `1.0.1.0` | Apache Doris 4.1.4 | `BIGTOP/3.3.0` |
-| elasticsearch | `1.0.1.0` | Elasticsearch 9.5.4 | `GENERIC/1.0` |
-| minio | `1.0.1.0` | MinIO `RELEASE.2025-10-15T17-29-55Z` | `GENERIC/1.0` |
+## Available Services {#packages-and-software}
 
-The foundation is pulled in as a package dependency; it is not an extra application to deploy. Nginx and PostgreSQL do not require a Hadoop installation. A generic service and a BIGTOP service cannot be combined into an arbitrary single environment just because both are in the bundle.
-
-## Topology And Prerequisites {#topology-and-prerequisites}
-
-| Service | Initial topology | Prepare before installation |
+| Service | What it is for | Software in the example store |
 | --- | --- | --- |
-| Nginx | A managed server instance | OS packages, configuration/include paths, and a free managed listener |
-| PostgreSQL | A managed database instance | OS packages, persistent data directory, local management access, and backups |
-| Kyuubi | Server and client definitions | JDK 17, compatible Spark 3.5/Scala 2.12 binaries, Hadoop clients and ZooKeeper configuration |
-| Airflow | One server host using LocalExecutor | Python 3.11 and an external PostgreSQL 14-18 database, database user and administrator inputs |
-| Celeborn | One master and one or more workers | JDK 17, pinned official archive, storage paths and role ports |
-| DolphinScheduler | One host supervising master, worker, API and alert processes | External PostgreSQL 14-18, ZooKeeper, Java 11 or 17, and administrator inputs |
-| Trino | One coordinator, optional workers | Java 25 on every assigned host, pinned archive, node/data paths and ports |
-| Doris | Exactly one FE and one BE, together or separate | ARM64 archive, Java 17, data directories, sufficient temporary/extracted disk space and explicit credentials |
-| Elasticsearch | One authenticated HTTPS node | Official Linux/ARM64 archive, kernel/OS prerequisites, data directory and protected administrator input |
-| MinIO | One source-built server and console | Pinned source, Go toolchain 1.24.8, module access/cache, persistent storage and new root credentials |
+| Nginx | Web serving and reverse proxying | From the operating system's package repository |
+| PostgreSQL | Relational data storage | From the operating system's repository; PostgreSQL 10 in the reference test |
+| Kyuubi | A shared SQL entry point for Spark | 1.9.4 |
+| Airflow | Scheduling and tracking workflows | 3.3.2 |
+| Celeborn | Shuffle storage for computing jobs | 0.7.0 |
+| DolphinScheduler | Building and scheduling data workflows | 3.1.9 |
+| Trino | SQL queries across data sources | 483 |
+| Doris | Analytical data storage and queries | 4.1.4 |
+| Elasticsearch | Search and indexing | 9.5.4 |
+| MinIO | S3-compatible object storage | `RELEASE.2025-10-15T17-29-55Z` |
 
-The PostgreSQL 10 reference service does not satisfy the Airflow or DolphinScheduler PostgreSQL 14-18 requirement. Prepare a suitable external database rather than assuming that installing the PostgreSQL card completes those prerequisites.
+Nginx, PostgreSQL, Airflow, Elasticsearch, and MinIO use the generic environment and do not need a Hadoop cluster simply to appear in the store. Kyuubi, Celeborn, DolphinScheduler, Trino, and Doris use the example BIGTOP environment. The page checks which services fit your destination; they cannot all be combined into any one cluster.
 
-Doris's recorded archive is about 4.35 GB and expands to about 6.8 GB before service data. Check free space for download, extraction, previous installations, metadata, and application data; the store bundle's size is not a sizing estimate.
+The store also contains a small foundation package. Ambari selects it when needed; it is not another application you need to run.
 
-## Service-specific Initialization {#service-initialization}
+## What Do I Need Before Installing? {#topology-and-prerequisites}
 
-**Airflow:** installation creates an isolated Python environment, initializes only an empty dedicated database, and verifies administrator provisioning. Existing schemas are checked rather than automatically upgraded. The declared `INITIALIZE_DATABASE` and `CREATE_ADMIN` actions remain available for explicit recovery. Verify the dedicated health workflow. The first pack fixes LocalExecutor; selecting another executor in a file does not provide Celery workers or a broker deployment.
+| Service | Initial setup | Prepare first |
+| --- | --- | --- |
+| Nginx | One managed instance | A reachable OS package repository and a free port |
+| PostgreSQL | One managed instance | OS packages, a persistent data directory, local management access, and backups |
+| Kyuubi | Server and client components | Java 17, Spark 3.5/Scala 2.12, Hadoop clients, and ZooKeeper configuration |
+| Airflow | One host, LocalExecutor | Python 3.11, a dedicated external PostgreSQL 14-18 database, and administrator details |
+| Celeborn | One master and one or more workers | Java 17, the matching release archive, storage directories, and free ports |
+| DolphinScheduler | Master, worker, API, and alert processes on one host | External PostgreSQL 14-18, ZooKeeper, Java 11 or 17, and administrator details |
+| Trino | One coordinator, optional workers | Java 25 on every assigned host, the release archive, and data directories |
+| Doris | One FE and one BE, on the same or separate hosts | ARM64 archive, Java 17, enough disk space, and explicit credentials |
+| Elasticsearch | One node using HTTPS and authentication | Linux/ARM64 archive, the required OS settings, storage, and administrator credentials |
+| MinIO | One server with a console | The specified source release, Go 1.24.8, access to build dependencies or a prepared cache, storage, and new root credentials |
 
-**DolphinScheduler:** the managed pseudo-cluster uses an external persistent PostgreSQL schema and ZooKeeper. It does not use the upstream standalone in-memory H2/testing-ZooKeeper path. Empty-schema ownership, initialization, and administrator setup are part of the managed lifecycle. Do not reuse a nonempty foreign schema as an initialization target.
+**Airflow and DolphinScheduler need a newer PostgreSQL database than the PostgreSQL 10 instance in the example store.** Installing the PostgreSQL card is not enough for them.
 
-**Kyuubi:** the pack pins the official binary and can wrap it into a compatible RPM using the provided packaging tool. It does not build Kyuubi from source during the normal binary packaging path. Configure matching Spark/Hadoop dependencies before starting engines.
+Doris needs substantial temporary disk space: its archive is about 4.35 GB and expands to about 6.8 GB before you store any data. Leave room for both, plus previous installations and application data.
 
-**Trino:** Java 25 is a service-specific prerequisite even though Ambari's own Java baseline is 17. The supplied TPCH catalog is for verification. Hive, Iceberg, authentication, TLS and production resource groups need explicit configuration and validation.
+## A Few Things To Know About The First Installation {#service-initialization}
 
-**MinIO:** the current reference is installable from its pinned source build; the earlier non-installable draft is superseded. The build verifies source and reproduced binary digests. The management definition does not redistribute the MinIO binary inside the store; inspect the upstream AGPL-3.0 licensing and source distribution requirements for your distribution.
+Airflow and DolphinScheduler need their own database space. Prepare an empty, dedicated database/schema and the right account. The installer initializes an eligible empty database and sets up the administrator; it does not take over someone else's existing data or automatically upgrade an existing schema.
 
-## What Service Checks Establish {#service-checks}
+Kyuubi uses an official binary distribution. Prepare compatible Spark and Hadoop dependencies before starting SQL engines.
 
-Checks use service-native observations. Representative examples include a verified Kyuubi engine/session operation, an Airflow health DAG result, registered Celeborn workers, authenticated DolphinScheduler processes, a Trino TPCH query, a Doris temporary table write/read, Elasticsearch authenticated cluster checks, and a MinIO object write/read/cleanup.
+Trino needs Java 25 even though Ambari itself uses Java 17. Its sample TPCH catalog is useful for a first query; connections to Hive, Iceberg, or other production data sources need your own configuration.
 
-Temporary test resources belong to the specific execution. A process existing, a successful download, or a command exiting zero is not sufficient evidence for every check. Inspect the Ambari request/task result and the service's structured observations.
+MinIO is built from the specified source release. The bundle does not contain a ready-made MinIO binary. Prepare the build environment and dependencies before installation; distributors also need to check upstream AGPL-3.0 requirements.
 
-A passed basic check does not prove HA, security hardening, backup restoration, production capacity, or arbitrary connector compatibility.
+## How Do I Know It Works? {#service-checks}
 
-## Limits And Extension Work {#limits-and-extension-work}
+After installation and startup, run the service check from its Ambari service page. Checks exercise basic service behavior, such as a Trino query, a Doris write/read, or a MinIO object upload/download and cleanup.
 
-The reference first releases do not promise HA or automatic failover. Airflow CeleryExecutor, distributed MinIO storage, Celeborn HA, Doris replication/cloud mode, automatic schema upgrades, and production connector integration require separate implementation and acceptance.
+If the check fails, open its task details and correct the reported problem. A running process alone is not enough to show that a query or object request works.
 
-Stopping a service or retiring its definition is not a request to delete persistent user data. Removal can still be blocked by active uses. Review [operation semantics](./operations-and-recovery.md) before changing bindings.
+A passed check confirms basic operation. It does not replace capacity testing, backup recovery testing, or a production security review.
 
-All ten service packs expose [editable configuration documents](./content-configuration.md). Dedicated service telemetry remains a separate capability; Linux host metrics alone do not establish service-level monitoring coverage.
+## What Is Not Included Yet? {#limits-and-extension-work}
+
+The first packages target single-server or small-cluster use. Airflow CeleryExecutor, distributed MinIO, Celeborn high availability, and Doris replication/cloud mode are not included. Editing a setting does not add the missing deployment support.
+
+You can [edit full configuration files](./content-configuration.md) for all ten services. Monitoring support varies; seeing host CPU and memory charts does not mean every service has its own dashboard.
+
+For the exact package revisions used in these examples, see the [source baseline](../release-baseline.md#runtime-mpack-follow-up).

@@ -1,5 +1,5 @@
 ---
-title: Import A Store And Deploy Services
+title: Install A Service
 ---
 
 <!--
@@ -19,72 +19,73 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Import A Store And Deploy Services {#import-store-deploy-services}
+# Install A Service {#import-store-deploy-services}
 
-This walkthrough uses the [runtime mpack preview](./overview.md). Obtain the reviewed bundle from the distributor of your matching development build, or [build it from the reference repository](./authoring-and-bundling.md).
+This walkthrough takes you from a service bundle to an installed service. You can start with Nginx to learn the steps, then use the same flow for other services.
 
-## Before You Start {#before-you-start}
+## Have These Ready {#before-you-start}
 
-Have an administrator account, an enabled runtime mpack API, compatible Server/Agent builds, and a bundle whose digest you can verify. Prepare reachable software sources, required databases, Java/Python runtimes, writable data directories, and available ports for the services you intend to select. Read the [service matrix](./service-catalog.md) before assigning hosts.
+- An Ambari administrator account and a build that includes the [service store](./overview.md).
+- A service bundle supplied for that build, usually named `mpackstore.bundle.tar.gz`.
+- Hosts registered with Ambari and the software sources they need to reach.
+- The service's prerequisites, such as a database address, account, or Java runtime. Check the [preparation list](./service-catalog.md).
 
-Record the current package versions, affected cluster configurations, and data backup arrangements before replacing active definitions. A definition archive is not a data backup.
+You do not need to unpack the bundle or copy scripts into Ambari's installation directory.
 
-## Open Management Packs {#open-management-packs}
+## 1. Open The Store {#open-management-packs}
 
-From a cluster workspace, use **Management Packs** near the top of the sidebar, below the Ambari brand and global Clusters entry. From a global directory, use **Management Packs** in the top navigation.
+From a cluster page, click **Management Packs** near the top of the left sidebar. In the Chinese console this is **管理包**. From the cluster directory, use the entry in the top navigation.
 
-The page has **Service catalog**, **Imported packages**, and **Activity** sections. The right-hand selection panel stays with the catalog as you browse. **Return to workspace** restores the cluster page you left, including its URL parameters.
+The service catalog is where you choose what to install. **Imported packages** shows what you have imported, and **Activity** shows the progress of store actions.
 
-![Management pack catalog with grouped services, version selectors, a selection panel, and return navigation](@site/static/img/3.1.0/mpack-store/catalog-dark.jpg)
+![Service choices and the selection panel in the current console](@site/static/img/3.1.0/mpack-store/catalog-dark.jpg)
 
-This development capture uses the Chinese UI and dark appearance. Host names, counts, and displayed versions describe the captured test environment.
+This screenshot uses the Chinese console in dark mode. The test environment's host names and version labels are examples.
 
-## Import The Bundle {#import-the-bundle}
+## 2. Import Your Bundle {#import-the-bundle}
 
-1. Select **Import bundle** to open the upload dialog.
-2. Choose `mpackstore.bundle.tar.gz`. Wait for inspection to identify its member packages.
-3. Review the members, then select **Import Packages**. The complete-store import includes all inspected members.
-4. Follow the operation in **Activity**. Keep its operation ID if the browser or network disconnects.
-5. Return to **Service catalog** after the import succeeds.
+1. Click **Import bundle**.
+2. Select `mpackstore.bundle.tar.gz` and wait for the list of packages.
+3. Check the list, then click **Import Packages**.
+4. Wait for the import to finish in **Activity**, then return to the service catalog.
 
-Import registers the packages without binding their definitions, running activation hooks, or deploying software on hosts. The default upload contract limits the compressed archive to 256 MiB, expanded contents to 1 GiB, and entries to 100,000; confirm the limits of the actual Server build.
+After this step, the services are available to select. Nothing has been installed on your hosts yet.
 
-Do not place multi-gigabyte runtime distributions inside the store merely to make installation offline. Use the runtime repository/cache preparation described by each service.
+If the file is rejected, check that you selected the service bundle, not a large software distribution archive. The default upload limit is 256 MiB. Ask the bundle provider for help if the file still cannot be imported.
 
-## Select One Version Per Service {#select-one-version}
+## 3. Choose What To Install {#select-one-version}
 
-Search by service or package and narrow the environment selector when useful. The catalog groups entries by service and exact Stack context; versions for that group appear in one selector instead of duplicate cards.
+Search for a service and select its card. Your selection appears in the panel on the right; remove anything you do not want.
 
-The default prefers a currently enabled definition. Other numeric definition versions are ordered by version, but a newer number is not a certification of compatibility or runtime upgrade support. Review the package's release information before switching.
+If several package versions are available, choose the one recommended for your Ambari build. This version describes the installation and management instructions, not necessarily the version of the application. Check the [service list](./service-catalog.md) for the software version.
 
-Check the service to add it to **Selected services**. Changing its version replaces that group's selected provider. The selection panel shows the actual package release, not just the software name. Remove an unwanted service there.
+Some services cannot be installed together in the same cluster. If a card is disabled, read its explanation and choose a compatible destination. Changing a search filter does not clear your existing selection.
 
-Services incompatible with the current selection or chosen destination are disabled with an explanation. Clear or change the selection to choose a different environment. Filtering the catalog does not silently remove already selected services.
+## 4. Choose A Cluster {#choose-a-destination}
 
-## Choose A Destination {#choose-a-destination}
+In **Deploy To**, select a compatible existing cluster or **New cluster**, then click **Continue With Selected Services**.
 
-Select **New cluster** or an existing compatible cluster in **Deploy To**, then use **Continue With Selected Services**.
+Ambari first makes the chosen services available for installation. If it asks you to confirm maintenance or a restart, read which clusters are affected before continuing.
 
-The Server derives required providers and bindings. A plan may require maintenance or restart confirmation; inspect its affected clusters and requirements. A straightforward enable operation can proceed without an extra confirmation dialog. Both paths still produce a durable operation.
+Wait for this step to finish, then choose **Create cluster** or **Add Services to Cluster** to enter the installation wizard. An enabled service is ready to install; it is not running on a host yet.
 
-**Definitions enabled** describes management-definition availability. It does not mean that the service is already installed and running on a host.
+## 5. Finish The Installation Wizard {#complete-the-deployment}
 
-## Complete The Deployment {#complete-the-deployment}
+1. Confirm the services to install.
+2. Choose the hosts for each component.
+3. Fill in the required settings, such as software locations, database details, and passwords.
+4. Review your choices and start installation.
+5. Wait for installation and startup tasks to finish. If one fails, open its task details.
+6. Open the service page and run its service check.
 
-After a verified successful enable operation, use the offered **Create cluster** or **Add Services to Cluster** action. In the wizard:
+For Nginx, check that the assigned host can reach its package repository and that the chosen port is free. Other services may need more preparation.
 
-1. Confirm the selected services and dependencies.
-2. Assign components to eligible hosts.
-3. Enter required credentials, database endpoints, software locations, and configuration.
-4. Review the assignments and start installation.
-5. Inspect install/start tasks and service checks, then open the service Summary and Configs pages.
+You are finished when the service is installed, running, and its service check passes. To change settings later, open its **Configs** page and follow [Edit configuration files](./content-configuration.md).
 
-Treat an installation task failure separately from a package-operation failure. The operation ID and the deployment request/task IDs identify different workflows; retain both when diagnosing a problem.
+## What If I Close The Page Or See An Error? {#recover-without-duplicates}
 
-## Recover Without Duplicating Work {#recover-without-duplicates}
+Return to **Activity** and check the original action before submitting it again. If the page offers an action to check whether the previous submission was accepted, use that first.
 
-If submission acceptance is uncertain, use the page's reconciliation action. It reuses the retained plan/submission identity rather than assuming that a timeout means nothing happened.
+If store preparation succeeded but a host failed to install the service, open the installation task and fix that host's problem. Importing the bundle again will not fix a missing Java runtime or an incorrect database password.
 
-If a plan has expired or its inputs changed and acceptance was definitively rejected, create a fresh preview. If the operation is waiting on tasks or maintenance, inspect the exact blockers before retrying. Do not repeatedly upload the same bundle to recover a host installation failure.
-
-See [operations and recovery](./operations-and-recovery.md) for phase meanings, CLI inspection, and recovery restrictions.
+See [common problems and updates](./operations-and-recovery.md) for the next step.

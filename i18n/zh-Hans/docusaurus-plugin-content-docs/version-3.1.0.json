@@ -1,7 +1,7 @@
 {
-  "sidebar.ambariSidebar.category.Management Pack Store": {
-    "message": "管理包商店",
-    "description": "The label for category 'Management Pack Store' in sidebar 'ambariSidebar'"
+  "sidebar.ambariSidebar.category.Service Store": {
+    "message": "服务商店",
+    "description": "The label for category 'Service Store' in sidebar 'ambariSidebar'"
   },
   "version.label": {
     "message": "3.1.0（预览）",

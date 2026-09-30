@@ -1,5 +1,5 @@
 ---
-title: Mpack Store Overview
+title: Service Store
 ---
 
 <!--
@@ -19,68 +19,65 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Mpack Store Overview {#mpack-store-overview}
+# Service Store {#mpack-store-overview}
 
-The mpack store is a separately maintained collection of Ambari service definitions and lifecycle scripts. A distributor can package the selected releases into one `mpackstore.bundle.tar.gz`. An administrator imports that bundle once, then chooses the services to manage through Ambari's normal deployment wizard.
+Want Ambari to manage Nginx, PostgreSQL, Kyuubi, or another service? Import a service bundle, choose what you need, and follow the installation wizard. After installation, use the service page to start or stop it, edit its configuration, and check its health.
 
-:::info Development snapshot
-These guides describe the `AMBARI-26663` development implementation reviewed on 2026-09-29, including Ambari commit `3a71190847` and reference-store commit `c10a271`. They require a build containing that implementation. The 3.1 documentation remains a preview; these snapshots do not establish an ASF release or production support matrix. See the [source baseline](../release-baseline.md#runtime-mpack-follow-up).
+You do not need to write scripts or call an API to use the store.
+
+:::info Before you try it
+The service store described here is a 3.1 preview feature. Your Ambari installation must include it. Ask the person who provides your Ambari build for a matching service bundle. See the [version details](../release-baseline.md#runtime-mpack-follow-up) if you need to check compatibility.
 :::
 
-## What The Store Contains {#store-contents}
+## What Can I Install? {#store-contents}
 
-A full store bundle transports individually versioned packages, manifests, service descriptors, configuration definitions, and installation/management scripts. The reference snapshot contains eleven packages: one foundation package and ten selectable services.
+The current example store includes ten services:
 
-Host software comes from the repositories, verified binary archives, Python dependencies, or pinned source builds described by each pack. Importing the store does not fetch all of those runtime artifacts onto every host. Prepare them before installation, especially for a disconnected environment.
-
-| Object | Purpose | Example |
-| --- | --- | --- |
-| Bundle | Transport several independent packages together | `mpackstore.bundle.tar.gz` |
-| Package release | Identify an immutable management definition | `nginx/1.0.1.1` |
-| Stack context | Define the environment to which services can be bound | `GENERIC/1.0` or `BIGTOP/3.3.0` |
-| Catalog service ID | Select one exact provider/context in a deployment plan | The ID returned by the service catalog |
-| Service descriptor version | Supply the version label from service metadata | The version in `metainfo.xml` |
-| Software version | Identify the application installed on a host | Trino `483` |
-| Operation | Track a durable package change and its recovery | An operation ID and authoritative phase |
-
-The version beside a service name comes from descriptor metadata; it must not replace an observed installed-software version. For example, a Kyuubi descriptor can say `1.0` while the reference runtime is `1.9.4`. The package version in the selector identifies the management definition. Updating scripts in a package does not by itself upgrade the application binary or its database schema.
-
-## The End-to-End Flow {#end-to-end-flow}
-
-| Stage | Result to verify |
+| What you want to do | Services to consider |
 | --- | --- |
-| Obtain and inspect | The bundle matches the expected publisher, versions, and digest |
-| Upload and import | Package releases appear in the catalog; host software has not been deployed |
-| Select services and destination | One provider per chosen service, with a compatible environment |
-| Enable definitions | The package operation reaches a verified successful state |
-| Deploy through the wizard | Host assignments and configuration produce successful installation/start tasks |
-| Run service checks | The service responds correctly; the check's result belongs to the actual request |
-| Operate | Edit configurations, inspect alerts, and use declared lifecycle commands |
+| Serve web pages or forward requests | Nginx |
+| Run a relational database | PostgreSQL |
+| Provide a SQL entry point for Spark | Kyuubi |
+| Schedule data jobs | Airflow, DolphinScheduler |
+| Support shuffle storage for computing jobs | Celeborn |
+| Query data across sources | Trino |
+| Run analytical queries | Doris |
+| Search and index data | Elasticsearch |
+| Store objects through an S3-compatible API | MinIO |
 
-Importing a multi-service bundle does not select every service. The Server resolves required package dependencies and bindings for the chosen services; deployment prerequisites still need operator input.
+Start with [available services and preparation](./service-catalog.md). Each service has its own requirements; some need an existing database or a particular Java version.
 
-For a new cluster, the handoff opens cluster creation. For a compatible existing cluster, it opens Add Services with the selected services. A successful definition operation is not proof that the subsequent installation has completed.
+## How Do I Get Started? {#end-to-end-flow}
 
-## Administration And Scope {#administration-and-scope}
+1. **Import the bundle.** Its services become available to choose from.
+2. **Choose your services.** You can install only what you need; importing does not install everything.
+3. **Choose a cluster and hosts.** Add services to a compatible existing cluster, or create a new one.
+4. **Fill in the configuration and install.** Wait for installation and startup, then run the service check.
 
-The Management Packs entry is an Ambari administrator function. The runtime endpoints require authenticated administrator access and `AMBARI.MANAGE_STACK_VERSIONS`. Service deployment and later lifecycle actions also retain their normal permissions and validation.
+For example, to add Nginx, import the bundle, select Nginx, choose its destination, assign a host, and follow the wizard. The [installation walkthrough](./store-guide.md) explains each step.
 
-The store is global to an Ambari Server. Definition bindings are shared by exact Stack name and version, rather than providing independent definition versions for each cluster. A definition update may therefore affect several clusters using the same context. Review the plan's affected clusters and maintenance requirements.
+The bundle teaches Ambari how to install and manage these services. The actual software may still need to be downloaded during installation. For a network without Internet access, ask your administrator to prepare the software sources first.
 
-Package operations reserve their affected definition scope. Ordinary writes and tasks unrelated to that scope can continue. This does not permit a conflicting service, configuration, or topology change while its definitions are being replaced. See [operation recovery](./operations-and-recovery.md).
+## Where Do I Open It? {#administration-and-scope}
 
-## Choosing A Reading Path {#reading-paths}
+Sign in with an Ambari administrator account. In the cluster sidebar, near the top, open **Management Packs**. The current Chinese console calls it **管理包**. This documentation calls the feature **Service Store**; the console label has not changed yet.
 
-- Operators: start with the [store walkthrough](./store-guide.md), then inspect [service prerequisites](./service-catalog.md).
-- Administrators changing configurations: use the [content configuration guide](./content-configuration.md).
-- Pack maintainers: use [authoring and bundling](./authoring-and-bundling.md).
-- Operators handling failed or interrupted work: use [operations and recovery](./operations-and-recovery.md).
-- Web users: read [workspace navigation and appearance](../frontend/workspace-and-appearance.md) and [monitoring interactions](../monitoring/queries-and-dashboards.md#workspace-interactions).
+If you are on the cluster directory page, use the same entry in the top navigation. To go back to the cluster page you left, choose **Return to workspace**.
 
-## Current Boundaries {#current-boundaries}
+The store is shared by the clusters on this Ambari Server. When updating a package, read the list of affected clusters before continuing.
 
-The reference acceptance environment is Rocky Linux 8 on aarch64 with systemd. Individual services have different Java, Python, database, repository, and network requirements. Existing definitions for another platform do not establish tested deployment support there.
+## What Should I Read Next? {#reading-paths}
 
-The first service packs focus on basic installation, configuration, start/stop, and service checks. HA, automatic failover, topology expansion, software upgrades, schema migrations, and production security vary by service and must not be assumed. Installing a service also does not automatically add its exporter or dashboards.
+- [Install a service](./store-guide.md): import, select, and finish the installation wizard.
+- [Choose a service](./service-catalog.md): check what it does and what you need to prepare.
+- [Edit configuration files](./content-configuration.md): change, save, and apply settings.
+- [Fix problems and manage updates](./operations-and-recovery.md): find the right place to check a failure.
+- [Add a service, step by step](./add-service-tutorial.md): build, import, and test a complete example.
+- [API and service integration](./authoring-and-bundling.md): for developers writing tools or adding a service.
+- [How the store works](./implementation.md): for developers who want to understand the design.
 
-The runtime store workflow and the legacy `ambari-server install-mpack` mechanism have different manifests and activation behavior. Use the [management-pack compatibility entry](../ambari-design/stack-and-services/management-packs.md) before mixing older instructions with this preview.
+## What Is Supported Today? {#current-boundaries}
+
+These first service packages focus on installation, configuration, start/stop, and basic health checks. Do not assume that high availability, automatic failover, or automatic software upgrades are included. The reference test environment is Rocky Linux 8 on ARM64; check the service requirements before using another platform.
+
+Installing a service also does not automatically add its monitoring charts. For dashboard usage, see the [monitoring guide](../monitoring/queries-and-dashboards.md#workspace-interactions).
