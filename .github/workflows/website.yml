@@ -57,6 +57,9 @@ jobs:
           yarn test:deployment
           yarn typecheck
 
+      - name: Test the downloadable service tutorial
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/examples -p 'test_*.py'
+
       - name: Build all languages
         run: |
           yarn update-avatar
